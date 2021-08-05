@@ -8,7 +8,6 @@
 #include <cctype>
 #include <locale>
 
-
 #define CONSTRUCT_DEFAULT(clazz) clazz() = default;
 
 #define COPYBLE_DEFAULT(clazz) \
@@ -22,8 +21,6 @@
 #define MOVEBLE_DEFAULT(clazz) \
     clazz(clazz&&) noexcept = default; \
     clazz& operator=(clazz&&) noexcept = default;
-
-
 
 namespace mchs {
 
@@ -157,6 +154,5 @@ static inline std::string trim_copy(std::string s) {
     trim(s);
     return s;
 }
-
 
 } // namespace mchs
