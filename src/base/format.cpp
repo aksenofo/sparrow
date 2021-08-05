@@ -8,7 +8,7 @@
          
 namespace sparrow {
 
-std::string vtformat_impl(const std::string& fmt, const std::vector<std::string>& strs)
+std::string format_impl(const std::string& fmt, const std::vector<std::string>& strs)
 {
     static const char FORMAT_SYMBOL = '%';
     std::string res;

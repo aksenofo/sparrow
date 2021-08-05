@@ -31,11 +31,11 @@ inline std::string to_string_help(const BoolAsString& bas)
     return bas.m_flag ? "True" : "False";
 }
 
-class CodeTextAsString
+class CodeAsString
 {
 
 public:
-    CodeTextAsString(int code, const std::function<const char*(int)>& fn)
+    CodeAsString(int code, const std::function<const char*(int)>& fn)
     {
         m_code = code;
         m_text = fn(code);
@@ -44,16 +44,16 @@ public:
     int m_code = 0;
     std::string m_text;
 };
-inline std::string to_string_help(const CodeTextAsString& ctas)
+inline std::string to_string_help(const CodeAsString& ctas)
 {
     return std::to_string(ctas.m_code) + " " + ctas.m_text;
 }
 
-class CodeTextAsString1
+class CodeAsString1
 {
 
 public:
-    CodeTextAsString1(int code, const std::function<std::string(int)>& fn)
+    CodeAsString1(int code, const std::function<std::string(int)>& fn)
     {
         m_code = code;
         m_text = fn(code);
@@ -63,16 +63,16 @@ public:
     std::string m_text;
 };
 
-inline std::string to_string_help(const CodeTextAsString1& ctas)
+inline std::string to_string_help(const CodeAsString1& ctas)
 {
     return std::to_string(ctas.m_code) + " " + ctas.m_text;
 }
 
-std::string vtformat_impl(const std::string& fmt, const std::vector<std::string>& strs);
+std::string format_impl(const std::string& fmt, const std::vector<std::string>& strs);
 
 using Bas = BoolAsString;
-using Ctas = CodeTextAsString;
-using Ctas1 = CodeTextAsString1;
+using Ctas = CodeAsString;
+using Ctas1 = CodeAsString1;
 
 inline std::string to_string_help(const std::error_code& ec)
 {
@@ -96,24 +96,22 @@ std::string to_string_help(const Type& v)
 }
 
 template<typename Arg, typename... Args>
-inline std::string vtformat_impl(const std::string& fmt, std::vector<std::string>& strs, Arg&& arg, Args&&... args)
+inline std::string format_impl(const std::string& fmt, std::vector<std::string>& strs, Arg&& arg, Args&&... args)
 {
-
     strs.push_back(to_string_help(std::forward<Arg>(arg)));
-
-    return vtformat_impl(fmt, strs, std::forward<Args>(args)...);
+    return format_impl(fmt, strs, std::forward<Args>(args)...);
 }
 
-inline std::string vtformat(const std::string& fmt)
+inline std::string format(const std::string& fmt)
 {
     return fmt;
 }
 
 template<typename Arg, typename... Args>
-inline std::string vtformat(const std::string& fmt, Arg&& arg, Args&&... args)
+inline std::string format(const std::string& fmt, Arg&& arg, Args&&... args)
 {
     std::vector<std::string> strs;
-    return vtformat_impl(fmt, strs, std::forward<Arg>(arg), std::forward<Args>(args)...);
+    return format_impl(fmt, strs, std::forward<Arg>(arg), std::forward<Args>(args)...);
 }
 
 } //namespace sparrow

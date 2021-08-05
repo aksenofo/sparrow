@@ -31,7 +31,7 @@ int TcpBase::SetNonblock(int fd)
 void TcpBase::SocketClose(void* ptr)
 {
     int tsock = reinterpret_cast<intptr_t>(ptr);
-    LOG(Debug) << sparrow::vtformat("Socket #%1 closed.", tsock);
+    LOG(Debug) << sparrow::format("Socket #%1 closed.", tsock);
     shutdown(tsock, SHUT_RDWR);
     close(tsock);
 }
@@ -46,12 +46,12 @@ TcpBase::TcpBase()
 {
     m_socket.reset(reinterpret_cast<void*>(socket(AF_INET, SOCK_STREAM, 0)));
     if (Socket() == -1) {
-        throw std::runtime_error(sparrow::vtformat("Cannot create socket. Code %1.", sparrow::ToECode(errno)));
+        throw std::runtime_error(sparrow::format("Cannot create socket. Code %1.", sparrow::ToECode(errno)));
     }
 
     int err = SetNonblock(Socket());
     if (err != 0) {
-        throw std::runtime_error(sparrow::vtformat("Failed to fcntl in client. Code %1.", sparrow::ToECode(errno)));
+        throw std::runtime_error(sparrow::format("Failed to fcntl in client. Code %1.", sparrow::ToECode(errno)));
     }
 }
 
@@ -72,11 +72,11 @@ TcpSocket::TcpSocket(const std::string& url, int port)
     if (err != 0 && errno == EINPROGRESS) {
         err = 0;
         errno = 0;
-        LOG(Debug) << sparrow::vtformat("Socket #%1 connection is in progress.", Socket());
+        LOG(Debug) << sparrow::format("Socket #%1 connection is in progress.", Socket());
     } else if (err == 0) {
-        LOG(Debug) << sparrow::vtformat("Socket #%1 connected.", Socket());
+        LOG(Debug) << sparrow::format("Socket #%1 connected.", Socket());
     } else {
-        std::string errorStr = sparrow::vtformat("Failed to connect to server. Code %1.", sparrow::ToECode(errno));
+        std::string errorStr = sparrow::format("Failed to connect to server. Code %1.", sparrow::ToECode(errno));
         throw std::runtime_error(errorStr);
     }
 }
@@ -92,14 +92,14 @@ TcpListener::TcpListener(int port, int backlog)
     int optval = 1;
     int err = setsockopt(reinterpret_cast<intptr_t>(m_socket.get()), SOL_SOCKET, SO_REUSEADDR, (char*)&optval, sizeof(optval));
     if (err != 0)
-        throw std::runtime_error(sparrow::vtformat("Failed to setsockopt(SOL_SOCKET, SO_REUSEADDR). Code %1.", sparrow::ToECode(errno)));
+        throw std::runtime_error(sparrow::format("Failed to setsockopt(SOL_SOCKET, SO_REUSEADDR). Code %1.", sparrow::ToECode(errno)));
 
     err = bind(reinterpret_cast<intptr_t>(m_socket.get()), (struct sockaddr*)&sockerAddr, sizeof(sockerAddr));
     if (err != 0)
-        throw std::runtime_error(sparrow::vtformat("Failed to bind socket. Code %1.", sparrow::ToECode(errno)));
+        throw std::runtime_error(sparrow::format("Failed to bind socket. Code %1.", sparrow::ToECode(errno)));
     err = listen(reinterpret_cast<intptr_t>(m_socket.get()), backlog);
     if (err < 0)
-        throw std::runtime_error(sparrow::vtformat("Failed to setsockopt(SOL_SOCKET, SO_REUSEADDR). Code %1.", sparrow::ToECode(errno)));
+        throw std::runtime_error(sparrow::format("Failed to setsockopt(SOL_SOCKET, SO_REUSEADDR). Code %1.", sparrow::ToECode(errno)));
 }
 
 } // namespace sparrow
