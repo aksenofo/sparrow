@@ -10,6 +10,8 @@ include_directories(${LIBEV}/include)
 
 add_executable(ftest
     main.cpp
+    client.cpp
+    auxillary/tcp.cpp
 )
 
 

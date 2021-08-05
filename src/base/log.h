@@ -95,13 +95,7 @@ private:
     std::string GetFilename(const char* argv0);
 
     //! Print exectry to ...
-    virtual void PrintSave(const std::stringstream& ss)
-    {
-        if (m_printTimestamp)
-            std::cout << ToIso8601(std::chrono::system_clock::now()) << ">> " << m_prefixText << ss.str() << std::endl;
-        else
-            std::cout << m_prefixText << ss.str() << std::endl;
-    }
+    virtual void PrintSave(const std::stringstream& ss);
 
     std::mutex m_mutex;                  //! Garding mutex
     std::atomic<log_level_t> m_logLevel; // = static_cast<log_level_t>(LogLevel::Nolog); //! log level of application

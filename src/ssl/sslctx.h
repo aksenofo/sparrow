@@ -34,4 +34,4 @@ private:
     std::unique_ptr<void, std::function<void(void*)>> m_ctx;
 };
 
-} // namespace mchs
+} // namespace sparrow

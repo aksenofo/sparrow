@@ -11,7 +11,7 @@
 namespace sparrow
 {
 
-inline std::string ToIso8601(std::chrono::time_point<std::chrono::system_clock> t)
+std::string ToIso8601(const std::chrono::time_point<std::chrono::system_clock>& t)
 {
     auto epoch_seconds = std::chrono::system_clock::to_time_t(t);
     std::stringstream sstream;

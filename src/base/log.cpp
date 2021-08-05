@@ -65,5 +65,12 @@ std::string LoggerFactory::GetFilename(const char* argv0)
         pathname.end());
 }
 
+    void LoggerFactory::PrintSave(const std::stringstream& ss)
+    {
+        if (m_printTimestamp)
+            std::cout << sparrow::ToIso8601(std::chrono::system_clock::now()) << ">> " << m_prefixText << ss.str() << std::endl;
+        else
+            std::cout << m_prefixText << ss.str() << std::endl;
+    }
 
 } // namespace sparrow
