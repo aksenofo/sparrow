@@ -6,10 +6,12 @@
 
 #include "log.h"
 
-namespace mchs {
+namespace mchs
+{
 
-const char* Logger::LogLevelStr(const LogLevel& logLevel) {
-    switch(logLevel) {
+const char* Logger::LogLevelStr(const LogLevel& logLevel)
+{
+    switch (logLevel) {
     case LogLevel::Nolog: return "NOLOG";
     case LogLevel::Trace: return "TRACE";
     case LogLevel::Debug: return "DEBUG";
@@ -22,7 +24,8 @@ const char* Logger::LogLevelStr(const LogLevel& logLevel) {
     }
 }
 
-Logger WrapLogger(const LogLevel& level, const char* funcname) {
+Logger WrapLogger(const LogLevel& level, const char* funcname)
+{
     if (level == LogLevel::Trace || level == LogLevel::Debug)
         return Logger(level, funcname);
     else
@@ -30,35 +33,37 @@ Logger WrapLogger(const LogLevel& level, const char* funcname) {
 }
 
 
-Logger::Logger(const LogLevel& level, const char* funcName) {
+Logger::Logger(const LogLevel& level, const char* funcName)
+{
     m_mutex = std::make_unique<std::mutex>();
     m_stringstream = std::make_unique<std::stringstream>();
 
     std::lock_guard<std::mutex> guard(*m_mutex);
     *m_stringstream << LogLevelStr(level) << ":";
-    if(funcName)
+    if (funcName)
         *m_stringstream << funcName << ": ";
     else
         *m_stringstream << " ";
 }
 
-std::string LoggerFactory::GetFilename(const char* argv0) {
-   std::string pathname(argv0);
+std::string LoggerFactory::GetFilename(const char* argv0)
+{
+    std::string pathname(argv0);
 
-   struct MatchPathSeparator {
-       bool operator()( char ch ) const {
-           return ch == '\\' || ch == '/';
-       }
-   };
-
-
-   return std::string( 
-       std::find_if( pathname.rbegin(), pathname.rend(),
-                     MatchPathSeparator() ).base(),
-       pathname.end() );
+    struct MatchPathSeparator {
+        bool operator()(char ch) const
+        {
+            return ch == '\\' || ch == '/';
+        }
+    };
 
 
+    return std::string(
+        std::find_if(pathname.rbegin(), pathname.rend(),
+            MatchPathSeparator())
+            .base(),
+        pathname.end());
 }
 
 
-}//namespace mchs {
+} // namespace mchs

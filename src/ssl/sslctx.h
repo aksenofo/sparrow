@@ -8,16 +8,18 @@
 
 #include <utils.h>
 
-namespace mchs {
+namespace mchs
+{
 
-class SslContext {
+class SslContext
+{
 public:
     SslContext();
 
     NOCOPIBLE(SslContext)
 
     void Load(const std::string& certfile, const std::string& keyfile);
-    
+
     static void Deleter(void* p);
 
     std::string GetLastErrorText();
@@ -30,7 +32,6 @@ private:
 
 private:
     std::unique_ptr<void, std::function<void(void*)>> m_ctx;
+};
 
-}; 
-
-}//namespace mchs {
+} // namespace mchs
