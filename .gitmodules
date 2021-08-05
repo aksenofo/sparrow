@@ -4,3 +4,6 @@
 [submodule "3th/libev"]
 	path = 3th/libev
 	url = https://github.com/enki/libev.git
+[submodule "3th/openssl"]
+	path = 3th/openssl
+	url = git://git.openssl.org/openssl.git
