@@ -19,13 +19,13 @@ set(testbase_source
     testbase/circbuffer102.cpp
 )
 
-add_executable(test
+add_executable(utest
     main.cpp
     ${testbase_source}
 )
 
 
-target_link_libraries(test
+target_link_libraries(utest
     ${GOOGLETEST_LIB}
     base
     pthread

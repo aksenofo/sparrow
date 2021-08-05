@@ -32,7 +32,7 @@ SET(GOOGLETEST_LIB ${GOOGLETEST}/lib/libgtest_main${namepostfix}.a ${GOOGLETEST}
 
 
 SET(LIBEV ${PROJECT_SOURCE_DIR}/3th/libev-release)
-
+SET(LIBEV_LIB ${LIBEV}/lib/libev.a)
 
 SET(OPENSSL ${PROJECT_SOURCE_DIR}/3th/openssl-${dirpostfix})
 
