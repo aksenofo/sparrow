@@ -2,7 +2,7 @@
 include_directories(.)
 
 
-add_library(sparrow-base
+add_library(base
     format.cpp
     circlebuffer.cpp
     utils.cpp
