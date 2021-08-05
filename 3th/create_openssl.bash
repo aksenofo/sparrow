@@ -1,5 +1,9 @@
 #!/bin/bash
 
+#       Author: Alexander Ksenofontov
+#       License: MIT
+#       All right reserved
+
 OPENSSL=openssl
 
 # Add perl template

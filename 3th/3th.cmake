@@ -1,4 +1,7 @@
-
+#       Author: Alexander Ksenofontov
+#       License: MIT
+#       All right reserved
+ 
 
 if(${CMAKE_BUILD_TYPE} STREQUAL "Debug")
 

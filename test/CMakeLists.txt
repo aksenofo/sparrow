@@ -1,4 +1,8 @@
 
+#       Author: Alexander Ksenofontov
+#       License: MIT
+#       All right reserved
+
 include_directories(${ROOT_PROJECT}/base)
 include_directories(${GOOGLETEST}/include)
 

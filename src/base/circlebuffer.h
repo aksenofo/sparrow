@@ -1,3 +1,9 @@
+/*
+ *      Author: Alexander Ksenofontov
+ *      License: MIT
+ *      All right reserved
+ */
+
 #include <cstdint>
 #include <iostream>
 #include <assert.h>

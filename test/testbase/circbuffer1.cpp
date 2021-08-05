@@ -1,3 +1,9 @@
+/*
+ *      Author: Alexander Ksenofontov
+ *      License: MIT
+ *      All right reserved
+ */
+
 
 #include "circlebuffer.h"
 #include "gtest/gtest.h"

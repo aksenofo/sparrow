@@ -1,5 +1,9 @@
 #!/bin/bash
 
+#       Author: Alexander Ksenofontov
+#       License: MIT
+#       All right reserved
+ 
 rm -rf libev-build
 
 mkdir libev-build

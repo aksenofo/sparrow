@@ -1,5 +1,9 @@
 #!/bin/bash
 
+#       Author: Alexander Ksenofontov
+#       License: MIT
+#       All right reserved
+ 
 rm -rf googletest-build
 
 mkdir -p googletest-build

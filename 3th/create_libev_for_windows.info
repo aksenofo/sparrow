@@ -1,4 +1,8 @@
 
+       Author: Alexander Ksenofontov
+       License: MIT
+       All right reserved
+ 
 1. make dir libev-win-build 
 2. cd libev-win-build 
 3. cmake ../libev-win 
