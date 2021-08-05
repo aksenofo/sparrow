@@ -1,0 +1,16 @@
+
+1. make dir libev-win-build 
+2. cd libev-win-build 
+3. cmake ../libev-win 
+4. open msvc and build release and debug
+5. mkdir libev-win-install/x86
+6. coping libev-win-build/Debug ../libev-win-install/x86 
+7. coping libev-win-build/Release ../libev-win-install/x86 
+
+1. make dir libev-win-build
+2. cd libev-win-build 
+3. cmake -G "Visual Studio 15 2017 Win64" ../libev-win 
+4. open msvc and build release and debug
+5. mkdir libev-win-install/x64
+6. coping libev-win-build/Debug ../libev-win-install/x86 
+7. coping libev-win-build/Release ../libev-win-install/x86 
