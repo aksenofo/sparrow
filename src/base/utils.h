@@ -158,13 +158,5 @@ static inline std::string trim_copy(std::string s) {
     return s;
 }
 
-std::string Cwd();
-
-std::vector<std::string> StringToVector(const std::string& str, const std::string& delim = " ");
-
-bool IsEqual(const std::string& s1, const std::string& s2);
-
-float ToFloat(const std::string& str);
-double ToDouble(const std::string& str);
 
 } // namespace mchs

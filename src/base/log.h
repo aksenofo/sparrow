@@ -42,9 +42,10 @@ enum class LogLevel : log_level_t {
 
 class LoggerFactory {
 public:
-    LoggerFactory(){}
-    
-    
+    LoggerFactory(){
+        m_logLevel = static_cast<log_level_t>(LogLevel::Nolog);
+    }
+        
     template<typename Args>
     void SetLevel(Args lt) {
         m_logLevel |= static_cast<log_level_t>(lt);
@@ -55,6 +56,7 @@ public:
         SetLevel(first);
         SetLevel(args...);
     }
+
     //! Verify if log level has been set 
     bool IsLevel(const LogLevel& level) const {
         return (m_logLevel & static_cast<log_level_t>(level)) == static_cast<log_level_t>(level);
@@ -89,7 +91,7 @@ private:
     }
 
     std::mutex m_mutex; //! Garding mutex 
-    std::atomic<log_level_t> m_logLevel = static_cast<log_level_t>(LogLevel::Nolog); //! log level of application
+    std::atomic<log_level_t> m_logLevel;// = static_cast<log_level_t>(LogLevel::Nolog); //! log level of application
 
     bool m_printTimestamp = false;
 
@@ -109,43 +111,45 @@ class Logger {
 
 public:
 
+    MOVEBLE_DEFAULT(Logger);
+
     Logger(const LogLevel& level, const char* funcName = nullptr);
 
     template<typename Type>
     Logger& operator << (const Type& val){
-        std::lock_guard<std::mutex> guard(m_mutex);
-        m_stringstream << val;
+        std::lock_guard<std::mutex> guard(*m_mutex);
+        *m_stringstream << val;
         return *this;
     }
 
     Logger& operator << (const std::string& val) {
-        std::lock_guard<std::mutex> guard(m_mutex);
-        m_stringstream << val;
+        std::lock_guard<std::mutex> guard(*m_mutex);
+        *m_stringstream << val;
         return *this;
     }
 
     Logger& operator << (const char* val) {
-        std::lock_guard<std::mutex> guard(m_mutex);
-        m_stringstream << val;
+        std::lock_guard<std::mutex> guard(*m_mutex);
+        *m_stringstream << val;
         return *this;
     }
 
     Logger& operator << (std::ios_base& (*val)(std::ios_base&)) {
-        std::lock_guard<std::mutex> guard(m_mutex);
-        m_stringstream << val;
+        std::lock_guard<std::mutex> guard(*m_mutex);
+        *m_stringstream << val;
         return *this;
     }
 
     virtual ~Logger() {
         auto& logger = Singletone<LoggerFactory>::Instance();
-        std::lock_guard<std::mutex> guard(m_mutex);
-        logger.Print(m_stringstream);
+        std::lock_guard<std::mutex> guard(*m_mutex);
+        logger.Print(*m_stringstream);
     }
 
 private:
 
-    std::mutex m_mutex;
-    std::stringstream m_stringstream;   
+    std::unique_ptr<std::mutex> m_mutex;
+    std::unique_ptr<std::stringstream> m_stringstream;   
 };
 
 Logger WrapLogger(const LogLevel& level, const char* funcname);

@@ -25,18 +25,19 @@ Logger WrapLogger(const LogLevel& level, const char* funcname) {
 
 
 Logger::Logger(const LogLevel& level, const char* funcName) {
-    std::lock_guard<std::mutex> guard(m_mutex);
-    m_stringstream << LogLevelStr(level) << ":";
+    m_mutex = std::make_unique<std::mutex>();
+    m_stringstream = std::make_unique<std::stringstream>();
+
+    std::lock_guard<std::mutex> guard(*m_mutex);
+    *m_stringstream << LogLevelStr(level) << ":";
     if(funcName)
-        m_stringstream << funcName << ": ";
+        *m_stringstream << funcName << ": ";
     else
-        m_stringstream << " ";
+        *m_stringstream << " ";
 }
 
 std::string LoggerFactory::GetFilename(const char* argv0) {
    std::string pathname(argv0);
-
-
 
    struct MatchPathSeparator {
        bool operator()( char ch ) const {

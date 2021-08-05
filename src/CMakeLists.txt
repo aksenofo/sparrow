@@ -1,9 +1,4 @@
 
-include_directories(.)
+add_subdirectory(base)
+add_subdirectory(ssl)
 
-
-add_library(sparrow
-    circlebuffer.cpp
-    utils.cpp
-    log.cpp
-)
