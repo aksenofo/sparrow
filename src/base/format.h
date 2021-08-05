@@ -31,11 +31,11 @@ inline std::string to_string_help(const BoolAsString& bas)
     return bas.m_flag ? "True" : "False";
 }
 
-class CodeAsString
+class CodeTextAsString
 {
 
 public:
-    CodeAsString(int code, const std::function<const char*(int)>& fn)
+    CodeTextAsString(int code, const std::function<const char*(int)>& fn)
     {
         m_code = code;
         m_text = fn(code);
@@ -44,16 +44,16 @@ public:
     int m_code = 0;
     std::string m_text;
 };
-inline std::string to_string_help(const CodeAsString& ctas)
+inline std::string to_string_help(const CodeTextAsString& ctas)
 {
     return std::to_string(ctas.m_code) + " " + ctas.m_text;
 }
 
-class CodeAsString1
+class CodeTextAsString1
 {
 
 public:
-    CodeAsString1(int code, const std::function<std::string(int)>& fn)
+    CodeTextAsString1(int code, const std::function<std::string(int)>& fn)
     {
         m_code = code;
         m_text = fn(code);
@@ -63,7 +63,7 @@ public:
     std::string m_text;
 };
 
-inline std::string to_string_help(const CodeAsString1& ctas)
+inline std::string to_string_help(const CodeTextAsString1& ctas)
 {
     return std::to_string(ctas.m_code) + " " + ctas.m_text;
 }
@@ -71,8 +71,8 @@ inline std::string to_string_help(const CodeAsString1& ctas)
 std::string format_impl(const std::string& fmt, const std::vector<std::string>& strs);
 
 using Bas = BoolAsString;
-using Ctas = CodeAsString;
-using Ctas1 = CodeAsString1;
+using Ctas = CodeTextAsString;
+using Ctas1 = CodeTextAsString1;
 
 inline std::string to_string_help(const std::error_code& ec)
 {
