@@ -9,8 +9,8 @@
 
 static uint32_t size = 1000;
 
-void Erase1(mchs::CircularBuffer& buf) {
-    buf = mchs::CircularBuffer(size);
+void Erase1(sparrow::CircularBuffer& buf) {
+    buf = sparrow::CircularBuffer(size);
 
     uint8_t buffer[size/100];
     memset(buffer, 0, sizeof(buffer));
@@ -21,14 +21,14 @@ void Erase1(mchs::CircularBuffer& buf) {
     }
 }
 
-void Pop(mchs::CircularBuffer& buf, uint32_t size) {
+void Pop(sparrow::CircularBuffer& buf, uint32_t size) {
     while(size--) {
         buf.Pop();
     }
 }
 
-void Erase2(mchs::CircularBuffer& buf) {
-    buf = mchs::CircularBuffer(size);
+void Erase2(sparrow::CircularBuffer& buf) {
+    buf = sparrow::CircularBuffer(size);
         
     uint8_t buffer[size/100];
     memset(buffer, 0, sizeof(buffer));
@@ -46,7 +46,7 @@ void Erase2(mchs::CircularBuffer& buf) {
 
 TEST(circular_buffer, latecomer01)
 {
-    mchs::CircularBuffer buf(size);
+    sparrow::CircularBuffer buf(size);
     Erase1(buf);
 
     uint8_t buffer[size/100];
@@ -72,7 +72,7 @@ TEST(circular_buffer, latecomer01)
 
 TEST(circular_buffer, latecomer02)
 {
-    mchs::CircularBuffer buf(size);
+    sparrow::CircularBuffer buf(size);
     Erase2(buf);
 
     uint8_t buffer[size/100];

@@ -18,7 +18,7 @@ TEST(circular_buffer, test20)
 		v = counter++;
 	}); 
 
-	mchs::CircularBuffer cbuf(bufSize / 11);
+	sparrow::CircularBuffer cbuf(bufSize / 11);
 
 	size_t inside = 0;
 	size_t step = bufSize / 11 / 7;

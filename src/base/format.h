@@ -12,7 +12,7 @@
 #include <type_traits>
 #include <vector>
 
-namespace mchs
+namespace sparrow
 {
 
 class BoolAsString
@@ -116,4 +116,4 @@ inline std::string vtformat(const std::string& fmt, Arg&& arg, Args&&... args)
     return vtformat_impl(fmt, strs, std::forward<Arg>(arg), std::forward<Args>(args)...);
 }
 
-} //namespace mchs
+} //namespace sparrow

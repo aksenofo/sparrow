@@ -8,7 +8,7 @@
 #include <memory>
 #include <mutex>
 
-namespace mchs
+namespace sparrow
 {
 
 
@@ -49,4 +49,4 @@ inline void Singletone<Type>::Create()
     m_instance = std::make_unique<Type>();
 }
 
-} // namespace mchs
+} // namespace sparrow

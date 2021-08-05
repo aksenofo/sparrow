@@ -6,7 +6,7 @@
 
 #include "format.h"
          
-namespace mchs {
+namespace sparrow {
 
 std::string vtformat_impl(const std::string& fmt, const std::vector<std::string>& strs)
 {
@@ -47,4 +47,4 @@ std::string vtformat_impl(const std::string& fmt, const std::vector<std::string>
     return res;
 }
 
-} //namespace mchs {
+} //namespace sparrow {

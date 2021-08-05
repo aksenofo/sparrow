@@ -6,7 +6,7 @@
 
 #include "log.h"
 
-namespace mchs
+namespace sparrow
 {
 
 const char* Logger::LogLevelStr(const LogLevel& logLevel)
@@ -66,4 +66,4 @@ std::string LoggerFactory::GetFilename(const char* argv0)
 }
 
 
-} // namespace mchs
+} // namespace sparrow

@@ -28,7 +28,7 @@
     clazz(clazz&&) noexcept = default; \
     clazz& operator=(clazz&&) noexcept = default;
 
-namespace mchs
+namespace sparrow
 {
 
 std::string ToIso8601(const std::chrono::time_point<std::chrono::system_clock>& t);
@@ -171,4 +171,4 @@ static inline std::string trim_copy(std::string s)
     return s;
 }
 
-} // namespace mchs
+} // namespace sparrow

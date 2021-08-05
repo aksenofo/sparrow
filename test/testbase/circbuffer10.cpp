@@ -9,7 +9,7 @@
 
 TEST(circular_buffer, test10)
 {
-	mchs::CircularBuffer buf(5);
+	sparrow::CircularBuffer buf(5);
 	ASSERT_EQ(buf.Push("ABCD", 4), 4);
 	ASSERT_EQ(memcmp(buf.Ptr(), "ABC", 3), 0);
 	buf.Consume(2);

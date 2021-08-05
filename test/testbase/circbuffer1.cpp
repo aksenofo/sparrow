@@ -10,7 +10,7 @@
 
 TEST(circular_buffer, test1)
 {
-	mchs::CircularBuffer buf(3);
+	sparrow::CircularBuffer buf(3);
 
 	ASSERT_EQ(buf.Push("A", 1), 1);
 	ASSERT_EQ(buf.Push("B", 1), 1);
@@ -28,7 +28,7 @@ TEST(circular_buffer, test1)
 	ASSERT_EQ(memcmp(pl, "NXC", 3), 0);
 	ASSERT_EQ(buf.Pop(), 'C');
 
-	mchs::CircularBuffer buf6(6);
+	sparrow::CircularBuffer buf6(6);
 	auto pl6 = buf6.Payload();
 	ASSERT_EQ(buf6.Push("Aa", 2), 2);
 	ASSERT_EQ(buf6.Push("Bb", 2), 2);
@@ -42,7 +42,7 @@ TEST(circular_buffer, test1)
 
         ASSERT_EQ(buf.Blocks(), 1);
 
-	mchs::CircularBuffer buf6_1(6);
+	sparrow::CircularBuffer buf6_1(6);
 	auto pl6_1 = buf6_1.Payload();
 	ASSERT_EQ(buf6_1.Push("Aa", 2), 2);
 	ASSERT_EQ(buf6_1.Push("Bb", 2), 2);
@@ -50,7 +50,7 @@ TEST(circular_buffer, test1)
 	ASSERT_EQ(buf6_1.Push("Ccx", 3), 3);
 	ASSERT_EQ(memcmp(buf6_1.Payload(), "xaBbCc", 6), 0);
 
-	mchs::CircularBuffer buf6_2(6);
+	sparrow::CircularBuffer buf6_2(6);
 	auto pl6_2 = buf6_2.Payload();
 	ASSERT_EQ(buf6_2.Push("Aa", 2), 2);
 	ASSERT_EQ(buf6_2.Push("Bb", 2), 2);

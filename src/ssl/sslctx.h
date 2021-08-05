@@ -8,7 +8,7 @@
 
 #include <utils.h>
 
-namespace mchs
+namespace sparrow
 {
 
 class SslContext

@@ -6,7 +6,7 @@
 
 #include "circlebuffer.h"
 
-namespace mchs
+namespace sparrow
 {
 
 CircularBuffer::CircularBuffer(uint32_t size)
@@ -197,4 +197,4 @@ uint32_t CircularBuffer::Blocks() const noexcept
 }
 
 
-} // namespace mchs
+} // namespace sparrow

@@ -15,7 +15,7 @@
 #include <string>
 #include <utils.h>
 
-namespace mchs
+namespace sparrow
 {
 
 using log_level_t = uint8_t;
@@ -173,9 +173,9 @@ Logger WrapLogger(const LogLevel& level, const char* funcname);
 
 
 #define LOG(TYPE) \
-    if (mchs::Singletone<mchs::LoggerFactory>::Instance().IsLevel(mchs::LogLevel::TYPE)) \
-    WrapLogger(mchs::LogLevel::TYPE, __FUNCTION__)
+    if (sparrow::Singletone<sparrow::LoggerFactory>::Instance().IsLevel(sparrow::LogLevel::TYPE)) \
+    WrapLogger(sparrow::LogLevel::TYPE, __FUNCTION__)
 
 
 
-} // namespace mchs
+} // namespace sparrow

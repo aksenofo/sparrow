@@ -7,8 +7,8 @@
 #include "circlebuffer.h"
 #include "gtest/gtest.h"
 
-static void fill4(mchs::CircularBuffer& buf) {
-    buf = mchs::CircularBuffer(buf.Size());
+static void fill4(sparrow::CircularBuffer& buf) {
+    buf = sparrow::CircularBuffer(buf.Size());
     buf.Push("A", 1);
     buf.Push("B", 1);
     buf.Push("C", 1);
@@ -18,8 +18,8 @@ static void fill4(mchs::CircularBuffer& buf) {
     buf.Push("F", 1);
 }            
 
-static void fill3(mchs::CircularBuffer& buf) {
-    buf = mchs::CircularBuffer(buf.Size());
+static void fill3(sparrow::CircularBuffer& buf) {
+    buf = sparrow::CircularBuffer(buf.Size());
     buf.Push("A", 1);
     buf.Push("B", 1);
     buf.Push("C", 1);
@@ -30,7 +30,7 @@ static void fill3(mchs::CircularBuffer& buf) {
 
 TEST(circular_buffer, latecomer_simple_2)
 {
-        mchs::CircularBuffer buf(4);
+        sparrow::CircularBuffer buf(4);
         fill4(buf);
         uint8_t ptr[10];
         uint32_t rc;
@@ -128,7 +128,7 @@ TEST(circular_buffer, latecomer_simple_2)
 
 TEST(circular_buffer, latecomer_simple_1)
 {
-        mchs::CircularBuffer buf(4);
+        sparrow::CircularBuffer buf(4);
         fill3(buf);
         uint8_t ptr[10];
         uint32_t rc;
@@ -225,7 +225,7 @@ TEST(circular_buffer, latecomer_simple_1)
 
 TEST(circular_buffer, latecomer_sinple)
 {
-	mchs::CircularBuffer buf(4);
+	sparrow::CircularBuffer buf(4);
         ASSERT_TRUE(buf.Head() == buf.Tail() && buf.IsEmpty());
 
 	ASSERT_EQ(buf.Push("A", 1), 1);
@@ -292,7 +292,7 @@ TEST(circular_buffer, latecomer_sinple)
 
 TEST(circular_buffer, latecomer_simple_error_params)
 {
-        mchs::CircularBuffer buf(4);
+        sparrow::CircularBuffer buf(4);
         ASSERT_EQ(buf.Push("A", 1), 1);
         ASSERT_EQ(buf.Push("B", 1), 1);
         ASSERT_EQ(buf.Push("C", 1), 1);

@@ -11,7 +11,7 @@ const uint32_t size = 1000;
 
 TEST(circular_buffer, latecomer001)
 {
-    mchs::CircularBuffer buf(size + 1);
+    sparrow::CircularBuffer buf(size + 1);
 
     uint8_t buffer[size];
 

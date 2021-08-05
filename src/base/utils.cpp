@@ -8,7 +8,7 @@
 #include <sstream>
 #include <utils.h>
 
-namespace mchs
+namespace sparrow
 {
 
 inline std::string ToIso8601(std::chrono::time_point<std::chrono::system_clock> t)
@@ -22,4 +22,4 @@ inline std::string ToIso8601(std::chrono::time_point<std::chrono::system_clock> 
     return sstream.str();
 }
 
-} // namespace mchs
+} // namespace sparrow

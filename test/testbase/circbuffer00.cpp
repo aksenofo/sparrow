@@ -9,7 +9,7 @@
 
 TEST(circular_buffer, test00)
 {
-    mchs::CircularBuffer buf(3);
+    sparrow::CircularBuffer buf(3);
 	ASSERT_EQ(buf.Head(), buf.Buffer());
 	ASSERT_EQ(buf.Push("A", 1), 1);
 	ASSERT_EQ(buf.Head() - buf.Buffer(), 1);

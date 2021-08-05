@@ -12,7 +12,7 @@
 #include <memory>
 #include <utils.h>
 
-namespace mchs {
+namespace sparrow {
 
 class CircularBuffer {
     enum State {
@@ -78,4 +78,4 @@ private:
     State m_state;
 };
 
-} //namespace mchs {
+} //namespace sparrow {
