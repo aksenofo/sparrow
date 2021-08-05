@@ -34,7 +34,7 @@ enum class LogLevel : log_level_t {
     Warning = 0x08,
     Error = 0x10,
     Panic = 0x20,
-    Always = 0x40,
+    Always = 0x40
 
 };
 
@@ -98,8 +98,8 @@ private:
     virtual void PrintSave(const std::stringstream& ss);
 
     std::mutex m_mutex;                  //! Garding mutex
-    std::atomic<log_level_t> m_logLevel; // = static_cast<log_level_t>(LogLevel::Nolog); //! log level of application
-
+    std::atomic<log_level_t> m_logLevel;
+    
     bool m_printTimestamp = false;
 
     std::string m_prefixText;

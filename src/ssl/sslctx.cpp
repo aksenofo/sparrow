@@ -5,6 +5,7 @@
  */
 
 #include "sslctx.h"
+#include "sslinternal.h"
 
 #include <format.h>
 #include <log.h>
@@ -16,22 +17,7 @@
 namespace sparrow
 {
 
-static SSL_CTX* ToSslContext(void* ptr)
-{
-    return static_cast<SSL_CTX*>(ptr);
-}
-
-std::string SslContext::GetLastErrorText()
-{
-    char buf[1024];
-    std::string ret;
-    for (unsigned long code = ERR_get_error(); code; code = ERR_get_error()) {
-        ERR_error_string_n(code, buf, sizeof(buf));
-        ret += std::string("\n") + buf;
-    }
-    return ret;
-}
-
+using namespace internal;
 void SslContext::Deleter(void* p)
 {
     SSL_CTX_free(ToSslContext(p));

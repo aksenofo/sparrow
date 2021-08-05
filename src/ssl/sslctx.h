@@ -6,12 +6,13 @@
 
 #pragma once
 
+#include <sslbase.h>
 #include <utils.h>
 
 namespace sparrow
 {
 
-class SslContext
+class SslContext : public SslBase
 {
 public:
     SslContext();
@@ -21,8 +22,6 @@ public:
     void Load(const std::string& certfile, const std::string& keyfile);
 
     static void Deleter(void* p);
-
-    std::string GetLastErrorText();
 
     const void* Ctx() const { return m_ctx.get(); }
     void* Ctx() { return m_ctx.get(); }

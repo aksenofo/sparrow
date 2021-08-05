@@ -7,6 +7,7 @@
 #pragma once
 
 #include <string>
+#include <utils.h>
 
 namespace sparrow
 {
@@ -17,6 +18,7 @@ class SslBase
 public:
 
     static std::string GetLastErrorText();
+    virtual ~SslBase() = default;
 
 };
 

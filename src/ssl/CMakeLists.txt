@@ -6,5 +6,6 @@ include_directories(.)
 include_directories(${ROOT_PROJECT}/base)
 
 add_library(sparrow-ssl
+    sslbase.cpp
     sslctx.cpp
 )
