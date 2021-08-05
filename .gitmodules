@@ -1,3 +1,6 @@
 [submodule "3th/googletest"]
 	path = 3th/googletest
 	url = https://github.com/google/googletest.git
+[submodule "3th/libev"]
+	path = 3th/libev
+	url = https://github.com/enki/libev.git
