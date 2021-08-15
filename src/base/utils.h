@@ -14,8 +14,6 @@
 #include <system_error>
 #include <thread>
 
-#define CONSTRUCT_DEFAULT(clazz) clazz() = default;
-
 #define COPYBLE_DEFAULT(clazz) \
     clazz(const clazz&) = default; \
     clazz& operator=(const clazz&) = default;
@@ -41,7 +39,7 @@ class ScopeDeleter
 public:
     NOCOPIBLE(ScopeDeleter);
     MOVEBLE_DEFAULT(ScopeDeleter);
-    CONSTRUCT_DEFAULT(ScopeDeleter)
+    ScopeDeleter() = default;
 
     ScopeDeleter(std::function<void()> fn)
     : m_fn(fn)
