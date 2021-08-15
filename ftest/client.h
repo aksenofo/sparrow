@@ -16,10 +16,9 @@ public:
     NOCOPIBLE(SslClient);
 
 private:
-    void OnCallback(ev::io& watcher, int revents) noexcept;
+    void OnCallback(ev::io& watcher, int revents);
 
     ev::io m_io;
     std::unique_ptr<TcpSocket> m_tcp;
     std::unique_ptr<sparrow::SslClient> m_sslClient;
-
 };

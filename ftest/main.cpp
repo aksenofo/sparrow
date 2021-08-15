@@ -32,8 +32,8 @@ int main(int argc, char* argv[])
     sigaction(SIGPIPE, &act, 0);
 
     ev::default_loop loop;
-    SslClient sslClient;
     SslServer sslServer;
+    SslClient sslClient;
 
     loop.run(0);
 }

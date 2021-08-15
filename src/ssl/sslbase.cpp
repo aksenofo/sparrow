@@ -9,6 +9,9 @@
 #include <openssl/ssl.h>
 #include <sslbase.h>
 #include <sslinternal.h>
+#include <log.h>
+#include <utils.h>
+#include <unistd.h>
 
 namespace sparrow
 {
@@ -49,6 +52,35 @@ SslBase::SslBase(SslContext& ctx, bool serverFlag)
     m_wbio = wbio.release();
 
     SSL_set_bio(ToSsl(m_ssl.get()), ToBio(m_rbio), ToBio(m_wbio));
+}
+
+void SslBase::SockSend(int sock, sparrow::CircularBuffer& cb) {
+/*
+    ssize_t n = write(sock, mb.RdPtr(), mb.Length());
+    if (n > 0) {
+        LOG(Trace) << format("Send %1 bytes", n);
+        mb.RdPtr(n);
+    } else if (n < 0) {
+        throw std::runtime_error(format("Cannot write to socket. %1", ToECode(errno)));
+    }
+*/
+}
+
+bool SslBase::SockRecv(int sock, sparrow::CircularBuffer& cb) {
+    assert(!cb.IsEmpty());
+/*    
+    ssize_t n = read(sock, mb.WrPtr(), mb.Space());
+
+    if (n > 0) {
+        LOG(Trace) << format("Recv %1 bytes", n);
+        mb.WrPtr(n);
+        return false;
+    } else if (n == 0) {
+        return true;
+    } else {
+        throw std::runtime_error(format("Cannot read from socket. %1", ToECode(errno)));
+    }
+*/
 }
 
 } // namespace sparrow
