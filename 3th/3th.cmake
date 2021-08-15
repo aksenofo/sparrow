@@ -36,3 +36,7 @@ SET(LIBEV_LIB ${LIBEV}/lib/libev.a)
 
 SET(OPENSSL ${PROJECT_SOURCE_DIR}/3th/openssl-${dirpostfix})
 
+SET(openssl_lib_path ${PROJECT_SOURCE_DIR}/3th/openssl-${dirpostfix}/lib64)
+
+SET(OPENSSL_LIB ${openssl_lib_path}/libssl.a ${openssl_lib_path}/libcrypto.a)
+ 

@@ -16,8 +16,6 @@
 #include <sys/un.h>
 #include <unistd.h>
 
-namespace sparrow
-{
 
 int TcpBase::SetNonblock(int fd)
 {
@@ -102,4 +100,3 @@ TcpListener::TcpListener(int port, int backlog)
         throw std::runtime_error(sparrow::format("Failed to setsockopt(SOL_SOCKET, SO_REUSEADDR). Code %1.", sparrow::ToECode(errno)));
 }
 
-} // namespace sparrow

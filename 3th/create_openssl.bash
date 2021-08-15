@@ -25,7 +25,7 @@ rm -rf openssl-build
 ####################################################################################
 mkdir openssl-build
 
-(cd openssl-build; ../$OPENSSL/config --debug no-shared --prefix=${PWD}/../openssl-debug)
+(cd openssl-build; ../$OPENSSL/config --debug --prefix=${PWD}/../openssl-debug)
 (cd openssl-build; make)
 (cd openssl-build; make install)
 

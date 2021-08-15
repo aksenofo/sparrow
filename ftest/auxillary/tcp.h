@@ -8,9 +8,6 @@
 
 #include <utils.h>
 
-namespace sparrow
-{
-
 class TcpBase
 {
 public:
@@ -57,4 +54,3 @@ public:
     TcpListener(int port, int backlog = 5);
 };
 
-} // namespace sparrow

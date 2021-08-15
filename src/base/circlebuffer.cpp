@@ -17,7 +17,7 @@ CircularBuffer::CircularBuffer(uint32_t size)
     m_state = m_size == 0 ? Full : Empty;
 }
 
-uint32_t CircularBuffer::WriteToTheEnd(const void* ptr, uint32_t size) noexcept
+uint32_t CircularBuffer::WriteEnd(const void* ptr, uint32_t size) noexcept
 {
 
     assert(m_tail <= m_head);
@@ -37,7 +37,7 @@ uint32_t CircularBuffer::WriteToTheEnd(const void* ptr, uint32_t size) noexcept
     return size;
 }
 
-uint32_t CircularBuffer::WriteToTheBegin(const void* ptr, uint32_t size) noexcept
+uint32_t CircularBuffer::WriteBegin(const void* ptr, uint32_t size) noexcept
 {
     assert(m_tail > m_head);
     const uint8_t* curPtr = reinterpret_cast<const uint8_t*>(ptr);
@@ -59,13 +59,13 @@ uint32_t CircularBuffer::Push(const void* ptr, uint32_t size) noexcept
     uint32_t sizeRest = size;
 
     if (m_tail <= m_head) {
-        sizeRest = WriteToTheEnd(ptr, size);
+        sizeRest = WriteEnd(ptr, size);
         curPtr += size - sizeRest;
         if (m_state == Full || sizeRest == 0)
             return size - sizeRest;
     }
 
-    sizeRest = WriteToTheBegin(curPtr, sizeRest);
+    sizeRest = WriteBegin(curPtr, sizeRest);
     return size - sizeRest;
 }
 

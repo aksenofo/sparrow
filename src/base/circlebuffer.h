@@ -66,9 +66,9 @@ public:
 
 private:
 	
-    uint32_t WriteToTheEnd(const void* ptr, uint32_t size) noexcept;
+    uint32_t WriteEnd(const void* ptr, uint32_t size) noexcept;
 
-    uint32_t WriteToTheBegin(const void* ptr, uint32_t size) noexcept;
+    uint32_t WriteBegin(const void* ptr, uint32_t size) noexcept;
 
     uint8_t* m_tail = nullptr;
     uint8_t* m_head = nullptr;
