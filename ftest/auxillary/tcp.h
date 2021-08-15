@@ -20,7 +20,7 @@ public:
     uint32_t Socket() const;
 
 protected:
-    int SetNonblock(int fd);
+    static int SetNonblock(int fd);
     static void SocketClose(void* ptr);
 
     std::unique_ptr<void, decltype(&TcpBase::SocketClose)> m_socket =
