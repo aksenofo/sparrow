@@ -4,10 +4,10 @@
  *      All right reserved
  */
 
+#include <format.h>
 #include <openssl/err.h>
 #include <openssl/ssl.h>
 #include <sslbase.h>
-#include <format.h>
 #include <sslinternal.h>
 
 namespace sparrow

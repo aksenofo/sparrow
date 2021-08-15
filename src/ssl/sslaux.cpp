@@ -5,6 +5,7 @@
  */
 
 #include "sslaux.h"
+
 #include <openssl/err.h>
 
 namespace sparrow

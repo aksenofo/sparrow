@@ -4,18 +4,14 @@
  *      All right reserved
  */
 
-#pragma once
-
-#include <string>
-#include <utils.h>
+#include "sslserver.h"
 
 namespace sparrow
 {
 
-class SslAux
+SslServer::SslServer(SslContext& context)
+: SslBase(context, true)
 {
-public:
-    static std::string GetLastErrorText();
-};
+}
 
 } //namespace sparrow

@@ -15,6 +15,7 @@
 
 SslInstance::SslInstance(int socket)
 {
+    m_sslServer = std::make_unique<sparrow::SslServer>(sparrow::Singletone<sparrow::SslContext>::Instance());
     m_tcp = std::make_unique<TcpSocket>(socket);
 
     m_io.set<SslInstance, &SslInstance::OnCallback>(this);

@@ -9,6 +9,7 @@
 #include <ev++.h>
 #include <memory>
 #include <utils.h>
+#include <sslserver.h>
 
 class SslInstance
 {
@@ -21,6 +22,7 @@ private:
 
     ev::io m_io;
     std::unique_ptr<TcpSocket> m_tcp;
+    std::unique_ptr<sparrow::SslServer> m_sslServer;
 
 };
 
