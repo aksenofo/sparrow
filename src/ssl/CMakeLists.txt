@@ -9,4 +9,6 @@ include_directories(${OPENSSL}/include)
 add_library(sparrow-ssl
     sslbase.cpp
     sslctx.cpp
+    sslclient.cpp
+    sslaux.cpp
 )

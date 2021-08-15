@@ -21,6 +21,7 @@ private:
 
     ev::io m_io;
     std::unique_ptr<TcpSocket> m_tcp;
+
 };
 
 

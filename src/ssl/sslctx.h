@@ -6,13 +6,13 @@
 
 #pragma once
 
-#include <sslbase.h>
+#include <sslaux.h>
 #include <utils.h>
 
 namespace sparrow
 {
 
-class SslContext : public SslBase
+class SslContext : public SslAux
 {
 public:
     SslContext();
