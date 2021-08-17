@@ -5,13 +5,13 @@
  */
 
 #include <format.h>
+#include <log.h>
 #include <openssl/err.h>
 #include <openssl/ssl.h>
 #include <sslbase.h>
 #include <sslinternal.h>
-#include <log.h>
-#include <utils.h>
 #include <unistd.h>
+#include <utils.h>
 
 namespace sparrow
 {
@@ -54,21 +54,25 @@ SslBase::SslBase(SslContext& ctx, bool serverFlag)
     SSL_set_bio(ToSsl(m_ssl.get()), ToBio(m_rbio), ToBio(m_wbio));
 }
 
-void SslBase::SockSend(int sock, sparrow::CircularBuffer& cb) {
-/*
-    ssize_t n = write(sock, mb.RdPtr(), mb.Length());
-    if (n > 0) {
-        LOG(Trace) << format("Send %1 bytes", n);
-        mb.RdPtr(n);
-    } else if (n < 0) {
-        throw std::runtime_error(format("Cannot write to socket. %1", ToECode(errno)));
-    }
-*/
+void SslBase::SockSend(int sock, sparrow::CircularBuffer& cb)
+{
+    bool loop;
+    do {
+        uint32_t sizeToConsume = cb.SizeToConsume();
+        ssize_t n = static_cast<ssize_t>(write(sock, cb.Ptr(), sizeToConsume));
+        if (n > 0) {
+            cb.Consume(n);
+        } else {
+            throw std::runtime_error(format("Cannot write to socket. %1", ToECode(errno)));
+        }
+        loop = n == sizeToConsume;
+    } while (loop);
 }
 
-bool SslBase::SockRecv(int sock, sparrow::CircularBuffer& cb) {
+bool SslBase::SockRecv(int sock, sparrow::CircularBuffer& cb)
+{
     assert(!cb.IsEmpty());
-/*    
+    /*    
     ssize_t n = read(sock, mb.WrPtr(), mb.Space());
 
     if (n > 0) {

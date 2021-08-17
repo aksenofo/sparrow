@@ -92,6 +92,41 @@ uint32_t CircularBuffer::SizeToConsume() noexcept
     return Eob() - m_tail;
 }
 
+uint32_t CircularBuffer::SizeToPopulate() noexcept
+{
+    if(IsFull())
+        return 0;
+
+    if (m_head >= m_tail)
+        return Eob() - m_head;
+    else
+        return m_head - m_tail;
+}
+
+void CircularBuffer::Populate(uint32_t size) noexcept {
+    if (size == 0)
+        return;
+    assert(m_state != Full);
+
+    if(m_tail <= m_head) {
+        assert(m_head + size <= Eob());
+        m_head += size;
+    }
+    else {
+        assert(m_head + size < m_tail);
+        m_head += size;
+    }
+    
+    if (m_head == Eob())
+        m_head = m_buffer.get();
+
+    if (m_tail == m_head)
+        m_state = Full;
+    else
+        m_state = Unknown;
+
+}
+
 void CircularBuffer::Consume(uint32_t size) noexcept
 {
     if (size == 0)

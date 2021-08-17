@@ -17,6 +17,7 @@ set(base_source
     base/circbuffer100.cpp
     base/circbuffer101.cpp
     base/circbuffer102.cpp
+    base/circbuffer1000.cpp
 )
 
 add_executable(utest

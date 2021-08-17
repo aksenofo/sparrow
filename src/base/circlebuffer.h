@@ -28,6 +28,10 @@ public:
 
     uint32_t Push(const void* ptr, uint32_t size) noexcept;
 
+    uint32_t Push(const char* ptr) noexcept {
+        return Push(ptr, strlen(ptr));
+    }
+
     uint8_t Pop();
 
     bool IsEmpty() const noexcept { return m_state == Empty; }
@@ -38,7 +42,11 @@ public:
 
     uint32_t SizeToConsume() noexcept;
 
+    uint32_t SizeToPopulate() noexcept;
+
     void Consume(uint32_t size) noexcept;
+    
+    void Populate(uint32_t size) noexcept;
 
     const uint8_t* Ptr() const noexcept { return m_tail; }
 
@@ -52,7 +60,11 @@ public:
 
     const uint8_t* Tail() const noexcept { return m_tail; } 
 
+    uint8_t* Tail() noexcept { return m_tail; } 
+
     const uint8_t* Head() const noexcept { return m_head; } 
+
+    uint8_t* Head() noexcept { return m_head; } 
 
     const uint8_t* Eob() const noexcept { return m_buffer.get() + m_size; } 
 
