@@ -54,11 +54,35 @@ public:
     */
     uint32_t Set(const char* ptr) noexcept { return Set(ptr, strlen(ptr)); }
 
-    //! Get single byte fron buffer and free one byte
+    //! Set data to the circular buffer with shifting reference to the begining of buffer
+    /*!
+      \param lateSize is shifting reference 
+      \param ptr point to the data buffer.
+      \return size of consumed data 
+    */
+    uint32_t SetLatecomer(uint32_t lateSize, const void* ptr, uint32_t size) noexcept;
+
+    //! Set data to the circular buffer with shifting reference to the begining of buffer
+    /*!
+      \param lateSize is shifting reference 
+      \param ptr point to the string buffer.
+      \return size of consumed data 
+    */
+    uint32_t SetLatecomer(uint32_t lateSize, const char* ptr) noexcept { return SetLatecomer(lateSize, ptr, strlen(ptr)); }
+
+    //! Get single byte from buffer and free one byte
     /*!
       \return single byte 
     */
     uint8_t Get();
+
+    //! Get bytes from buffer
+    /*!
+      \param ptr is pointer to the buffer
+      \param size of buffer 
+      \return actual number of bytes 
+    */
+    uint32_t Get(void* ptr, uint32_t size) noexcept;
 
     //! Return true if buffer is empty
     /*!
@@ -72,25 +96,49 @@ public:
     */
     bool IsFull() const noexcept { return m_state == Full; }
 
+    //! Return how many bytes can be consumed from continuous data block
+    /*!
+      \return size of contunuous data block 
+    */
     uint32_t ConsumeSize() noexcept;
 
-    uint32_t PopulateSize() noexcept;
-
+    //! Consume some data from continuous block
+    //! Att. if data block is less thab consume size than assert.
+    /*!
+      \param size of data block
+    */
     void Consume(uint32_t size) noexcept;
 
+    //! Return how many bytes can be populated to continuous data block
+    /*!
+      \return size of contunuous data block 
+    */
+    uint32_t PopulateSize() noexcept;
+
+
+    //! Populate some data from continuous block
+    //! Att. if data block is less thab populate size than assert.
+    /*!
+      \param size of data block
+    */
     void Populate(uint32_t size) noexcept;
 
+
+    //! Return const. pointer to the actulal buffer position
+    /*!
+      \return size of contunuous data block 
+    */
     const uint8_t* Ptr() const noexcept { return m_tail; }
 
+    //! Return pointer to the actulal buffer position
+    /*!
+      \return size of contunuous data block 
+    */
     uint8_t* Ptr() noexcept { return m_tail; }
 
     uint32_t AvailableSize() const noexcept { return m_size - FilledSize(); }
 
     uint32_t FilledSize() const noexcept;
-
-    uint32_t Pop(void* ptr, uint32_t size) noexcept;
-
-    uint32_t PushLatecomer(uint32_t lateSize, const uint8_t* ptr, uint32_t size) noexcept;
 
     //! Return size of reserved bytes.
     /*!
@@ -107,7 +155,7 @@ public:
     */
     uint32_t Blocks() const noexcept;
 
-    // Internal and auxillary methods  
+    // Internal and auxillary methods
     const uint8_t* Tail() const noexcept { return m_tail; }
 
     uint8_t* Tail() noexcept { return m_tail; }

@@ -63,10 +63,10 @@ TEST(circular_buffer, latecomer01)
             buffer[t] = (uint32_t)t;
         }
 
-        ASSERT_EQ(buf.PushLatecomer(ref, buffer, sizeof(buffer)), sizeof(buffer));
+        ASSERT_EQ(buf.SetLatecomer(ref, buffer, sizeof(buffer)), sizeof(buffer));
         Pop(buf, ref);
 
-        ASSERT_EQ(buf.Pop(getBuffer, sizeof(getBuffer)), sizeof(getBuffer));
+        ASSERT_EQ(buf.Get(getBuffer, sizeof(getBuffer)), sizeof(getBuffer));
         for (uint32_t t = 0; t < sizeof(buffer); t++) {
             ASSERT_EQ(getBuffer[t], buffer[t]);
         }
@@ -88,10 +88,10 @@ TEST(circular_buffer, latecomer02)
             buffer[t] = (uint32_t)t;
         }
 
-        ASSERT_EQ(buf.PushLatecomer(ref, buffer, sizeof(buffer)), sizeof(buffer));
+        ASSERT_EQ(buf.SetLatecomer(ref, buffer, sizeof(buffer)), sizeof(buffer));
         Pop(buf, ref);
 
-        ASSERT_EQ(buf.Pop(getBuffer, sizeof(getBuffer)), sizeof(getBuffer));
+        ASSERT_EQ(buf.Get(getBuffer, sizeof(getBuffer)), sizeof(getBuffer));
         for (uint32_t t = 0; t < sizeof(buffer); t++) {
             ASSERT_EQ(getBuffer[t], buffer[t]);
         }

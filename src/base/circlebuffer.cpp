@@ -156,7 +156,7 @@ uint32_t CircularBuffer::FilledSize() const noexcept
         return (Eob() - m_tail) + m_head - m_buffer.get();
 }
 
-uint32_t CircularBuffer::Pop(void* ptr, uint32_t size) noexcept
+uint32_t CircularBuffer::Get(void* ptr, uint32_t size) noexcept
 {
 
     uint32_t ts1 = std::min(ConsumeSize(), size);
@@ -174,8 +174,9 @@ uint32_t CircularBuffer::Pop(void* ptr, uint32_t size) noexcept
     return ts1 + ts2;
 }
 
-uint32_t CircularBuffer::PushLatecomer(uint32_t lateSize, const uint8_t* ptr, uint32_t size) noexcept
+uint32_t CircularBuffer::SetLatecomer(uint32_t lateSize, const void* ptr, uint32_t size) noexcept
 {
+    const uint8_t* point = static_cast<const uint8_t*>(ptr);
     if (IsEmpty() || size == 0) {
         return 0;
     } else if (m_head > m_tail) {
@@ -185,7 +186,7 @@ uint32_t CircularBuffer::PushLatecomer(uint32_t lateSize, const uint8_t* ptr, ui
             return 0;
         start = std::max(start, m_tail);
         if (start < m_buffer.get() + m_size) {
-            memcpy(start, ptr, stop - start);
+            memcpy(start, point, stop - start);
             return stop - start;
         }
         return 0;
@@ -199,8 +200,8 @@ uint32_t CircularBuffer::PushLatecomer(uint32_t lateSize, const uint8_t* ptr, ui
         else {
             uint8_t* start = m_tail + lateSize;
             uint8_t* stop = std::min(m_buffer.get() + m_size, start + size);
-            memcpy(start, ptr, stop - start);
-            ptr += stop - start;
+            memcpy(start, point, stop - start);
+            point += stop - start;
             consumed += stop - start;
             size -= stop - start;
             lateSize = 0;
@@ -212,7 +213,7 @@ uint32_t CircularBuffer::PushLatecomer(uint32_t lateSize, const uint8_t* ptr, ui
         else {
             uint8_t* start = m_buffer.get() + lateSize;
             uint8_t* stop = std::min(start + size, m_head);
-            memcpy(start, ptr, stop - start);
+            memcpy(start, point, stop - start);
             consumed += stop - start;
         }
         return consumed;
@@ -221,14 +222,13 @@ uint32_t CircularBuffer::PushLatecomer(uint32_t lateSize, const uint8_t* ptr, ui
 
 uint32_t CircularBuffer::Blocks() const noexcept
 {
-    if(m_state == Empty) {
+    if (m_state == Empty) {
         return 0;
     }
-    if(m_tail < m_head)
+    if (m_tail < m_head)
         return 1;
     else
-        return 2;    
-
+        return 2;
 }
 
 } // namespace sparrow
