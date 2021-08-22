@@ -15,27 +15,61 @@
 namespace sparrow
 {
 
+/*! \brief Circular buffer.
+ *
+ *  Circular buffer is used to hold temporary date.
+ */
 class CircularBuffer
 {
     enum State {
-        Unknown,
-        Full,
-        Empty
+        Unknown, /**< buffer is neither Full nor empty */
+        Full,    /**< buffer is full */
+        Empty    /**< buffer is empty */
     };
 
 public:
+    //! Constructor
+    /*!
+      \param size is the size of buffer.
+    */
     CircularBuffer(uint32_t size);
 
+    //! Makes class moveable(and noncopyable)
     MOVEBLE_DEFAULT(CircularBuffer);
 
+    //! Push data to the buffer
+    /*!
+      \param ptr point to the data buffer.
+      \param size is the size of data buffer.
+      \return size of consumed data 
+      \sa uint32_t Push(const char* ptr) noexcept
+    */
     uint32_t Push(const void* ptr, uint32_t size) noexcept;
 
+    //! Push string to the buffer
+    /*!
+      \param ptr point to the data buffer.
+      \return size of consumed data 
+      \sa uint32_t Push(const void* ptr, uint32_t size) noexcept
+    */
     uint32_t Push(const char* ptr) noexcept { return Push(ptr, strlen(ptr)); }
 
+    //! Pop single byte fron buffer and free one byte
+    /*!
+      \return single data 
+    */
     uint8_t Pop();
 
+    //! Return true if buffer is empty
+    /*!
+      \return true/false 
+    */
     bool IsEmpty() const noexcept { return m_state == Empty; }
 
+    //! Return true if buffer is full
+    /*!
+      \return true/false 
+    */
     bool IsFull() const noexcept { return m_state == Full; }
 
     const uint8_t* Payload() const noexcept { return m_buffer.get(); }
@@ -77,17 +111,16 @@ public:
     uint32_t Blocks() const noexcept;
 
 private:
-
     uint32_t WriteEnd(const void* ptr, uint32_t size) noexcept;
     uint32_t WriteBegin(const void* ptr, uint32_t size) noexcept;
 
-    uint8_t* m_tail = nullptr;
-    uint8_t* m_head = nullptr;
+    uint8_t* m_tail = nullptr; /*!< pointer to tail of buffer */
+    uint8_t* m_head = nullptr; /*!< pointer to head of buffer */
 
-    uint32_t m_size;
+    uint32_t m_size; /*!< totally reserver buffer size*/
 
-    std::unique_ptr<uint8_t[]> m_buffer;
-    State m_state;
+    std::unique_ptr<uint8_t[]> m_buffer; /*!< data buffer */
+    State m_state;                       /*!< buffer state(full, empty, ...)*/
 };
 
 } // namespace sparrow
