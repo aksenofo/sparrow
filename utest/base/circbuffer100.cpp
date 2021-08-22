@@ -10,7 +10,7 @@
 
 static void fill4(sparrow::CircularBuffer& buf)
 {
-    buf = sparrow::CircularBuffer(buf.Size());
+    buf = sparrow::CircularBuffer(buf.Reserved());
     buf.Push("A", 1);
     buf.Push("B", 1);
     buf.Push("C", 1);
@@ -22,7 +22,7 @@ static void fill4(sparrow::CircularBuffer& buf)
 
 static void fill3(sparrow::CircularBuffer& buf)
 {
-    buf = sparrow::CircularBuffer(buf.Size());
+    buf = sparrow::CircularBuffer(buf.Reserved());
     buf.Push("A", 1);
     buf.Push("B", 1);
     buf.Push("C", 1);

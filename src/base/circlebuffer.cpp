@@ -99,7 +99,7 @@ uint32_t CircularBuffer::PopulateSize() noexcept
     if (m_head >= m_tail)
         return Eob() - m_head;
     else
-        return m_head - m_tail;
+        return m_tail - m_head;
 }
 
 void CircularBuffer::Populate(uint32_t size) noexcept
@@ -221,12 +221,14 @@ uint32_t CircularBuffer::PushLatecomer(uint32_t lateSize, const uint8_t* ptr, ui
 
 uint32_t CircularBuffer::Blocks() const noexcept
 {
-    if (m_size == 0)
+    if(m_state == Empty) {
         return 0;
-    if (m_head > m_tail)
+    }
+    if(m_tail < m_head)
         return 1;
     else
-        return 2;
+        return 2;    
+
 }
 
 } // namespace sparrow

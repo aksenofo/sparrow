@@ -90,6 +90,24 @@ public:
 
     uint32_t Pop(void* ptr, uint32_t size) noexcept;
 
+    uint32_t PushLatecomer(uint32_t lateSize, const uint8_t* ptr, uint32_t size) noexcept;
+
+    //! Return size of reserved bytes.
+    /*!
+      \return Return size of reserved bytes 
+    */
+    uint32_t Reserved() const noexcept { return m_size; }
+
+    //! Return number of continuous blocks in buffer.
+    //! May be 0 - buffer is empty,
+    //!        1 - buffer has only one block (tail is less than head),
+    //!        2 - buffer has two blocks(from tail to end of buffer, from begin of buffer to head)
+    /*!
+      \return number of block in buffer 
+    */
+    uint32_t Blocks() const noexcept;
+
+    // Internal and auxillary methods  
     const uint8_t* Tail() const noexcept { return m_tail; }
 
     uint8_t* Tail() noexcept { return m_tail; }
@@ -102,14 +120,20 @@ public:
 
     const uint8_t* Buffer() const noexcept { return m_buffer.get(); }
 
-    uint32_t PushLatecomer(uint32_t lateSize, const uint8_t* ptr, uint32_t size) noexcept;
-
-    uint32_t Size() const noexcept { return m_size; }
-
-    uint32_t Blocks() const noexcept;
-
 private:
+    //! Write to the end of buffer.
+    //! \param ptr - pointer to the buffer
+    //! \param size of buffer
+    /*!
+      \return number of bytes which been really consumed 
+    */
     uint32_t WriteEnd(const void* ptr, uint32_t size) noexcept;
+    //! Write to the begin of buffer.
+    //! \param ptr - pointer to the buffer
+    //! \param size of buffer
+    /*!
+      \return number of bytes which been really consumed 
+    */
     uint32_t WriteBegin(const void* ptr, uint32_t size) noexcept;
 
     uint8_t* m_tail = nullptr; /*!< pointer to tail of buffer */
