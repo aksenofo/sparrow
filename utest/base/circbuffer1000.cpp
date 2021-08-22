@@ -31,7 +31,7 @@ TEST(circular_buffer, test1000)
     buf.Consume(1);
 }
 
-TEST(circular_buffer, test1001)
+TEST(circular_buffer, test1000_1)
 {
     sparrow::CircularBuffer buf(3);
     ASSERT_EQ(buf.PopulateSize(), 3);
@@ -58,4 +58,22 @@ TEST(circular_buffer, test1001)
     ASSERT_TRUE(buf.IsFull());
     ASSERT_FALSE(buf.IsEmpty());
     ASSERT_EQ(buf.PopulateSize(), 0);
+}
+
+
+TEST(circular_buffer, test1000_2)
+{
+    sparrow::CircularBuffer buf(10);
+    buf.Set("0123456789");
+    buf.Consume(8);
+    ASSERT_EQ(buf.PopulateSize(), 8);
+    buf.Set("QWERTYUI");
+    ASSERT_EQ(buf.PopulateSize(), 0);
+    buf.Consume(2);
+    ASSERT_EQ(buf.PopulateSize(), 2);
+    ASSERT_EQ(*buf.Ptr(), 'Q');
+    
+    buf.Consume(2);
+    ASSERT_EQ(*buf.Ptr(), 'E');
+    ASSERT_EQ(buf.PopulateSize(), 4);
 }

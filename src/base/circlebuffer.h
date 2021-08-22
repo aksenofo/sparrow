@@ -193,4 +193,58 @@ private:
     State m_state;                       /*!< buffer state(full, empty, ...)*/
 };
 
+class Consumer
+{
+public:
+    Consumer() = default;
+    COPYBLE_DEFAULT(Consumer);
+    MOVEBLE_DEFAULT(Consumer);
+
+    template<typename Func>
+    uint32_t operator()(CircularBuffer& circularBuffer, Func fn)
+    {
+        uint32_t totallyConsumed = 0;
+        while (true) {
+            uint32_t size = circularBuffer.ConsumeSize();
+            if (size) {
+                uint32_t consSize = fn(size);
+                assert(consSize <= size);
+                circularBuffer.Consume(consSize);
+                totallyConsumed += consSize;
+                if (consSize < size)
+                    break;
+            } else
+                break;
+        }
+        return totallyConsumed;
+    }
+};
+
+class Populator
+{
+public:
+    Populator() = default;
+    COPYBLE_DEFAULT(Populator);
+    MOVEBLE_DEFAULT(Populator);
+
+    template<typename Func>
+    uint32_t operator()(CircularBuffer& circularBuffer, Func fn)
+    {
+        uint32_t totallyPopulated = 0;
+        while (true) {
+            uint32_t size = circularBuffer.PopulateSize();
+            if (size) {
+                uint32_t popSize = fn(size);
+                assert(popSize <= size);
+                circularBuffer.Populate(popSize);
+                totallyPopulated += popSize;
+                if (popSize < size)
+                    break;
+            } else
+                break;
+        }
+        return totallyPopulated;
+    }
+};
+
 } // namespace sparrow

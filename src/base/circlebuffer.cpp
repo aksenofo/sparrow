@@ -95,9 +95,8 @@ uint32_t CircularBuffer::PopulateSize() noexcept
 {
     if (IsFull())
         return 0;
-
     if (m_head >= m_tail)
-        return Eob() - m_head;
+        return (Eob() - m_head) + (m_tail - Buffer());
     else
         return m_tail - m_head;
 }

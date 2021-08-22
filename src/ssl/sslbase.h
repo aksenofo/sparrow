@@ -29,14 +29,14 @@ public:
 
 private:
     static void DeleterSsl(void* p);
-    static void SockSend(int sock, sparrow::CircularBuffer& cb);
-    static bool SockRecv(int sock, sparrow::CircularBuffer& cb);
+    static void SockSend(int sock, CircularBuffer& cb);
+    static bool SockRecv(int sock, CircularBuffer& cb);
 
     std::unique_ptr<void, std::function<void(void*)>> m_ssl;
     void *m_rbio, *m_wbio;
 
-    sparrow::CircularBuffer m_sendEncBuffer = sparrow::CircularBuffer(kEncBufferSize);
-    sparrow::CircularBuffer m_recvEncBuffer = sparrow::CircularBuffer(kEncBufferSize);
+    CircularBuffer m_sendEncBuffer = CircularBuffer(kEncBufferSize);
+    CircularBuffer m_recvEncBuffer = CircularBuffer(kEncBufferSize);
 };
 
 } //namespace sparrow
