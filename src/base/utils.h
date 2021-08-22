@@ -56,69 +56,11 @@ private:
     std::function<void()> m_fn;
 };
 
-inline uint64_t NowMicrosecs()
-{
-    auto now = std::chrono::high_resolution_clock::now();
-    auto duration = now.time_since_epoch();
-    return std::chrono::duration_cast<std::chrono::microseconds>(duration).count();
-}
-
-template<typename T>
-void ClockForEvery(const uint64_t& period, T fn)
-{
-    auto now = []() {
-        auto now = std::chrono::high_resolution_clock::now();
-        auto duration = now.time_since_epoch();
-        return std::chrono::duration_cast<std::chrono::microseconds>(duration).count();
-    };
-
-    int64_t nextStopTime = now();
-    while (fn()) {
-        nextStopTime += period;
-        int64_t nextDel = nextStopTime - now();
-        if (nextDel < 0)
-            nextDel = 0;
-
-        std::this_thread::sleep_for(std::chrono::microseconds(nextDel));
-    }
-}
-
 inline std::error_code ToECode(int errno_code)
 {
     return std::make_error_code(static_cast<std::errc>(errno_code));
 }
 
-template<typename T>
-T ReverseBits(T n)
-{
-    short bits = sizeof(n) * 8;
-    T mask = ~T(0);
-    while (bits >>= 1) {
-        mask ^= mask << (bits);
-        n = (n & ~mask) >> bits | (n & mask) << bits;
-    }
-
-    return n;
-}
-
-
-inline uint16_t ToBitmack(uint8_t number)
-{
-    uint16_t rc = 0x1;
-    return rc << number;
-}
-
-inline uint8_t FromBitmack(uint16_t mack)
-{
-    for (uint8_t t = 0; t < 10; t++) {
-        if ((mack & 0x1) == 0x1)
-            return t;
-        mack >>= 1;
-    }
-    return 0;
-}
-
-std::string BitsToStr(uint64_t value, size_t size);
 
 // trim from start (in place)
 static inline void ltrim(std::string& s)
