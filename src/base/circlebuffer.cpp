@@ -50,7 +50,7 @@ uint32_t CircularBuffer::WriteBegin(const void* ptr, uint32_t size) noexcept
     return size;
 }
 
-uint32_t CircularBuffer::Push(const void* ptr, uint32_t size) noexcept
+uint32_t CircularBuffer::Set(const void* ptr, uint32_t size) noexcept
 {
     const uint8_t* curPtr = reinterpret_cast<const uint8_t*>(ptr);
     if (m_state == Full || size == 0)
@@ -68,7 +68,7 @@ uint32_t CircularBuffer::Push(const void* ptr, uint32_t size) noexcept
     return size - sizeRest;
 }
 
-uint8_t CircularBuffer::Pop()
+uint8_t CircularBuffer::Get()
 {
     uint8_t v;
     if (ConsumeSize() > 0) {

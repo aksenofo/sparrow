@@ -13,7 +13,7 @@ TEST(circular_buffer, test1000)
     sparrow::CircularBuffer buf(3);
     ASSERT_EQ(buf.ConsumeSize(), 0);
 
-    buf.Push("123");
+    buf.Set("123");
     ASSERT_EQ(*buf.Ptr(), '1');
     buf.Consume(1);
     ASSERT_EQ(*buf.Ptr(), '2');
@@ -22,7 +22,7 @@ TEST(circular_buffer, test1000)
     buf.Consume(1);
 
     ASSERT_EQ(buf.ConsumeSize(), 0);
-    buf.Push("456");
+    buf.Set("456");
     ASSERT_EQ(*buf.Ptr(), '4');
     buf.Consume(1);
     ASSERT_EQ(*buf.Ptr(), '5');

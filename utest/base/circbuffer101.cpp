@@ -18,7 +18,7 @@ void Erase1(sparrow::CircularBuffer& buf)
     memset(buffer, 0, sizeof(buffer));
 
     for (uint32_t t = 0; t < size / sizeof(buffer); t++) {
-        uint32_t g = buf.Push(buffer, sizeof(buffer));
+        uint32_t g = buf.Set(buffer, sizeof(buffer));
         ASSERT_EQ(g, sizeof(buffer));
     }
 }
@@ -26,7 +26,7 @@ void Erase1(sparrow::CircularBuffer& buf)
 void Pop(sparrow::CircularBuffer& buf, uint32_t size)
 {
     while (size--) {
-        buf.Pop();
+        buf.Get();
     }
 }
 
@@ -38,14 +38,14 @@ void Erase2(sparrow::CircularBuffer& buf)
     memset(buffer, 0, sizeof(buffer));
 
     for (uint32_t t = 0; t < size / sizeof(buffer); t++) {
-        uint32_t g = buf.Push(buffer, sizeof(buffer));
+        uint32_t g = buf.Set(buffer, sizeof(buffer));
         ASSERT_EQ(g, sizeof(buffer));
     }
 
     Pop(buf, size / 100);
     Pop(buf, size / 100);
-    ASSERT_EQ(buf.Push(buffer, sizeof(buffer)), sizeof(buffer));
-    ASSERT_EQ(buf.Push(buffer, sizeof(buffer)), sizeof(buffer));
+    ASSERT_EQ(buf.Set(buffer, sizeof(buffer)), sizeof(buffer));
+    ASSERT_EQ(buf.Set(buffer, sizeof(buffer)), sizeof(buffer));
 }
 
 TEST(circular_buffer, latecomer01)

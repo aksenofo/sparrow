@@ -30,7 +30,7 @@ TEST(circular_buffer, test20)
         size_t t = std::min(step, bufSize - inside);
         t = std::min(t, (size_t)cbuf.AvailableSize());
         if (t) {
-            cbuf.Push(ptr + inside, t);
+            cbuf.Set(ptr + inside, t);
             inside += t;
         }
 

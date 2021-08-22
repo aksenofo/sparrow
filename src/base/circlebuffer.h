@@ -37,28 +37,28 @@ public:
     //! Makes class moveable(and noncopyable)
     MOVEBLE_DEFAULT(CircularBuffer);
 
-    //! Push data to the buffer
+    //! Set data to the buffer
     /*!
       \param ptr point to the data buffer.
       \param size is the size of data buffer.
       \return size of consumed data 
-      \sa uint32_t Push(const char* ptr) noexcept
+      \sa uint32_t Set(const char* ptr) noexcept
     */
-    uint32_t Push(const void* ptr, uint32_t size) noexcept;
+    uint32_t Set(const void* ptr, uint32_t size) noexcept;
 
-    //! Push string to the buffer
+    //! Set string to the buffer
     /*!
       \param ptr point to the data buffer.
       \return size of consumed data 
-      \sa uint32_t Push(const void* ptr, uint32_t size) noexcept
+      \sa uint32_t Set(const void* ptr, uint32_t size) noexcept
     */
-    uint32_t Push(const char* ptr) noexcept { return Push(ptr, strlen(ptr)); }
+    uint32_t Set(const char* ptr) noexcept { return Set(ptr, strlen(ptr)); }
 
-    //! Pop single byte fron buffer and free one byte
+    //! Get single byte fron buffer and free one byte
     /*!
-      \return single data 
+      \return single byte 
     */
-    uint8_t Pop();
+    uint8_t Get();
 
     //! Return true if buffer is empty
     /*!

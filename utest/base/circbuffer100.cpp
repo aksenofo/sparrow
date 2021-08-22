@@ -11,24 +11,24 @@
 static void fill4(sparrow::CircularBuffer& buf)
 {
     buf = sparrow::CircularBuffer(buf.Reserved());
-    buf.Push("A", 1);
-    buf.Push("B", 1);
-    buf.Push("C", 1);
-    buf.Push("D", 1);
+    buf.Set("A", 1);
+    buf.Set("B", 1);
+    buf.Set("C", 1);
+    buf.Set("D", 1);
     buf.Consume(2);
-    buf.Push("E", 1);
-    buf.Push("F", 1);
+    buf.Set("E", 1);
+    buf.Set("F", 1);
 }
 
 static void fill3(sparrow::CircularBuffer& buf)
 {
     buf = sparrow::CircularBuffer(buf.Reserved());
-    buf.Push("A", 1);
-    buf.Push("B", 1);
-    buf.Push("C", 1);
-    buf.Push("D", 1);
+    buf.Set("A", 1);
+    buf.Set("B", 1);
+    buf.Set("C", 1);
+    buf.Set("D", 1);
     buf.Consume(2);
-    buf.Push("E", 1);
+    buf.Set("E", 1);
 }
 
 TEST(circular_buffer, latecomer_simple_2)
@@ -228,15 +228,15 @@ TEST(circular_buffer, latecomer_sinple)
     sparrow::CircularBuffer buf(4);
     ASSERT_TRUE(buf.Head() == buf.Tail() && buf.IsEmpty());
 
-    ASSERT_EQ(buf.Push("A", 1), 1);
+    ASSERT_EQ(buf.Set("A", 1), 1);
     ASSERT_TRUE(buf.Head() > buf.Tail() && !buf.IsFull() && !buf.IsEmpty());
     ASSERT_EQ(buf.FilledSize(), 1);
 
-    ASSERT_EQ(buf.Push("B", 1), 1);
+    ASSERT_EQ(buf.Set("B", 1), 1);
     ASSERT_TRUE(buf.Head() > buf.Tail() && !buf.IsFull() && !buf.IsEmpty());
     ASSERT_EQ(buf.FilledSize(), 2);
 
-    ASSERT_EQ(buf.Push("C", 1), 1);
+    ASSERT_EQ(buf.Set("C", 1), 1);
     ASSERT_EQ(buf.FilledSize(), 3);
     ASSERT_TRUE(buf.Head() > buf.Tail() && !buf.IsFull() && !buf.IsEmpty());
 
@@ -292,8 +292,8 @@ TEST(circular_buffer, latecomer_sinple)
 TEST(circular_buffer, latecomer_simple_error_params)
 {
     sparrow::CircularBuffer buf(4);
-    ASSERT_EQ(buf.Push("A", 1), 1);
-    ASSERT_EQ(buf.Push("B", 1), 1);
-    ASSERT_EQ(buf.Push("C", 1), 1);
+    ASSERT_EQ(buf.Set("A", 1), 1);
+    ASSERT_EQ(buf.Set("B", 1), 1);
+    ASSERT_EQ(buf.Set("C", 1), 1);
     ASSERT_EQ(buf.PushLatecomer((uint32_t)-1, (uint8_t*)"asdf", 4), 0);
 }
