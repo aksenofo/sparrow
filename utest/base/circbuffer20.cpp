@@ -35,7 +35,7 @@ TEST(circular_buffer, test20)
         }
 
         size_t stepRead = step / 2 + 111; // Just same randomizing
-        uint32_t av = std::min(cbuf.SizeToConsume(), (uint32_t)stepRead);
+        uint32_t av = std::min(cbuf.ConsumeSize(), (uint32_t)stepRead);
         if (av) {
             for (uint32_t t = 0; t < av; t++) {
                 ASSERT_EQ(lastCounterValue, cbuf.Ptr()[t]);

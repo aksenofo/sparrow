@@ -58,7 +58,7 @@ void SslBase::SockSend(int sock, sparrow::CircularBuffer& cb)
 {
     bool loop;
     do {
-        uint32_t sizeToConsume = cb.SizeToConsume();
+        uint32_t sizeToConsume = cb.ConsumeSize();
         ssize_t n = static_cast<ssize_t>(write(sock, cb.Ptr(), sizeToConsume));
         if (n > 0) {
             cb.Consume(n);

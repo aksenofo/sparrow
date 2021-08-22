@@ -25,9 +25,9 @@ TEST(circular_buffer, test10)
     ASSERT_TRUE(buf.IsEmpty());
 
     ASSERT_EQ(buf.Push("12345", 5), 5);
-    uint32_t t = buf.SizeToConsume();
+    uint32_t t = buf.ConsumeSize();
     buf.Consume(t);
-    t = buf.SizeToConsume();
+    t = buf.ConsumeSize();
     buf.Consume(t);
     ASSERT_TRUE(buf.IsEmpty());
 }

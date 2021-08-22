@@ -72,7 +72,7 @@ uint32_t CircularBuffer::Push(const void* ptr, uint32_t size) noexcept
 uint8_t CircularBuffer::Pop()
 {
     uint8_t v;
-    if (SizeToConsume() > 0) {
+    if (ConsumeSize() > 0) {
         v = *Ptr();
         Consume(1);
     } else
@@ -80,7 +80,7 @@ uint8_t CircularBuffer::Pop()
     return v;
 }
 
-uint32_t CircularBuffer::SizeToConsume() noexcept
+uint32_t CircularBuffer::ConsumeSize() noexcept
 {
     if (m_state == Empty)
         return 0;
@@ -92,9 +92,9 @@ uint32_t CircularBuffer::SizeToConsume() noexcept
     return Eob() - m_tail;
 }
 
-uint32_t CircularBuffer::SizeToPopulate() noexcept
+uint32_t CircularBuffer::PopulateSize() noexcept
 {
-    if(IsFull())
+    if (IsFull())
         return 0;
 
     if (m_head >= m_tail)
@@ -103,20 +103,20 @@ uint32_t CircularBuffer::SizeToPopulate() noexcept
         return m_head - m_tail;
 }
 
-void CircularBuffer::Populate(uint32_t size) noexcept {
+void CircularBuffer::Populate(uint32_t size) noexcept
+{
     if (size == 0)
         return;
     assert(m_state != Full);
 
-    if(m_tail <= m_head) {
+    if (m_tail <= m_head) {
         assert(m_head + size <= Eob());
         m_head += size;
-    }
-    else {
+    } else {
         assert(m_head + size < m_tail);
         m_head += size;
     }
-    
+
     if (m_head == Eob())
         m_head = m_buffer.get();
 
@@ -124,7 +124,6 @@ void CircularBuffer::Populate(uint32_t size) noexcept {
         m_state = Full;
     else
         m_state = Unknown;
-
 }
 
 void CircularBuffer::Consume(uint32_t size) noexcept
@@ -161,13 +160,13 @@ uint32_t CircularBuffer::FilledSize() const noexcept
 uint32_t CircularBuffer::Pop(void* ptr, uint32_t size) noexcept
 {
 
-    uint32_t ts1 = std::min(SizeToConsume(), size);
+    uint32_t ts1 = std::min(ConsumeSize(), size);
     if (ts1 == 0)
         return 0;
     memcpy(ptr, Ptr(), ts1);
     Consume(ts1);
 
-    uint32_t ts2 = std::min(SizeToConsume(), size - ts1);
+    uint32_t ts2 = std::min(ConsumeSize(), size - ts1);
     if (ts2 == 0)
         return ts1;
     memcpy(reinterpret_cast<uint8_t*>(ptr) + ts1, Ptr(), ts2);

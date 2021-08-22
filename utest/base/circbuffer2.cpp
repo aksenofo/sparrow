@@ -16,7 +16,7 @@ TEST(circular_buffer, test2)
     ASSERT_EQ(buf.FilledSize(), 2);
 
     ASSERT_EQ(memcmp(buf.Payload(), "AB", 2), 0);
-    uint32_t v = buf.SizeToConsume();
+    uint32_t v = buf.ConsumeSize();
     buf.Consume(1);
     ASSERT_EQ(buf.FilledSize(), 1);
     ASSERT_FALSE(buf.IsEmpty());

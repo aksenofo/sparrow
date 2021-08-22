@@ -11,7 +11,7 @@
 TEST(circular_buffer, test1000)
 {
     sparrow::CircularBuffer buf(3);
-    ASSERT_EQ(buf.SizeToConsume(), 0);
+    ASSERT_EQ(buf.ConsumeSize(), 0);
     
     buf.Push("123");
     ASSERT_EQ(*buf.Ptr(), '1');
@@ -21,7 +21,7 @@ TEST(circular_buffer, test1000)
     ASSERT_EQ(*buf.Ptr(), '3');
     buf.Consume(1);
 
-    ASSERT_EQ(buf.SizeToConsume(), 0);
+    ASSERT_EQ(buf.ConsumeSize(), 0);
     buf.Push("456");
     ASSERT_EQ(*buf.Ptr(), '4');
     buf.Consume(1);
@@ -34,20 +34,20 @@ TEST(circular_buffer, test1000)
 TEST(circular_buffer, test1001)
 {
     sparrow::CircularBuffer buf(3);
-    ASSERT_EQ(buf.SizeToPopulate(), 3);
+    ASSERT_EQ(buf.PopulateSize(), 3);
     buf.Head()[0] = 'A';
     buf.Populate(1);
-    ASSERT_EQ(buf.SizeToPopulate(), 2);
+    ASSERT_EQ(buf.PopulateSize(), 2);
     buf.Head()[0] = 'B';
     buf.Populate(1);
-    ASSERT_EQ(buf.SizeToPopulate(), 1);
+    ASSERT_EQ(buf.PopulateSize(), 1);
     buf.Head()[0] = 'C';
     buf.Populate(1);
-    ASSERT_EQ(buf.SizeToPopulate(), 0);
+    ASSERT_EQ(buf.PopulateSize(), 0);
     ASSERT_TRUE(buf.IsFull());
 
     buf.Consume(1);
-    ASSERT_EQ(buf.SizeToPopulate(), 1);
+    ASSERT_EQ(buf.PopulateSize(), 1);
     ASSERT_FALSE(buf.IsFull());
 
 }
