@@ -193,6 +193,10 @@ private:
     State m_state;                       /*!< buffer state(full, empty, ...)*/
 };
 
+/*! \brief Consumer aux class.
+ *
+ *  Consumer allow simplify process reading data from circular buffer.
+ */
 class Consumer
 {
 public:
@@ -220,6 +224,10 @@ public:
     }
 };
 
+/*! \brief Populator aux class.
+ *
+ *  Populator allow simplify process writing data to circular buffer.
+ */
 class Populator
 {
 public:
