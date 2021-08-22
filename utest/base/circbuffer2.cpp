@@ -15,7 +15,7 @@ TEST(circular_buffer, test2)
     ASSERT_EQ(buf.Push("B", 1), 1);
     ASSERT_EQ(buf.FilledSize(), 2);
 
-    ASSERT_EQ(memcmp(buf.Payload(), "AB", 2), 0);
+    ASSERT_EQ(memcmp(buf.Buffer(), "AB", 2), 0);
     uint32_t v = buf.ConsumeSize();
     buf.Consume(1);
     ASSERT_EQ(buf.FilledSize(), 1);
@@ -27,7 +27,7 @@ TEST(circular_buffer, test2)
     ASSERT_EQ(buf.Push("x", 1), 1);
     ASSERT_EQ(buf.FilledSize(), 1);
     ASSERT_FALSE(buf.IsEmpty());
-    auto pl = buf.Payload();
+    auto pl = buf.Buffer();
     buf.Consume(1);
     ASSERT_EQ(buf.FilledSize(), 0);
     ASSERT_TRUE(buf.IsEmpty());

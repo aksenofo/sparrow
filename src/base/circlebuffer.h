@@ -72,8 +72,6 @@ public:
     */
     bool IsFull() const noexcept { return m_state == Full; }
 
-    const uint8_t* Payload() const noexcept { return m_buffer.get(); }
-
     uint32_t ConsumeSize() noexcept;
 
     uint32_t PopulateSize() noexcept;
