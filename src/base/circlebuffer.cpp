@@ -19,7 +19,6 @@ CircularBuffer::CircularBuffer(uint32_t size)
 
 uint32_t CircularBuffer::WriteEnd(const void* ptr, uint32_t size) noexcept
 {
-
     assert(m_tail <= m_head);
     const uint8_t* curPtr = reinterpret_cast<const uint8_t*>(ptr);
     uint32_t canWrite = std::min(size, uint32_t(Eob() - m_head));
@@ -229,6 +228,5 @@ uint32_t CircularBuffer::Blocks() const noexcept
     else
         return 2;
 }
-
 
 } // namespace sparrow
