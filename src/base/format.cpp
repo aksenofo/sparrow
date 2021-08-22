@@ -5,8 +5,9 @@
  */
 
 #include "format.h"
-         
-namespace sparrow {
+
+namespace sparrow
+{
 
 std::string format_impl(const std::string& fmt, const std::vector<std::string>& strs)
 {
@@ -47,4 +48,4 @@ std::string format_impl(const std::string& fmt, const std::vector<std::string>& 
     return res;
 }
 
-} //namespace sparrow {
+} // namespace sparrow
