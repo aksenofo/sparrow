@@ -110,7 +110,7 @@ void CircularBuffer::Populate(uint32_t size) noexcept
         assert(m_head + size <= Eob());
         m_head += size;
     } else {
-        assert(m_head + size < m_tail);
+        assert(m_head + size <= m_tail);
         m_head += size;
     }
 

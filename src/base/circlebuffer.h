@@ -211,7 +211,7 @@ public:
         while (true) {
             uint32_t size = circularBuffer.ConsumeSize();
             if (size) {
-                uint32_t consSize = fn(size);
+                uint32_t consSize = fn(circularBuffer.Ptr(), size);
                 assert(consSize <= size);
                 circularBuffer.Consume(consSize);
                 totallyConsumed += consSize;
@@ -242,7 +242,7 @@ public:
         while (true) {
             uint32_t size = circularBuffer.PopulateSize();
             if (size) {
-                uint32_t popSize = fn(size);
+                uint32_t popSize = fn(circularBuffer.Ptr(), size);
                 assert(popSize <= size);
                 circularBuffer.Populate(popSize);
                 totallyPopulated += popSize;
