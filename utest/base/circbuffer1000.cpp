@@ -92,5 +92,17 @@ TEST(circular_buffer, test1000_3)
     ASSERT_EQ(buf.ConsumeSize(), 9);
     buf.Consume(9);
     ASSERT_EQ(buf.ConsumeSize(), 1);
+}
 
+TEST(circular_buffer, test1000_4)
+{
+    sparrow::CircularBuffer buf(10);
+    char v = 10;
+    char tv = 0;
+    for(size_t t = 0; t < 100; t++) {
+        buf.Set(&v, 1);
+        buf.Get(&tv, 1);
+        ASSERT_EQ(v, tv);
+        v++;
+    }
 }

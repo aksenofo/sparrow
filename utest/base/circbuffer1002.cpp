@@ -102,3 +102,28 @@ TEST(circular_buffer, test1002_1)
         }
     }
 }
+
+TEST(circular_buffer, test1002_2)
+{
+    sparrow::CircularBuffer buf(10);
+    sparrow::Populator populator;
+    const char* tmpbuff = "0123456789";
+    char outBuff[10];
+
+    Distributor distributor(tmpbuff);
+    for (size_t simulSize : { 1, 3, 5, 9 }) {
+        for (size_t t = 0; t < 100; t++) {
+            distributor.Reset();
+
+            populator(buf, [&](uint8_t* ptr, size_t size) {
+                size = std::min(size, simulSize);
+                auto p = distributor.Get(size);
+                strncpy((char*)ptr, (const char*)p.first, p.second);
+                return p.second;
+            });
+            buf.Get(outBuff, 10);
+            if (strncmp(tmpbuff, outBuff, simulSize) != 0)
+                ASSERT_TRUE(strncmp(tmpbuff, outBuff, simulSize) == 0);
+        }
+    }
+}
