@@ -84,11 +84,10 @@ uint32_t CircularBuffer::ConsumeSize() noexcept
     if (m_state == Empty)
         return 0;
 
-    if (m_tail < m_head) {
+    if (m_tail < m_head)
         return m_head - m_tail;
-    }
-
-    return Eob() - m_tail;
+    else
+        return Eob() - m_tail;
 }
 
 uint32_t CircularBuffer::PopulateSize() noexcept
@@ -96,7 +95,7 @@ uint32_t CircularBuffer::PopulateSize() noexcept
     if (IsFull())
         return 0;
     if (m_head >= m_tail)
-        return (Eob() - m_head) + (m_tail - Buffer());
+        return Eob() - m_head;
     else
         return m_tail - m_head;
 }

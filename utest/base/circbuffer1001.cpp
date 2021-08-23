@@ -24,7 +24,7 @@ TEST(circular_buffer, test1001)
     ASSERT_EQ(buf.PopulateSize(), 10);
 }
 
-TEST(circular_buffer, test1002)
+TEST(circular_buffer, test1001_1)
 {
     sparrow::CircularBuffer buf(10);
     buf.Set("0123456789");
@@ -42,11 +42,11 @@ TEST(circular_buffer, test1002)
     buf.Set("01234567");
     ASSERT_EQ(consumer(buf, [&](uint32_t size) { return 2; }),
         4);
-    ASSERT_EQ(buf.PopulateSize(), 4);
+    ASSERT_EQ(buf.PopulateSize(), 2);
 
     consumer(buf, [&](uint32_t size) { return 4; });
-    ASSERT_EQ(buf.PopulateSize(), 8);
+    ASSERT_EQ(buf.PopulateSize(), 2);
 
     consumer(buf, [&](uint32_t size) { return 2; });
-    ASSERT_EQ(buf.PopulateSize(), 10);
+    ASSERT_EQ(buf.PopulateSize(), 2);
 }
