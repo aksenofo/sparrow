@@ -37,22 +37,22 @@ public:
     //! Makes class moveable(and noncopyable)
     MOVEBLE_DEFAULT(CircularBuffer);
 
-    //! Set data to the buffer
+    //! Put data to the buffer
     /*!
       \param ptr point to the data buffer.
       \param size is the size of data buffer.
       \return size of consumed data 
-      \sa uint32_t Set(const char* ptr) noexcept
+      \sa uint32_t Put(const char* ptr) noexcept
     */
-    uint32_t Set(const void* ptr, uint32_t size) noexcept;
+    uint32_t Put(const void* ptr, uint32_t size) noexcept;
 
-    //! Set string to the buffer
+    //! Put string to the buffer
     /*!
       \param ptr point to the data buffer.
       \return size of consumed data 
-      \sa uint32_t Set(const void* ptr, uint32_t size) noexcept
+      \sa uint32_t Put(const void* ptr, uint32_t size) noexcept
     */
-    uint32_t Set(const char* ptr) noexcept { return Set(ptr, strlen(ptr)); }
+    uint32_t Put(const char* ptr) noexcept { return Put(ptr, strlen(ptr)); }
 
     //! Set data to the circular buffer with shifting reference to the begining of buffer
     /*!
@@ -60,7 +60,7 @@ public:
       \param ptr point to the data buffer.
       \return size of consumed data 
     */
-    uint32_t SetLatecomer(uint32_t lateSize, const void* ptr, uint32_t size) noexcept;
+    uint32_t PutLatecomer(uint32_t lateSize, const void* ptr, uint32_t size) noexcept;
 
     //! Set data to the circular buffer with shifting reference to the begining of buffer
     /*!
@@ -68,7 +68,7 @@ public:
       \param ptr point to the string buffer.
       \return size of consumed data 
     */
-    uint32_t SetLatecomer(uint32_t lateSize, const char* ptr) noexcept { return SetLatecomer(lateSize, ptr, strlen(ptr)); }
+    uint32_t PutLatecomer(uint32_t lateSize, const char* ptr) noexcept { return PutLatecomer(lateSize, ptr, strlen(ptr)); }
 
     //! Get single byte from buffer and free one byte
     /*!

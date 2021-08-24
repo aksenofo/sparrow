@@ -11,19 +11,19 @@
 TEST(circular_buffer, test0)
 {
     sparrow::CircularBuffer buf(3);
-    ASSERT_EQ(buf.Set("A", 1), 1);
+    ASSERT_EQ(buf.Put("A", 1), 1);
     ASSERT_EQ(buf.FilledSize(), 1);
     ASSERT_EQ(buf.ConsumeSize(), 1);
     ASSERT_EQ(*buf.Ptr(), 'A');
 
-    ASSERT_EQ(buf.Set("B", 1), 1);
+    ASSERT_EQ(buf.Put("B", 1), 1);
     ASSERT_EQ(buf.FilledSize(), 2);
     ASSERT_EQ(buf.ConsumeSize(), 2);
     ASSERT_EQ(buf.Ptr()[1], 'B');
 
     ASSERT_EQ(buf.Blocks(), 1);
 
-    ASSERT_EQ(buf.Set("C", 1), 1);
+    ASSERT_EQ(buf.Put("C", 1), 1);
     ASSERT_EQ(buf.FilledSize(), 3);
     ASSERT_EQ(buf.ConsumeSize(), 3);
     ASSERT_EQ(buf.Ptr()[2], 'C');
@@ -36,7 +36,7 @@ TEST(circular_buffer, test0)
     ASSERT_EQ(buf.ConsumeSize(), 2);
     ASSERT_EQ(buf.FilledSize(), 2);
 
-    ASSERT_EQ(buf.Set("x", 1), 1);
+    ASSERT_EQ(buf.Put("x", 1), 1);
     ASSERT_EQ(buf.ConsumeSize(), 2);
     ASSERT_EQ(buf.FilledSize(), 3);
 }

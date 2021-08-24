@@ -50,7 +50,7 @@ uint32_t CircularBuffer::WriteBegin(const void* ptr, uint32_t size) noexcept
     return size;
 }
 
-uint32_t CircularBuffer::Set(const void* ptr, uint32_t size) noexcept
+uint32_t CircularBuffer::Put(const void* ptr, uint32_t size) noexcept
 {
     const uint8_t* curPtr = reinterpret_cast<const uint8_t*>(ptr);
     if (m_state == Full || size == 0)
@@ -172,7 +172,7 @@ uint32_t CircularBuffer::Get(void* ptr, uint32_t size) noexcept
     return ts1 + ts2;
 }
 
-uint32_t CircularBuffer::SetLatecomer(uint32_t lateSize, const void* ptr, uint32_t size) noexcept
+uint32_t CircularBuffer::PutLatecomer(uint32_t lateSize, const void* ptr, uint32_t size) noexcept
 {
     const uint8_t* point = static_cast<const uint8_t*>(ptr);
     if (IsEmpty() || size == 0) {

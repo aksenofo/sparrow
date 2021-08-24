@@ -18,7 +18,7 @@ void Erase1(sparrow::CircularBuffer& buf)
     memset(buffer, 0, sizeof(buffer));
 
     for (uint32_t t = 0; t < size / sizeof(buffer); t++) {
-        uint32_t g = buf.Set(buffer, sizeof(buffer));
+        uint32_t g = buf.Put(buffer, sizeof(buffer));
         ASSERT_EQ(g, sizeof(buffer));
     }
 }
@@ -38,14 +38,14 @@ void Erase2(sparrow::CircularBuffer& buf)
     memset(buffer, 0, sizeof(buffer));
 
     for (uint32_t t = 0; t < size / sizeof(buffer); t++) {
-        uint32_t g = buf.Set(buffer, sizeof(buffer));
+        uint32_t g = buf.Put(buffer, sizeof(buffer));
         ASSERT_EQ(g, sizeof(buffer));
     }
 
     Pop(buf, size / 100);
     Pop(buf, size / 100);
-    ASSERT_EQ(buf.Set(buffer, sizeof(buffer)), sizeof(buffer));
-    ASSERT_EQ(buf.Set(buffer, sizeof(buffer)), sizeof(buffer));
+    ASSERT_EQ(buf.Put(buffer, sizeof(buffer)), sizeof(buffer));
+    ASSERT_EQ(buf.Put(buffer, sizeof(buffer)), sizeof(buffer));
 }
 
 TEST(circular_buffer, latecomer01)
@@ -63,7 +63,7 @@ TEST(circular_buffer, latecomer01)
             buffer[t] = (uint32_t)t;
         }
 
-        ASSERT_EQ(buf.SetLatecomer(ref, buffer, sizeof(buffer)), sizeof(buffer));
+        ASSERT_EQ(buf.PutLatecomer(ref, buffer, sizeof(buffer)), sizeof(buffer));
         Pop(buf, ref);
 
         ASSERT_EQ(buf.Get(getBuffer, sizeof(getBuffer)), sizeof(getBuffer));
@@ -88,7 +88,7 @@ TEST(circular_buffer, latecomer02)
             buffer[t] = (uint32_t)t;
         }
 
-        ASSERT_EQ(buf.SetLatecomer(ref, buffer, sizeof(buffer)), sizeof(buffer));
+        ASSERT_EQ(buf.PutLatecomer(ref, buffer, sizeof(buffer)), sizeof(buffer));
         Pop(buf, ref);
 
         ASSERT_EQ(buf.Get(getBuffer, sizeof(getBuffer)), sizeof(getBuffer));

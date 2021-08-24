@@ -11,11 +11,11 @@
 TEST(circular_buffer, test3)
 {
     sparrow::CircularBuffer buf(3);
-    ASSERT_EQ(buf.Set("A", 1), 1);
+    ASSERT_EQ(buf.Put("A", 1), 1);
     ASSERT_EQ(buf.FilledSize(), 1);
-    ASSERT_EQ(buf.Set("B", 1), 1);
+    ASSERT_EQ(buf.Put("B", 1), 1);
     ASSERT_EQ(buf.FilledSize(), 2);
-    ASSERT_EQ(buf.Set("C", 1), 1);
+    ASSERT_EQ(buf.Put("C", 1), 1);
     ASSERT_EQ(buf.FilledSize(), 3);
 
     buf.Consume(1);

@@ -92,7 +92,7 @@ TEST(circular_buffer, test1002_1)
     for (size_t simulSize : { 1, 3, 5, 9 }) {
         for (size_t t = 0; t < 100; t++) {
             collector.Reset();
-            buf.Set(tmpbuff, simulSize);
+            buf.Put(tmpbuff, simulSize);
 
             consumer(buf, [&](uint8_t* ptr, size_t size) {
                 size = std::min(size, simulSize);
@@ -114,14 +114,16 @@ TEST(circular_buffer, test1002_2)
         Distributor distributor(tmpbuff, simulSize);
         for (size_t t = 0; t < 100; t++) {
             distributor.Reset();
+            buf.Put(tmpbuff, simulSize);
 
-            populator(buf, [&](uint8_t* ptr, size_t size) {
-                size = std::min(size, simulSize);
-                auto p = distributor.Get(size);
-                strncpy((char*)ptr, (const char*)p.first, p.second);
-                return p.second;
-            });
-            buf.Get(outBuff, 10);
+//            populator(buf, [&](uint8_t* ptr, size_t size) {
+//                size = std::min(size, simulSize);
+//                auto p = distributor.Get(size);
+//                strncpy((char*)ptr, (const char*)p.first, p.second);
+//                return p.second;
+//            });
+
+            buf.Get(outBuff, simulSize);
             if (strncmp(tmpbuff, outBuff, simulSize) != 0)
                 ASSERT_TRUE(strncmp(tmpbuff, outBuff, simulSize) == 0);
         }

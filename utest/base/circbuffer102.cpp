@@ -16,20 +16,20 @@ TEST(circular_buffer, latecomer001)
 
     uint8_t buffer[size];
 
-    ASSERT_EQ(buf.Set(buffer, size), size);
+    ASSERT_EQ(buf.Put(buffer, size), size);
 
     for (size_t ref = 0; ref < size; ref++) {
-        ASSERT_EQ(buf.SetLatecomer(ref, buffer, sizeof(buffer)), sizeof(buffer) - ref);
+        ASSERT_EQ(buf.PutLatecomer(ref, buffer, sizeof(buffer)), sizeof(buffer) - ref);
     }
     ASSERT_EQ(buf.Blocks(), 1);
 
     buf.Get();
     buf.Get();
 
-    buf.Set("  ", 2);
+    buf.Put("  ", 2);
     ASSERT_EQ(buf.Blocks(), 2);
 
     for (size_t ref = 0; ref < size; ref++) {
-        ASSERT_EQ(buf.SetLatecomer(ref, buffer, sizeof(buffer)), sizeof(buffer) - ref);
+        ASSERT_EQ(buf.PutLatecomer(ref, buffer, sizeof(buffer)), sizeof(buffer) - ref);
     }
 }
