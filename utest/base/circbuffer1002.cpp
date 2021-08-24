@@ -36,8 +36,8 @@ TEST(circular_buffer, test1002)
 }
 
 struct Distributor {
-    Distributor(const std::string& str)
-    : m_str(str)
+    Distributor(const char* str, size_t size)
+    : m_str(str, size)
     , m_last(0)
     {
     }
@@ -110,8 +110,8 @@ TEST(circular_buffer, test1002_2)
     const char* tmpbuff = "0123456789";
     char outBuff[10];
 
-    Distributor distributor(tmpbuff);
-    for (size_t simulSize : { 1, 3, 5, 9 }) {
+    for (size_t simulSize : { 3, 5, 9 }) {
+        Distributor distributor(tmpbuff, simulSize);
         for (size_t t = 0; t < 100; t++) {
             distributor.Reset();
 

@@ -99,10 +99,25 @@ TEST(circular_buffer, test1000_4)
     sparrow::CircularBuffer buf(10);
     char v = 10;
     char tv = 0;
-    for(size_t t = 0; t < 100; t++) {
+    for (size_t t = 0; t < 100; t++) {
         buf.Set(&v, 1);
         buf.Get(&tv, 1);
         ASSERT_EQ(v, tv);
         v++;
+    }
+}
+
+TEST(circular_buffer, test1000_5)
+{
+    sparrow::CircularBuffer buf(10);
+    char v[3] = { 1, 2, 3 };
+    char tv[3];
+    for (size_t t = 0; t < 100; t++) {
+        buf.Set(v, 3);
+        buf.Get(tv, 3);
+        ASSERT_EQ(memcmp(v, tv, 3), 0);
+        v[0] ++;
+        v[1] ++;
+        v[2] ++;
     }
 }
