@@ -128,13 +128,13 @@ public:
     /*!
       \return size of contunuous data block 
     */
-    const uint8_t* Ptr() const noexcept { return m_tail; }
+    const uint8_t* Ptr() const noexcept { return Tail(); }
 
     //! Return pointer to the actulal buffer position
     /*!
       \return size of contunuous data block 
     */
-    uint8_t* Ptr() noexcept { return m_tail; }
+    uint8_t* Ptr() noexcept { return Tail(); }
 
     uint32_t AvailableSize() const noexcept { return m_size - FilledSize(); }
 
@@ -211,7 +211,7 @@ public:
         while (true) {
             uint32_t size = circularBuffer.ConsumeSize();
             if (size) {
-                uint32_t consSize = fn(circularBuffer.Ptr(), size);
+                uint32_t consSize = fn(circularBuffer.Tail(), size);
                 assert(consSize <= size);
                 circularBuffer.Consume(consSize);
                 totallyConsumed += consSize;
@@ -242,7 +242,7 @@ public:
         while (true) {
             uint32_t size = circularBuffer.PopulateSize();
             if (size) {
-                uint32_t popSize = fn(circularBuffer.Ptr(), size);
+                uint32_t popSize = fn(circularBuffer.Head(), size);
                 assert(popSize <= size);
                 circularBuffer.Populate(popSize);
                 totallyPopulated += popSize;
