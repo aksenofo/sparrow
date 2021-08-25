@@ -9,7 +9,7 @@ project(sparrow)
 
 SET(ROOT_PROJECT ${PROJECT_SOURCE_DIR}/src)
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 14)
 
 include(cmake-common/common.cmake)
 include(3th/3th.cmake)

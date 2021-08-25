@@ -8,8 +8,8 @@
 
 #include <memory>
 #include <openssl/ssl.h>
-#include <utils.h>
 #include <sslaux.h>
+#include <utils.h>
 
 namespace sparrow
 {
@@ -45,12 +45,21 @@ public:
     long ClearOptions(long options);
     long GetOptions();
 
-private:
+    bool HasObj() const { return !!m_ctx; }
+
     SSL_CTX* CtxPtr() noexcept { return m_ctx.get(); }
     const SSL_CTX* CtxPtr() const noexcept { return m_ctx.get(); }
-    static void Deleter(SSL_CTX* p) noexcept { SSL_CTX_free(p); }
+
+private:
+    static void Deleter(SSL_CTX* p) noexcept;
 
     std::unique_ptr<SSL_CTX, std::function<void(SSL_CTX*)>> m_ctx;
 };
+
+inline void SslCtxBase::Deleter(SSL_CTX* p) noexcept
+{
+    if (p)
+        SSL_CTX_free(p);
+}
 
 } //namespace sparrow

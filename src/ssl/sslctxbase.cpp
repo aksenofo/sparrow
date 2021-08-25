@@ -17,6 +17,7 @@ namespace sparrow
 SslCtxBase::SslCtxBase(const SSL_METHOD* method)
 {
     SSL_CTX* ctx = SSL_CTX_new(method);
+    CheckIfNullptr(ctx);
     m_ctx = std::unique_ptr<SSL_CTX, std::function<void(SSL_CTX*)>>(ctx, &SslCtxBase::Deleter);
 }
 

@@ -30,4 +30,10 @@ void SslAux::CheckIf_1(int rc)
         throw std::runtime_error(format("'%1'", GetLastErrorText()));
 }
 
+void SslAux::CheckIfNullptr(void* ptr)
+{
+    if (!ptr)
+        throw std::runtime_error(format("'%1'", GetLastErrorText()));
+}
+
 } //namespace sparrow
