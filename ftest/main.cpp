@@ -9,7 +9,7 @@
 
 #include <log.h>
 #include <singletone.h>
-#include <sslctx.h>
+#include <sslctxbase.h>
 
 int main(int argc, char* argv[])
 {

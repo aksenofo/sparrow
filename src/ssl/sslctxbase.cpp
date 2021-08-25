@@ -6,8 +6,6 @@
 
 #include "sslctxbase.h"
 
-#include "sslinternal.h"
-
 #include <format.h>
 #include <functional>
 #include <log.h>
