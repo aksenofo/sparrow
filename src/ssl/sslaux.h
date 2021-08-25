@@ -6,15 +6,16 @@
 
 #pragma once
 
-#include "sslctxbase.h"
-
-#include <circlebuffer.h>
 #include <string>
-#include <utils.h>
-#include <openssl/ssl.h>
 
 namespace sparrow
 {
 
+class SslAux
+{
+public:
+    static std::string GetLastErrorText();
+    void CheckIf_1(int rc);
+};
 
 } //namespace sparrow
