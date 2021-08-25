@@ -40,4 +40,24 @@ SslBio& SslBio::operator=(const SslBio& bio)
     return *this;
 }
 
+int SslBio::Read(void* buf, int len)
+{
+    return BIO_read(BioPtr(), buf, len);
+}
+
+int SslBio::Gets(char* buf, int size)
+{
+    return BIO_gets(BioPtr(), buf, size);
+}
+
+int SslBio::Write(const void* buf, int len)
+{
+    return BIO_write(BioPtr(), buf, len);
+}
+
+int SslBio::Puts(const char* buf)
+{
+    return BIO_puts(BioPtr(), buf);
+}
+
 } //namespace sparrow

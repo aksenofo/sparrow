@@ -30,6 +30,17 @@ public:
 
     bool HasObj() const { return !!m_bio; }
 
+    int Read(void* buf, int len);
+    int Gets(char* buf, int size);
+    int Write(const void* buf, int len);
+    int Puts(const char* buf);
+
+    bool ShouldRead() const noexcept;
+    bool ShouldWrite() const noexcept;
+    bool ShouldIoSpecial() const noexcept;
+    int RetryType() const noexcept;
+    bool ShouldRetry() const noexcept;
+
 private:
     static void Deleter(BIO* p) noexcept;
     std::unique_ptr<BIO, std::function<void(BIO*)>> m_bio;
@@ -39,6 +50,31 @@ inline void SslBio::Deleter(BIO* p) noexcept
 {
     if (p)
         BIO_free(p);
+}
+
+inline bool SslBio::ShouldRead() const noexcept
+{
+    return BIO_should_read(BioPtr());
+}
+
+inline bool SslBio::ShouldWrite() const noexcept
+{
+    return BIO_should_write(BioPtr());
+}
+
+inline bool SslBio::ShouldIoSpecial() const noexcept
+{
+    return BIO_should_io_special(BioPtr());
+}
+
+inline int SslBio::RetryType() const noexcept
+{
+    return BIO_retry_type(BioPtr());
+}
+
+inline bool SslBio::ShouldRetry() const noexcept
+{
+    return BIO_should_retry(BioPtr());
 }
 
 } //namespace sparrow

@@ -26,23 +26,19 @@ public:
     SslBase() = default;
     MOVEBLE_DEFAULT(SslBase);
     virtual ~SslBase() = default;
-
     SslBase(SSL_CTX* sslCtx);
     SslBase(SslCtxBase& sslCtx);
-
     SslBase(SSL* ssl);
     SslBase(const SslBase& ssl);
     SslBase& operator=(const SslBase& ssl);
-
     SSL* SslPtr() { return m_ssl.get(); }
     const SSL* SslPtr() const { return m_ssl.get(); }
-
     template<typename SslBaseT>
     SslBaseT Dup();
-
     bool HasObj() const { return !!m_ssl; }
-
-    void SetBio(SslBio& rbio, SslBio& wbio);
+    void SetBio(SslBio& rbio, SslBio& wbio); 
+    void SetConnectState();
+    void SetAcceptState();
 
 private:
     static void Deleter(SSL* p) noexcept;

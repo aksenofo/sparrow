@@ -72,4 +72,12 @@ void SslBase::SetBio(SslBio& rbio, SslBio& wbio)
     SSL_set_bio(m_ssl.get(), trbio, twbio);
 }
 
+void SslBase::SetConnectState() {
+    SSL_set_connect_state(m_ssl.get());
+}
+
+void SslBase::SetAcceptState() {
+    SSL_set_accept_state(m_ssl.get());
+}
+
 } // namespace sparrow
