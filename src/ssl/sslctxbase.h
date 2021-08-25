@@ -21,6 +21,8 @@ public:
     SslCtxBase(const SSL_METHOD* method);
     SslCtxBase(SSL_CTX* ctx);
     MOVEBLE_DEFAULT(SslCtxBase);
+    virtual ~SslCtxBase() = default;
+
     SslCtxBase(const SslCtxBase& sslContext);
     SslCtxBase& operator=(const SslCtxBase& sslContext);
 

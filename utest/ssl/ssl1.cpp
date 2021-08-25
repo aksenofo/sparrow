@@ -8,6 +8,7 @@
 
 #include "gtest/gtest.h"
 #include <sslbase.h>
+#include <sslbio.h>
 #include <sslctxbase.h>
 
 using namespace sparrow;
@@ -64,5 +65,20 @@ TEST(ssl, testSslBase0)
 
     Tssl tt = ssl4.Dup<Tssl>();
     ASSERT_TRUE(tt.HasObj());
+}
 
+TEST(ssl, testBio0)
+{
+    SslBio bio1(BIO_s_mem());
+    ASSERT_TRUE(bio1.HasObj());
+    SslBio bio2(BIO_s_mem());
+    ASSERT_TRUE(bio2.HasObj());
+
+    SslCtxBase ctx(SSLv23_method());
+    ASSERT_TRUE(ctx.HasObj());
+
+    SslBase ssl(ctx);
+    ASSERT_TRUE(ssl.HasObj());
+
+    ssl.SetBio(bio1, bio2);
 }

@@ -7,6 +7,7 @@
 #include <format.h>
 #include <log.h>
 #include <sslbase.h>
+#include <sslbio.h>
 #include <unistd.h>
 #include <utils.h>
 
@@ -53,6 +54,22 @@ SslBase& SslBase::operator=(const SslBase& ssl)
     m_ssl = std::unique_ptr<SSL, std::function<void(SSL*)>>(tssl, &SslBase::Deleter);
     CheckIfNullptr(m_ssl.get());
     return *this;
+}
+
+void SslBase::SetBio(SslBio& rbio, SslBio& wbio)
+{
+    BIO* trbio = rbio.BioPtr();
+    BIO* twbio = wbio.BioPtr();
+
+    CheckIf_1(BIO_up_ref(trbio));
+    try {
+        CheckIf_1(BIO_up_ref(twbio));
+    } catch (...) {
+        BIO_free(trbio);
+        throw;
+    }
+
+    SSL_set_bio(m_ssl.get(), trbio, twbio);
 }
 
 } // namespace sparrow

@@ -17,6 +17,7 @@
 namespace sparrow
 {
 class SslCtxBase;
+class SslBio;
 
 class SslBase : public SslAux
 {
@@ -24,6 +25,7 @@ class SslBase : public SslAux
 public:
     SslBase() = default;
     MOVEBLE_DEFAULT(SslBase);
+    virtual ~SslBase() = default;
 
     SslBase(SSL_CTX* sslCtx);
     SslBase(SslCtxBase& sslCtx);
@@ -39,6 +41,8 @@ public:
     SslBaseT Dup();
 
     bool HasObj() const { return !!m_ssl; }
+
+    void SetBio(SslBio& rbio, SslBio& wbio);
 
 private:
     static void Deleter(SSL* p) noexcept;
