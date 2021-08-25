@@ -69,16 +69,16 @@ TEST(ssl, testSslBase0)
 
 TEST(ssl, testBio0)
 {
-    SslBio bio1(BIO_s_mem());
-    ASSERT_TRUE(bio1.HasObj());
-    SslBio bio2(BIO_s_mem());
-    ASSERT_TRUE(bio2.HasObj());
-
     SslCtxBase ctx(SSLv23_method());
     ASSERT_TRUE(ctx.HasObj());
 
     SslBase ssl(ctx);
     ASSERT_TRUE(ssl.HasObj());
+
+    SslBio bio1;
+    ASSERT_TRUE(bio1.HasObj());
+    SslBio bio2;
+    ASSERT_TRUE(bio2.HasObj());
 
     ssl.SetBio(bio1, bio2);
 }

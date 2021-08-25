@@ -20,7 +20,7 @@ public:
     MOVEBLE_DEFAULT(SslBio);
     virtual ~SslBio() = default;
 
-    SslBio(const BIO_METHOD* type);
+    SslBio(const BIO_METHOD* type = BIO_s_mem());
     SslBio(BIO* bio);
     SslBio(const SslBio& bio);
     SslBio& operator=(const SslBio& bio);
