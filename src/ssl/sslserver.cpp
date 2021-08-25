@@ -8,10 +8,10 @@
 
 namespace sparrow
 {
-
+/*
 SslServer::SslServer(SslContext& context)
 : SslBase(context, true)
 {
 }
-
+*/
 } //namespace sparrow

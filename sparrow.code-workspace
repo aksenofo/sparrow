@@ -63,7 +63,10 @@
 			"bit": "cpp",
 			"set": "cpp",
 			"bitset": "cpp",
-			"valarray": "cpp"
+			"valarray": "cpp",
+			"iomanip": "cpp",
+			"any": "cpp",
+			"variant": "cpp"
 		}
 	}
 }

@@ -22,7 +22,7 @@ private:
 
     ev::io m_io;
     std::unique_ptr<TcpSocket> m_tcp;
-    std::unique_ptr<sparrow::SslServer> m_sslServer;
+//    std::unique_ptr<sparrow::SslServer> m_sslServer;
 
 };
 

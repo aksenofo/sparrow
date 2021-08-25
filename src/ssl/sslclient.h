@@ -12,11 +12,5 @@
 namespace sparrow
 {
 
-class SslClient : public SslBase
-{
-public:
-    MOVEBLE_DEFAULT(SslClient)
-    SslClient(SslContext& context);
-};
 
 } //namespace sparrow

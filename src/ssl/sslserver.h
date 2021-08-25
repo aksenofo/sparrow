@@ -12,11 +12,13 @@
 namespace sparrow
 {
 
+/*
 class SslServer : public SslBase
 {
 public:
     MOVEBLE_DEFAULT(SslServer)
     SslServer(SslContext& context);
 };
+*/
 
 } //namespace sparrow

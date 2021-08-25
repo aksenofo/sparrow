@@ -23,7 +23,7 @@ int main(int argc, char* argv[])
         sparrow::LogLevel::Info,
         sparrow::LogLevel::Warning);
 
-    sparrow::Singletone<sparrow::SslContext>::Instance();
+//    sparrow::Singletone<sparrow::SslContext>::Instance();
 
     struct sigaction act;
     act.sa_handler = [](int) {};

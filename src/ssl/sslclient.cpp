@@ -9,9 +9,4 @@
 namespace sparrow
 {
 
-SslClient::SslClient(SslContext& context)
-: SslBase(context, false)
-{
-}
-
 } //namespace sparrow
