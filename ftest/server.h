@@ -9,6 +9,9 @@
 #include <ev++.h>
 #include <memory>
 #include <utils.h>
+#include <sslbase.h>
+#include <sslhandler.h>
+#include <circlebuffer.h>
 
 class SslInstance
 {
@@ -21,7 +24,11 @@ private:
 
     ev::io m_io;
     std::unique_ptr<TcpSocket> m_tcp;
-//    std::unique_ptr<sparrow::SslServer> m_sslServer;
+
+    std::unique_ptr<sparrow::SslHandler> m_handler;
+
+    sparrow::CircularBuffer m_sendBuffer = sparrow::CircularBuffer(1024);
+    sparrow::CircularBuffer m_recvBuffer = sparrow::CircularBuffer(1024);
 
 };
 

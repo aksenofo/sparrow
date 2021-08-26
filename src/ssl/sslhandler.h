@@ -4,6 +4,8 @@
  *      All right reserved
  */
 
+#pragma once
+
 #include <sslaux.h>
 #include <sslbase.h>
 #include <utils.h>
@@ -20,6 +22,8 @@ public:
     MOVEBLE_DEFAULT(SslHandler);
     
     SslHandler(const SslBase& ssl);
+
+    SslHandler(SSL* ssl);
 
     bool Handle(CircularBuffer& sendBuf, CircularBuffer& recvBuf, int socket, bool& write, bool& read);
 

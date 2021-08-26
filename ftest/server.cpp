@@ -10,20 +10,34 @@
 
 #include <format.h>
 #include <netinet/in.h>
+#include <sslbio.h>
 #include <sys/socket.h>
 #include <tcp.h>
 
+using namespace sparrow;
+
 SslInstance::SslInstance(int socket)
 {
-//    m_sslServer = std::make_unique<sparrow::SslServer>(sparrow::Singletone<sparrow::SslContext>::Instance());
     m_tcp = std::make_unique<TcpSocket>(socket);
 
     m_io.set<SslInstance, &SslInstance::OnCallback>(this);
     m_io.start(m_tcp->Socket(), ev::READ);
+
+    SslContext ctx(SSLv23_method());
+    SslBase base(ctx);
+    base.SetAcceptState();
+    base.SetBio(SslBio(), SslBio());
+    m_handler = std::make_unique<SslHandler>(base);
 }
 
 void SslInstance::OnCallback(ev::io& watcher, int revents) noexcept
 {
+    bool write = revents & EV_WRITE;
+    bool read = revents & EV_READ;
+    bool rc = m_handler->Handle(m_sendBuffer, m_recvBuffer, watcher.fd, write, read);
+    if (rc)
+        watcher.start(m_tcp->Socket(), (read ? ev::READ : 0) | (write ? ev::WRITE : 0));
+    return;
 }
 
 SslServer::SslServer()

@@ -4,8 +4,8 @@
  *      All right reserved
  */
 
-#include <sslhandler.h>
 #include <sslbio.h>
+#include <sslhandler.h>
 
 namespace sparrow
 {
@@ -15,11 +15,18 @@ SslHandler::SslHandler(const SslBase& ssl)
 {
 }
 
-bool SslHandler::Handle(CircularBuffer& sendBuf, CircularBuffer& recvBuf, int socket, bool& write, bool& read) {
+SslHandler::SslHandler(SSL* ssl)
+: m_ssl(ssl)
+{
+}
+
+bool SslHandler::Handle(CircularBuffer& sendBuf, CircularBuffer& recvBuf, int socket, bool& write, bool& read)
+{
     return true;
 }
 
-bool SslHandler::DoHandhakke(int socket, bool& write, bool& read) {
+bool SslHandler::DoHandhakke(int socket, bool& write, bool& read)
+{
     return true;
 }
 
