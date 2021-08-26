@@ -1,9 +1,18 @@
-#include <openssl/ssl.h>
+/*
+ *      Author: Alexander Ksenofontov
+ *      License: MIT
+ *      All right reserved
+ */
+
+
 #include <openssl/err.h>
+#include <openssl/ssl.h>
 #include <singletone.h>
 
-struct SslInitializer
+namespace sparrow
 {
+
+struct SslInitializer {
 
     SslInitializer()
     {
@@ -14,3 +23,5 @@ struct SslInitializer
         //    ERR_load_crypto_strings();
     }
 };
+
+} // namespace sparrow
