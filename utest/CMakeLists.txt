@@ -26,6 +26,7 @@ set(base_source
 
 set(ssl_source
     ssl/ssl1.cpp
+    ssl/ssl2.cpp
 )
 
 add_executable(utest

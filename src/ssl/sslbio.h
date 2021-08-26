@@ -41,6 +41,9 @@ public:
     int RetryType() const noexcept;
     bool ShouldRetry() const noexcept;
 
+    bool operator==(const SslBio& bio) const noexcept;
+    bool operator!=(const SslBio& bio) const noexcept;
+
 private:
     static void Deleter(BIO* p) noexcept;
     std::unique_ptr<BIO, std::function<void(BIO*)>> m_bio;
@@ -76,5 +79,16 @@ inline bool SslBio::ShouldRetry() const noexcept
 {
     return BIO_should_retry(BioPtr());
 }
+
+inline bool SslBio::operator==(const SslBio& bio) const noexcept
+{
+    return m_bio.get() == bio.m_bio.get();
+}
+
+inline bool SslBio::operator!=(const SslBio& bio) const noexcept
+{
+    return m_bio.get() != bio.m_bio.get();
+}
+
 
 } //namespace sparrow

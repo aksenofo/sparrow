@@ -13,4 +13,5 @@ add_library(sparrow-ssl
     sslclient.cpp
     sslserver.cpp
     sslaux.cpp
+    sslhandler.cpp
 )

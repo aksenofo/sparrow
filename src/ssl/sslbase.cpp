@@ -56,10 +56,10 @@ SslBase& SslBase::operator=(const SslBase& ssl)
     return *this;
 }
 
-void SslBase::SetBio(SslBio& rbio, SslBio& wbio)
+void SslBase::SetBio(const SslBio& rbio, const SslBio& wbio)
 {
-    BIO* trbio = rbio.BioPtr();
-    BIO* twbio = wbio.BioPtr();
+    BIO* trbio = const_cast<BIO*>(rbio.BioPtr());
+    BIO* twbio = const_cast<BIO*>(wbio.BioPtr());
 
     CheckIf_1(BIO_up_ref(trbio));
     try {
@@ -72,12 +72,32 @@ void SslBase::SetBio(SslBio& rbio, SslBio& wbio)
     SSL_set_bio(m_ssl.get(), trbio, twbio);
 }
 
-void SslBase::SetConnectState() {
+void SslBase::SetConnectState()
+{
+    m_preparedAsServer = false;
     SSL_set_connect_state(m_ssl.get());
 }
 
-void SslBase::SetAcceptState() {
+void SslBase::SetAcceptState()
+{
+    m_preparedAsServer = true;
     SSL_set_accept_state(m_ssl.get());
+}
+
+SslBio SslBase::Rbio()
+{
+    BIO* bio = SSL_get_rbio(m_ssl.get());
+    CheckIfNullptr(bio);
+    BIO_up_ref(bio);
+    return SslBio(bio);
+}
+
+SslBio SslBase::Wbio()
+{
+    BIO* bio = SSL_get_wbio(m_ssl.get());
+    CheckIfNullptr(bio);
+    BIO_up_ref(bio);
+    return SslBio(bio);
 }
 
 } // namespace sparrow

@@ -48,6 +48,8 @@ struct Tssl : public SslBase {
 
 TEST(ssl, testSslBase0)
 {
+    Singletone<SslInitializer>::Instance();
+
     SslContext ctx(SSLv23_method());
     ASSERT_TRUE(ctx.HasObj());
 
@@ -69,6 +71,8 @@ TEST(ssl, testSslBase0)
 
 TEST(ssl, testBio0)
 {
+    Singletone<SslInitializer>::Instance();
+
     SslContext ctx(SSLv23_method());
     ASSERT_TRUE(ctx.HasObj());
 
@@ -81,4 +85,30 @@ TEST(ssl, testBio0)
     ASSERT_TRUE(bio2.HasObj());
 
     ssl.SetBio(bio1, bio2);
+}
+
+TEST(ssl, testInitAsServer)
+{
+    Singletone<SslInitializer>::Instance();
+    
+    SslContext ctx(SSLv23_method());
+    ASSERT_TRUE(ctx.HasObj());
+
+    SslBase ssl(ctx);
+    ssl.SetAcceptState();
+
+    ssl.SetBio(SslBio(), SslBio());
+}
+
+TEST(ssl, testInitAsClient)
+{
+    Singletone<SslInitializer>::Instance();
+    
+    SslContext ctx(SSLv23_method());
+    ASSERT_TRUE(ctx.HasObj());
+
+    SslBase ssl(ctx);
+    ssl.SetConnectState();
+    
+    ssl.SetBio(SslBio(), SslBio());
 }
