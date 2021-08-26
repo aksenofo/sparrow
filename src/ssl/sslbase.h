@@ -42,13 +42,14 @@ public:
     bool PreparedAsServer() const noexcept { return m_preparedAsServer; }
     template<typename SslBaseT>
     SslBaseT Dup();
+    
+    std::unique_ptr<SslContext> ContextPtr();
 
 private:
     static bool DetectIfServer(const SSL* ssl);
 
     static void Deleter(SSL* p) noexcept;
     std::unique_ptr<SSL, std::function<void(SSL*)>> m_ssl;
-    std::unique_ptr<SslContext> m_context;
     bool m_preparedAsServer = false;
 };
 

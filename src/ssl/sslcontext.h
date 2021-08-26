@@ -48,8 +48,13 @@ public:
     long GetOptions();
 
     bool HasObj() const { return !!m_ctx; }
+    bool operator==(const SslContext& ctx) const noexcept;
+    bool operator!=(const SslContext& ctx) const noexcept;
 
-    SSL_CTX* CtxPtr() noexcept { return m_ctx.get(); }
+    SSL_CTX* CtxPtr() noexcept
+    {
+        return m_ctx.get();
+    }
     const SSL_CTX* CtxPtr() const noexcept { return m_ctx.get(); }
 
 private:
@@ -62,6 +67,17 @@ inline void SslContext::Deleter(SSL_CTX* p) noexcept
 {
     if (p)
         SSL_CTX_free(p);
+}
+
+
+inline bool SslContext::operator==(const SslContext& ctx) const noexcept
+{
+    return m_ctx.get() == ctx.m_ctx.get();
+}
+
+inline bool SslContext::operator!=(const SslContext& ctx) const noexcept
+{
+    return m_ctx.get() != ctx.m_ctx.get();
 }
 
 } //namespace sparrow

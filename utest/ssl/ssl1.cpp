@@ -67,6 +67,8 @@ TEST(ssl, testSslBase0)
 
     Tssl tt = ssl4.Dup<Tssl>();
     ASSERT_TRUE(tt.HasObj());
+
+    ASSERT_EQ(*tt.ContextPtr(), ctx);
 }
 
 TEST(ssl, testBio0)

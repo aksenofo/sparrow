@@ -20,9 +20,6 @@ SslBase::SslBase(SSL_CTX* sslCtx)
     SSL* ssl = SSL_new(sslCtx);
     m_ssl = std::unique_ptr<SSL, std::function<void(SSL*)>>(ssl, &SslBase::Deleter);
     CheckIfNullptr(m_ssl.get());
-
-    SSL_CTX_up_ref(sslCtx);
-    m_context = std::make_unique<SslContext>(sslCtx);
 }
 
 SslBase::SslBase(SslContext& sslCtx)
@@ -31,7 +28,6 @@ SslBase::SslBase(SslContext& sslCtx)
     SSL* ssl = SSL_new(sslCtx.CtxPtr());
     m_ssl = std::unique_ptr<SSL, std::function<void(SSL*)>>(ssl, &SslBase::Deleter);
     CheckIfNullptr(m_ssl.get());
-    m_context = std::make_unique<SslContext>(sslCtx);
 }
 
 SslBase::SslBase(SSL* ssl)
@@ -39,10 +35,6 @@ SslBase::SslBase(SSL* ssl)
     assert(ssl);
     m_ssl = std::unique_ptr<SSL, std::function<void(SSL*)>>(ssl, &SslBase::Deleter);
     CheckIfNullptr(m_ssl.get());
-    SSL_CTX* ctx = SSL_get_SSL_CTX(ssl);
-    CheckIfNullptr(ctx);
-    SSL_CTX_up_ref(ctx);
-    m_context = std::make_unique<SslContext>(ctx);
 }
 
 SslBase::SslBase(const SslBase& ssl)
@@ -52,7 +44,6 @@ SslBase::SslBase(const SslBase& ssl)
     SSL_up_ref(tssl);
     m_ssl = std::unique_ptr<SSL, std::function<void(SSL*)>>(tssl, &SslBase::Deleter);
     CheckIfNullptr(m_ssl.get());
-    m_context = std::make_unique<SslContext>(*ssl.m_context);
 }
 
 SslBase& SslBase::operator=(const SslBase& ssl)
@@ -62,7 +53,6 @@ SslBase& SslBase::operator=(const SslBase& ssl)
     SSL_up_ref(tssl);
     m_ssl = std::unique_ptr<SSL, std::function<void(SSL*)>>(tssl, &SslBase::Deleter);
     CheckIfNullptr(m_ssl.get());
-    m_context = std::make_unique<SslContext>(*ssl.m_context);
     return *this;
 }
 
@@ -108,6 +98,14 @@ SslBio SslBase::Wbio()
     CheckIfNullptr(bio);
     BIO_up_ref(bio);
     return SslBio(bio);
+}
+
+std::unique_ptr<SslContext> SslBase::ContextPtr()
+{
+    SSL_CTX* ctx = SSL_get_SSL_CTX(m_ssl.get());
+    CheckIfNullptr(ctx);
+    SSL_CTX_up_ref(ctx);
+    return std::make_unique<SslContext>(ctx);
 }
 
 SslBase::~SslBase() = default;
