@@ -25,7 +25,7 @@ class SslBase : public SslAux
 public:
     SslBase() = default;
     MOVEBLE_DEFAULT(SslBase);
-    virtual ~SslBase() = default;
+    virtual ~SslBase();
     SslBase(SSL_CTX* sslCtx);
     SslBase(SslContext& sslCtx);
     SslBase(SSL* ssl);
@@ -48,6 +48,7 @@ private:
 
     static void Deleter(SSL* p) noexcept;
     std::unique_ptr<SSL, std::function<void(SSL*)>> m_ssl;
+    std::unique_ptr<SslContext> m_context;
     bool m_preparedAsServer = false;
 };
 
