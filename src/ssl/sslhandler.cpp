@@ -15,4 +15,12 @@ SslHandler::SslHandler(const SslBase& ssl)
 {
 }
 
+bool SslHandler::Handle(CircularBuffer& sendBuf, CircularBuffer& recvBuf, int socket, bool& write, bool& read) {
+    return true;
+}
+
+bool SslHandler::DoHandhakke(int socket, bool& write, bool& read) {
+    return true;
+}
+
 } //namespace sparrow

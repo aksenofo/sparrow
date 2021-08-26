@@ -7,6 +7,7 @@
 #include <sslaux.h>
 #include <sslbase.h>
 #include <utils.h>
+#include <circlebuffer.h>
 
 namespace sparrow
 {
@@ -20,7 +21,11 @@ public:
     
     SslHandler(const SslBase& ssl);
 
+    bool Handle(CircularBuffer& sendBuf, CircularBuffer& recvBuf, int socket, bool& write, bool& read);
+
 private:
+    bool DoHandhakke(int socket, bool& write, bool& read);
+
     SslBase m_ssl;
 };
 

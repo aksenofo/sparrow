@@ -4,6 +4,8 @@
  *      All right reserved
  */
 
+#pragma once 
+
 #include <algorithm>
 #include <assert.h>
 #include <cstdint>

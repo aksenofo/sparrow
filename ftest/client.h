@@ -7,7 +7,6 @@
 #include <ev++.h>
 #include <utils.h>
 #include <tcp.h>
-#include <sslclient.h>
 
 class SslClient
 {

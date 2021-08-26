@@ -9,7 +9,6 @@
 #include <ev++.h>
 #include <memory>
 #include <utils.h>
-#include <sslserver.h>
 
 class SslInstance
 {
