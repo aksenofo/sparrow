@@ -9,7 +9,7 @@
 #include "gtest/gtest.h"
 #include <sslbase.h>
 #include <sslbio.h>
-#include <sslctxbase.h>
+#include <sslcontext.h>
 
 using namespace sparrow;
 
@@ -17,11 +17,11 @@ TEST(ssl, test_SslCtxBase0)
 {
     Singletone<SslInitializer>::Instance();
 
-    SslCtxBase ctx(SSLv23_method());
-    SslCtxBase ctx1(ctx);
+    SslContext ctx(SSLv23_method());
+    SslContext ctx1(ctx);
     ASSERT_TRUE(ctx.HasObj());
     ASSERT_TRUE(ctx1.HasObj());
-    SslCtxBase ctx2 = std::move(ctx1);
+    SslContext ctx2 = std::move(ctx1);
     ASSERT_FALSE(ctx1.HasObj());
     ASSERT_TRUE(ctx2.HasObj());
 
@@ -48,7 +48,7 @@ struct Tssl : public SslBase {
 
 TEST(ssl, testSslBase0)
 {
-    SslCtxBase ctx(SSLv23_method());
+    SslContext ctx(SSLv23_method());
     ASSERT_TRUE(ctx.HasObj());
 
     SslBase ssl1(ctx);
@@ -69,7 +69,7 @@ TEST(ssl, testSslBase0)
 
 TEST(ssl, testBio0)
 {
-    SslCtxBase ctx(SSLv23_method());
+    SslContext ctx(SSLv23_method());
     ASSERT_TRUE(ctx.HasObj());
 
     SslBase ssl(ctx);

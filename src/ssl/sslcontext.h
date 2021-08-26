@@ -14,17 +14,17 @@
 namespace sparrow
 {
 
-class SslCtxBase : public SslAux
+class SslContext : public SslAux
 {
 public:
-    SslCtxBase() = default;
-    SslCtxBase(const SSL_METHOD* method);
-    SslCtxBase(SSL_CTX* ctx);
-    MOVEBLE_DEFAULT(SslCtxBase);
-    virtual ~SslCtxBase() = default;
+    SslContext() = default;
+    SslContext(const SSL_METHOD* method);
+    SslContext(SSL_CTX* ctx);
+    MOVEBLE_DEFAULT(SslContext);
+    virtual ~SslContext() = default;
 
-    SslCtxBase(const SslCtxBase& sslContext);
-    SslCtxBase& operator=(const SslCtxBase& sslContext);
+    SslContext(const SslContext& sslContext);
+    SslContext& operator=(const SslContext& sslContext);
 
     void SetVerify(int mode, SSL_verify_cb verify_callback);
     void SetVerifyDepth(int depth);
@@ -58,7 +58,7 @@ private:
     std::unique_ptr<SSL_CTX, std::function<void(SSL_CTX*)>> m_ctx;
 };
 
-inline void SslCtxBase::Deleter(SSL_CTX* p) noexcept
+inline void SslContext::Deleter(SSL_CTX* p) noexcept
 {
     if (p)
         SSL_CTX_free(p);

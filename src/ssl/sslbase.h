@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include "sslctxbase.h"
+#include "sslcontext.h"
 
 #include <circlebuffer.h>
 #include <openssl/ssl.h>
@@ -16,7 +16,7 @@
 
 namespace sparrow
 {
-class SslCtxBase;
+class SslContext;
 class SslBio;
 
 class SslBase : public SslAux
@@ -27,7 +27,7 @@ public:
     MOVEBLE_DEFAULT(SslBase);
     virtual ~SslBase() = default;
     SslBase(SSL_CTX* sslCtx);
-    SslBase(SslCtxBase& sslCtx);
+    SslBase(SslContext& sslCtx);
     SslBase(SSL* ssl);
     SslBase(const SslBase& ssl);
     SslBase& operator=(const SslBase& ssl);

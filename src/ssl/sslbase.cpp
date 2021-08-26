@@ -22,7 +22,7 @@ SslBase::SslBase(SSL_CTX* sslCtx)
     CheckIfNullptr(m_ssl.get());
 }
 
-SslBase::SslBase(SslCtxBase& sslCtx)
+SslBase::SslBase(SslContext& sslCtx)
 {
     assert(sslCtx.CtxPtr());
     SSL* ssl = SSL_new(sslCtx.CtxPtr());
