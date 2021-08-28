@@ -108,6 +108,27 @@ std::unique_ptr<SslContext> SslBase::ContextPtr()
     return std::make_unique<SslContext>(ctx);
 }
 
+int SslBase::DoHandshake()
+{
+    assert(m_ssl.get());
+    return SSL_do_handshake(m_ssl.get());
+}
+
+bool SslBase::IsAcceptableReturn(const int n, const int extraCode) const noexcept
+{
+    assert(m_ssl.get());
+    int code = SSL_get_error(m_ssl.get(), n);
+    return n >= 0 || code == SSL_ERROR_NONE || code == extraCode;
+}
+
+bool SslBase::IsCode(int n, int extraCode)
+{
+    assert(m_ssl.get());
+    int code = SSL_get_error(m_ssl.get(), n);
+    assert(IsAcceptableReturn(n, extraCode));
+    return code == extraCode;
+}
+
 SslBase::~SslBase() = default;
 
 } // namespace sparrow

@@ -33,17 +33,23 @@ public:
     SslBase& operator=(const SslBase& ssl);
     SSL* SslPtr() { return m_ssl.get(); }
     const SSL* SslPtr() const { return m_ssl.get(); }
-        bool HasObj() const { return !!m_ssl; }
+    bool HasObj() const { return !!m_ssl; }
     void SetBio(const SslBio& rbio, const SslBio& wbio);
     void SetConnectState();
     void SetAcceptState();
+    bool IsInitFinished() const noexcept;
     SslBio Rbio();
     SslBio Wbio();
     bool PreparedAsServer() const noexcept { return m_preparedAsServer; }
     template<typename SslBaseT>
     SslBaseT Dup();
-    
+
+    int DoHandshake();
+
     std::unique_ptr<SslContext> ContextPtr();
+
+    bool IsAcceptableReturn(const int n, const int code) const noexcept;
+    bool IsCode(int n, int extraCode);
 
 private:
     static bool DetectIfServer(const SSL* ssl);
@@ -58,9 +64,15 @@ SslBaseT SslBase::Dup()
 {
     SSL* ssl = SslPtr();
     SSL* nssl = SSL_dup(ssl);
+    CheckIfNullptr(nssl);
     return SslBaseT(nssl);
 }
 
+inline bool SslBase::IsInitFinished() const noexcept
+{
+    assert(m_ssl.get());
+    return SSL_is_init_finished(m_ssl.get());
+}
 
 inline void SslBase::Deleter(SSL* p) noexcept
 {

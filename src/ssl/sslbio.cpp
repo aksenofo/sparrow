@@ -40,24 +40,24 @@ SslBio& SslBio::operator=(const SslBio& bio)
     return *this;
 }
 
-int SslBio::Read(void* buf, int len)
+int SslBio::Read(void* buf, int len) const noexcept
 {
-    return BIO_read(BioPtr(), buf, len);
+    return BIO_read(const_cast<BIO*>(BioPtr()), buf, len);
 }
 
-int SslBio::Gets(char* buf, int size)
+int SslBio::Gets(char* buf, int size) const noexcept
 {
-    return BIO_gets(BioPtr(), buf, size);
+    return BIO_gets(const_cast<BIO*>(BioPtr()), buf, size);
 }
 
-int SslBio::Write(const void* buf, int len)
+int SslBio::Write(const void* buf, int len) const noexcept
 {
-    return BIO_write(BioPtr(), buf, len);
+    return BIO_write(const_cast<BIO*>(BioPtr()), buf, len);
 }
 
-int SslBio::Puts(const char* buf)
+int SslBio::Puts(const char* buf) const noexcept
 {
-    return BIO_puts(BioPtr(), buf);
+    return BIO_puts(const_cast<BIO*>(BioPtr()), buf);
 }
 
 } //namespace sparrow

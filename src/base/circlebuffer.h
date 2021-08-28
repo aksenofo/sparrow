@@ -4,7 +4,7 @@
  *      All right reserved
  */
 
-#pragma once 
+#pragma once
 
 #include <algorithm>
 #include <assert.h>
@@ -195,9 +195,24 @@ private:
     State m_state;                       /*!< buffer state(full, empty, ...)*/
 };
 
+/*! \brief Circular buffer template.
+ *
+ *  Circular buffer is used to hold temporary date.
+ */
+template<int Size>
+class CircularBufferConst : public CircularBuffer
+{
+public:
+    CircularBufferConst()
+    : CircularBuffer(Size)
+    {
+    }
+};
+
+
 /*! \brief Consumer aux class.
  *
- *  Consumer allow simplify process reading data from circular buffer.
+ *  Consumer allows simplify process of reading data from circular buffer.
  */
 class Consumer
 {
@@ -228,7 +243,7 @@ public:
 
 /*! \brief Populator aux class.
  *
- *  Populator allow simplify process writing data to circular buffer.
+ *  Populator allows simplify process of writing data to circular buffer.
  */
 class Populator
 {
@@ -255,6 +270,7 @@ public:
         }
         return totallyPopulated;
     }
+
 };
 
 } // namespace sparrow

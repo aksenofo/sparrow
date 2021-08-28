@@ -30,10 +30,10 @@ public:
 
     bool HasObj() const { return !!m_bio; }
 
-    int Read(void* buf, int len);
-    int Gets(char* buf, int size);
-    int Write(const void* buf, int len);
-    int Puts(const char* buf);
+    int Read(void* buf, int len) const noexcept;
+    int Gets(char* buf, int size) const noexcept;
+    int Write(const void* buf, int len) const noexcept;
+    int Puts(const char* buf) const noexcept;
 
     bool ShouldRead() const noexcept;
     bool ShouldWrite() const noexcept;
