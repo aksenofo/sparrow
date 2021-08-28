@@ -53,6 +53,9 @@ public:
     bool IsAcceptableReturn(const int n, const int code) const noexcept;
     bool IsCode(int n, int extraCode);
 
+    bool operator==(const SslBase& o) const noexcept;
+    bool operator!=(const SslBase& o) const noexcept;
+
 private:
     static bool DetectIfServer(const SSL* ssl);
 
@@ -74,6 +77,18 @@ inline bool SslBase::IsInitFinished() const noexcept
 {
     assert(m_ssl.get());
     return SSL_is_init_finished(m_ssl.get());
+}
+
+inline bool SslBase::operator==(const SslBase& o) const noexcept
+{
+    assert(m_ssl.get() && o.m_ssl.get());
+    return m_ssl.get() == o.m_ssl.get();
+}
+
+inline bool SslBase::operator!=(const SslBase& o) const noexcept
+{
+    assert(m_ssl.get() && o.m_ssl.get());
+    return m_ssl.get() != o.m_ssl.get();
 }
 
 inline void SslBase::Deleter(SSL* p) noexcept
