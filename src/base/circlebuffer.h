@@ -146,7 +146,7 @@ public:
     /*!
       \return Return size of reserved bytes 
     */
-    uint32_t Reserved() const noexcept { return m_size; }
+    uint32_t Capacity() const noexcept { return m_size; }
 
     //! Return number of continuous blocks in buffer.
     //! May be 0 - buffer is empty,

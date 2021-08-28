@@ -6,23 +6,23 @@
 
 #pragma once
 
+#include <circlebuffer.h>
 #include <sslaux.h>
 #include <sslbase.h>
 #include <utils.h>
-#include <circlebuffer.h>
 
 namespace sparrow
 {
 
 const int kEncBufferSize = 32;
 
-class SslHandler : public SslAux {
+class SslHandler : public SslAux
+{
 
 public:
-
     COPYBLE_DEFAULT(SslHandler);
     MOVEBLE_DEFAULT(SslHandler);
-    
+
     SslHandler(const SslBase& ssl);
 
     SslHandler(SSL* ssl);
@@ -34,6 +34,7 @@ private:
     static bool SockRecv(int sock, CircularBuffer& mb);
 
     void Unencrypt(CircularBuffer& cb);
+    bool Encrypt(CircularBuffer& cb);
 
     bool DoHandshake(int socket, bool& write, bool& read);
     bool DoDataExchande(int socket, CircularBuffer& sendBuf, CircularBuffer& recvBuf, bool& write, bool& read);

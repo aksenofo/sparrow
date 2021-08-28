@@ -43,6 +43,8 @@ public:
     bool PreparedAsServer() const noexcept { return m_preparedAsServer; }
     template<typename SslBaseT>
     SslBaseT Dup();
+    int Read(uint8_t* ptr, size_t size) const noexcept;
+    int Write(const uint8_t* ptr, size_t size) const noexcept;
 
     int DoHandshake();
 

@@ -66,7 +66,8 @@
 			"valarray": "cpp",
 			"iomanip": "cpp",
 			"any": "cpp",
-			"variant": "cpp"
+			"variant": "cpp",
+			"condition_variable": "cpp"
 		}
 	}
 }

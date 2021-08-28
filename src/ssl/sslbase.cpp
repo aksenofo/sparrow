@@ -129,6 +129,17 @@ bool SslBase::IsCode(int n, int extraCode)
     return code == extraCode;
 }
 
+int SslBase::Read(uint8_t* ptr, size_t size) const noexcept
+{
+    assert(m_ssl.get());
+    return SSL_read(m_ssl.get(), ptr, size);
+}
+
+int SslBase::Write(const uint8_t* ptr, size_t size) const noexcept {
+    assert(m_ssl.get());
+    return SSL_write(m_ssl.get(), ptr, size);
+}
+
 SslBase::~SslBase() = default;
 
 } // namespace sparrow

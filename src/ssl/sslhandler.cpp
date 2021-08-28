@@ -74,15 +74,63 @@ bool SslHandler::DoHandshake(int socket, bool& write, bool& read)
 
 void SslHandler::Unencrypt(CircularBuffer& cb)
 {
-    bool needRead = false;
-    int nWrite;
+    int nRead = 0;
+    int nWrite = 0;
+
+    SslBio rbio = m_ssl.Rbio();
 
     do {
         if (cb.IsFull()) {
-            throw std::runtime_error(format("Read buffer has no space. Capacity: %1", cb.Reserved()));
+            throw std::runtime_error(format("Read buffer has no space. Capacity: %1", cb.Capacity()));
         }
+        Populator populator;
+        nRead = populator(cb, [this](uint8_t* buf, size_t size) {
+            int nRead = m_ssl.Read(buf, size);
+            if (!m_ssl.IsAcceptableReturn(nRead, SSL_ERROR_WANT_READ))
+                throw std::runtime_error(format("Cannot SSL_read. %1", GetLastErrorText()));
+            return nRead;
+        });
 
-    } while (needRead && nWrite);
+        Consumer consumer;
+        nWrite = consumer(m_encRecvBuffer, [&rbio, this](const uint8_t* buf, size_t size) {
+            int nWrite = rbio.Write(buf, size);
+            if (!m_ssl.IsAcceptableReturn(nWrite, SSL_ERROR_WANT_WRITE))
+                throw std::runtime_error(format("Cannot BIO_write. %1", GetLastErrorText()));
+            return nWrite;
+        });
+
+    } while (nRead && nWrite);
+}
+
+bool SslHandler::Encrypt(CircularBuffer& cb)
+{
+    SslBio wbio = m_ssl.Wbio();
+    Consumer consumer;
+    Populator populator;
+
+    do {
+        consumer(cb, [this](const uint8_t* ptr, size_t size) {
+            int nWrite = m_ssl.Write(ptr, size);
+            if (!m_ssl.IsAcceptableReturn(nWrite, 0))
+                throw std::runtime_error(format("Cannot SSL_write. %1", GetLastErrorText()));
+
+            return nWrite;
+        });
+
+        if (!m_ssl.IsInitFinished()) // TODO
+            throw std::runtime_error(format("Needs to re-negotiate. Not implemented"));
+
+        populator(m_encSendBuffer, [&wbio](uint8_t* ptr, size_t size) {
+            int nRead = wbio.Read(ptr, size);
+            if (nRead == -1 && !wbio.ShouldRetry())
+                throw std::runtime_error(format("Cannot BIO_read. %1", GetLastErrorText()));
+
+            return nRead;
+        });
+
+    } while (!cb.IsEmpty() && !m_encSendBuffer.IsFull());
+    
+    return !m_encSendBuffer.IsFull();
 }
 
 void SslHandler::SockSend(int sock, CircularBuffer& cb)
