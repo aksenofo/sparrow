@@ -13,6 +13,8 @@
 #include <sslhandler.h>
 #include <circlebuffer.h>
 
+extern std::string sertificate, privateKey;
+
 class SslInstance
 {
 public:

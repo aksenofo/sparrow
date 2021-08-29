@@ -140,6 +140,11 @@ int SslBase::Write(const uint8_t* ptr, size_t size) const noexcept {
     return SSL_write(m_ssl.get(), ptr, size);
 }
 
+void SslBase::CheckPrivateKey() const {
+    assert(m_ssl.get());
+    CheckIf_1(SSL_check_private_key(m_ssl.get()));
+}
+
 SslBase::~SslBase() = default;
 
 } // namespace sparrow

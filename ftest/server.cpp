@@ -16,6 +16,9 @@
 
 using namespace sparrow;
 
+std::string sertificate, privateKey;
+
+
 SslInstance::SslInstance(int socket)
 {
     m_tcp = std::make_unique<TcpSocket>(socket);
@@ -24,6 +27,11 @@ SslInstance::SslInstance(int socket)
     m_io.start(m_tcp->Socket(), ev::READ);
 
     SslContext ctx(SSLv23_method());
+    ctx.UseCertificateFile(sertificate, SSL_FILETYPE_PEM);
+    ctx.UsePrivateKeyFile(privateKey, SSL_FILETYPE_PEM);
+    ctx.CheckPrivateKey();
+    ctx.SetOptions( SSL_OP_ALL | SSL_OP_NO_SSLv2 | SSL_OP_NO_SSLv3);
+
     SslBase base(ctx);
     base.SetAcceptState();
     base.SetBio(SslBio(), SslBio());

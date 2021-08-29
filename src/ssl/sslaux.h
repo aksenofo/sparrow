@@ -15,8 +15,8 @@ class SslAux
 {
 public:
     static std::string GetLastErrorText();
-    void CheckIf_1(int rc);
-    void CheckIfNullptr(void* ptr);
+    void CheckIf_1(int rc) const;
+    void CheckIfNullptr(void* ptr) const;
 };
 
 } //namespace sparrow

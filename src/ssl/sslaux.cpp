@@ -24,13 +24,13 @@ std::string SslAux::GetLastErrorText()
     return ret;
 }
 
-void SslAux::CheckIf_1(int rc)
+void SslAux::CheckIf_1(int rc) const
 {
     if (rc != 1)
         throw std::runtime_error(format("'%1'", GetLastErrorText()));
 }
 
-void SslAux::CheckIfNullptr(void* ptr)
+void SslAux::CheckIfNullptr(void* ptr) const
 {
     if (!ptr)
         throw std::runtime_error(format("'%1'", GetLastErrorText()));

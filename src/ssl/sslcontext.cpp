@@ -117,4 +117,11 @@ long SslContext::GetOptions()
     return SSL_CTX_get_options(CtxPtr());
 }
 
+void SslContext::CheckPrivateKey() const
+{
+    assert(CtxPtr());
+    CheckIf_1(SSL_CTX_check_private_key(const_cast<SSL_CTX*>(CtxPtr())));
+}
+
+
 } //namespace sparrow
