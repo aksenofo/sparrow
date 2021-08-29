@@ -64,12 +64,13 @@ int main(int argc, char* argv[])
         sparrow::LogLevel::Error,
         sparrow::LogLevel::Panic,
         sparrow::LogLevel::Info,
+        sparrow::LogLevel::Debug,
         sparrow::LogLevel::Warning);
 
     //    sparrow::Singletone<sparrow::SslContext>::Instance();
 
     ev::default_loop loop;
-    SslServer sslServer;
+//    SslServer sslServer;
     SslClient sslClient;
 
     loop.run(0);
