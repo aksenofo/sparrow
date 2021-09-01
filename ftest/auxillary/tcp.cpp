@@ -49,13 +49,17 @@ TcpBase::TcpBase()
 
     int err = SetNonblock(Socket());
     if (err != 0) {
-        throw std::runtime_error(sparrow::format("Failed to fcntl in client. Code %1.", sparrow::ToECode(errno)));
+        throw std::runtime_error(sparrow::format("Failed to nonblock. Code %1.", sparrow::ToECode(errno)));
     }
 }
 
 TcpBase::TcpBase(int socket)
 {
     m_socket.reset(reinterpret_cast<void*>(socket));
+    int err = SetNonblock(Socket());
+    if (err != 0) {
+        throw std::runtime_error(sparrow::format("Failed to nonblock. Code %1.", sparrow::ToECode(errno)));
+    }
 }
 
 TcpSocket::TcpSocket(const std::string& url, int port)

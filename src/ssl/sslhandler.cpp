@@ -59,36 +59,39 @@ bool SslHandler::DoDataExchande(int socket, CircularBuffer& sendBuf, CircularBuf
 
 bool SslHandler::DoHandshake(int socket, bool& write, bool& read)
 {
+    const SslBio wbio = m_ssl.Wbio();
+    SslBio rbio = m_ssl.Rbio();
+    Populator populator;
+    Consumer consumer;
+
     bool notFinished = m_ssl.IsInitFinished();
     int n = m_ssl.DoHandshake();
     if (!m_ssl.IsAcceptableReturn(n, SSL_ERROR_WANT_READ)) {
         throw std::runtime_error(format("Cannot SSL_do_handshake. %1", m_ssl.GetLastErrorText()));
     }
+
     bool needRead = m_ssl.IsCode(n, SSL_ERROR_WANT_READ);
     if (needRead) {
-        const SslBio wbio = m_ssl.Wbio();
-        Populator populator;
         populator(m_encSendBuffer, [&wbio](uint8_t* ptr, size_t size) {
             int nRead = wbio.Read(ptr, size);
-            if (nRead == -1 && !wbio.ShouldRetry())
+            if (nRead == -1 && !wbio.ShouldRetry()) {
                 throw std::runtime_error(format("Cannot BIO_read. %1", GetLastErrorText()));
+            }
             return (nRead < 0) ? 0 : nRead;
         });
     }
     SockSend(socket, m_encSendBuffer);
 
     bool socketNotClosed = true;
-    uint32_t consumedNumber = 0;
     if (read) {
         socketNotClosed = SockRecv(socket, m_encRecvBuffer);
     }
 
-    SslBio rbio = m_ssl.Rbio();
-    Consumer consumer;
-    consumedNumber = consumer(m_encRecvBuffer, [&rbio](const uint8_t* ptr, size_t size) {
+    uint32_t consumedNumber = consumer(m_encRecvBuffer, [&rbio](const uint8_t* ptr, size_t size) {
         int nWrite = rbio.Write(ptr, size);
-        if (nWrite == -1 && !rbio.ShouldRetry())
+        if (nWrite == -1 && !rbio.ShouldRetry()) {
             throw std::runtime_error(format("Cannot BIO_write. %1", GetLastErrorText()));
+        }
         return (nWrite < 0) ? 0 : nWrite;
     });
 
@@ -118,8 +121,9 @@ void SslHandler::Unencrypt(CircularBuffer& cb)
         Consumer consumer;
         nWrite = consumer(m_encRecvBuffer, [&rbio, this](const uint8_t* buf, size_t size) {
             int nWrite = rbio.Write(buf, size);
-            if (!m_ssl.IsAcceptableReturn(nWrite, SSL_ERROR_WANT_WRITE))
+            if (!m_ssl.IsAcceptableReturn(nWrite, SSL_ERROR_WANT_WRITE)) {
                 throw std::runtime_error(format("Cannot BIO_write. %1", GetLastErrorText()));
+            }
             return nWrite < 0 ? 0 : nWrite;
         });
 
@@ -127,8 +131,9 @@ void SslHandler::Unencrypt(CircularBuffer& cb)
         Populator populator;
         nRead = populator(cb, [this](uint8_t* buf, size_t size) {
             int nRead = m_ssl.Read(buf, size);
-            if (!m_ssl.IsAcceptableReturn(nRead, SSL_ERROR_WANT_READ))
+            if (!m_ssl.IsAcceptableReturn(nRead, SSL_ERROR_WANT_READ)) {
                 throw std::runtime_error(format("Cannot SSL_read. %1", GetLastErrorText()));
+            }
             return nRead < 0 ? 0 : nRead;
         });
 
@@ -147,9 +152,9 @@ bool SslHandler::Encrypt(CircularBuffer& cb)
         // Transmit data from input data buffer to encryptor(SSL)
         consumer(cb, [this](const uint8_t* ptr, size_t size) {
             int nWrite = m_ssl.Write(ptr, size);
-            if (!m_ssl.IsAcceptableReturn(nWrite, 0))
+            if (!m_ssl.IsAcceptableReturn(nWrite, 0)) {
                 throw std::runtime_error(format("Cannot SSL_write. %1", GetLastErrorText()));
-
+            }
             return nWrite < 0 ? 0 : nWrite;
         });
 
@@ -159,9 +164,9 @@ bool SslHandler::Encrypt(CircularBuffer& cb)
         // Transmit data from encryptor to output encrypted data buffer
         populator(m_encSendBuffer, [&wbio](uint8_t* ptr, size_t size) {
             int nRead = wbio.Read(ptr, size);
-            if (nRead == -1 && !wbio.ShouldRetry())
+            if (nRead == -1 && !wbio.ShouldRetry()) {
                 throw std::runtime_error(format("Cannot BIO_read. %1", GetLastErrorText()));
-
+            }
             return nRead < 0 ? 0 : nRead;
         });
 
@@ -175,8 +180,9 @@ void SslHandler::SockSend(int sock, CircularBuffer& cb)
     Consumer consumer;
     uint32_t s = consumer(cb, [&sock](const uint8_t* ptr, const size_t size) {
         int rc = write(sock, ptr, size);
-        if (rc < 0 && errno != EAGAIN)
+        if (rc < 0 && errno != EAGAIN) {
             throw std::runtime_error(format("Cannot write to socket. %1", ToECode(errno)));
+        }
         return rc < 0 ? 0 : rc;
         ;
     });
@@ -190,13 +196,17 @@ bool SslHandler::SockRecv(int sock, CircularBuffer& cb)
     bool isSocketNotClosed = true;
     auto s = populator(cb, [&sock, &isSocketNotClosed](uint8_t* ptr, const size_t size) {
         int rc = read(sock, ptr, size);
-        if (rc < 0 && errno != EAGAIN)
+        if (rc < 0 && errno != EAGAIN) {
             throw std::runtime_error(format("Cannot read from socket. %1", ToECode(errno)));
-        if (rc == 0)
-            isSocketNotClosed = false;
+        }
+
+        isSocketNotClosed = rc;
         return rc < 0 ? 0 : rc;
     });
-    LOG(Debug) << format("recv:%1 bytes.", s);
+
+    if (s)
+        LOG(Debug) << format("recv:%1 bytes.", s);
+    
     return isSocketNotClosed;
 }
 

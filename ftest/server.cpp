@@ -30,7 +30,7 @@ SslInstance::SslInstance(int socket)
     ctx.UseCertificateFile(sertificate, SSL_FILETYPE_PEM);
     ctx.UsePrivateKeyFile(privateKey, SSL_FILETYPE_PEM);
     ctx.CheckPrivateKey();
-    ctx.SetOptions( SSL_OP_ALL | SSL_OP_NO_SSLv2 | SSL_OP_NO_SSLv3);
+    ctx.SetOptions(SSL_OP_ALL | SSL_OP_NO_SSLv2 | SSL_OP_NO_SSLv3);
 
     SslBase base(ctx);
     base.SetAcceptState();
@@ -45,12 +45,17 @@ void SslInstance::OnCallback(ev::io& watcher, int revents) noexcept
     bool rc = m_handler->Handle(m_sendBuffer, m_recvBuffer, watcher.fd, write, read);
     if (rc)
         watcher.start(m_tcp->Socket(), (read ? ev::READ : 0) | (write ? ev::WRITE : 0));
+    else {
+        watcher.stop();
+        LOG(Debug) << format("Connection closed for socket #%1", watcher.fd);
+    }
+
     return;
 }
 
 SslServer::SslServer()
 {
-    m_tcp = std::make_unique<TcpListener>(10000, 5);
+    m_tcp = std::make_unique<TcpListener>(55555, 5);
     m_io.set<SslServer, &SslServer::OnAccept>(this);
     m_io.start(m_tcp->Socket(), ev::READ);
 }

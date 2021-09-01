@@ -70,7 +70,7 @@ int main(int argc, char* argv[])
     //    sparrow::Singletone<sparrow::SslContext>::Instance();
 
     ev::default_loop loop;
-//    SslServer sslServer;
+    SslServer sslServer;
     SslClient sslClient;
 
     loop.run(0);
