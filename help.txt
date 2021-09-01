@@ -1,3 +1,7 @@
+#       Author: Alexander Ksenofontov
+#       License: MIT
+#       All right reserved
+ 
 git submodule add
 git submodule init
 git submodule update
