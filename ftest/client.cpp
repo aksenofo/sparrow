@@ -29,7 +29,9 @@ void SslClient::OnCallback(ev::io& watcher, int revents)
     bool rc = m_handler->Handle(m_sendBuffer, m_recvBuffer, watcher.fd, write, read);
     if(rc)
         watcher.start(m_tcp->Socket(), (read ? ev::READ : 0) | (write ? ev::WRITE : 0));
-    
+    else
+        watcher.stop();
+        
     char b [1024];
     memset(b, 0, sizeof(b));
     m_recvBuffer.Get(b, sizeof(b));
