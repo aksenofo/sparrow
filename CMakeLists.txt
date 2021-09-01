@@ -14,6 +14,9 @@ set(CMAKE_CXX_STANDARD 14)
 include(cmake-common/common.cmake)
 include(3th/3th.cmake)
 
+add_definitions(-Wno-deprecated)
+add_definitions(-Wno-deprecated-declarations)
+
 add_subdirectory(src)
 add_subdirectory(utest)
 add_subdirectory(ftest)
