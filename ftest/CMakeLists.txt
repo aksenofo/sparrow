@@ -2,7 +2,7 @@
 #       License: MIT
 #       All right reserved
 
-#libev current version does not support c++17. Downgrade version.  
+#libev current version does not support c++17. Downgrade c++ version.  
 set(CMAKE_CXX_STANDARD 14) 
 
 include_directories(${ROOT_PROJECT}/base)
