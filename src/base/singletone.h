@@ -12,22 +12,30 @@ namespace sparrow
 {
 
 
-/*
-*
-*/
+/*! \brief Singletone.
+ *
+ *  Singletone support 'Singletone' pattern.
+ */
+
 template<typename Type>
 class Singletone
 {
 public:
     Singletone() = delete;
     Singletone(const Singletone& that) = delete;
+    //! Get reference on singletone payload object.
+    /*!
+      \return Reference to instance of object 
+    */
     static Type& Instance();
 
 private:
+
+    //! Create object.
     static void Create();
 
-    static std::once_flag m_flag;
-    static std::unique_ptr<Type> m_instance;
+    static std::once_flag m_flag; /*!< once flag. see std::once_flag documentation */
+    static std::unique_ptr<Type> m_instance; /*!< singletone payload itself */
 };
 
 

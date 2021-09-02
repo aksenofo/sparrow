@@ -10,13 +10,33 @@
 
 namespace sparrow
 {
-
+/*! \brief SslAux is ssl auxillary class.
+ *
+ *  SslAux is ssl auxillary class.
+ */
 class SslAux
 {
+    constexpr static size_t kErrBufferSize = 2048; /*!< buffer size for single error string */
+
 public:
-    static std::string GetLastErrorText();
-    void CheckIf_1(int rc) const;
-    void CheckIfNullptr(void* ptr) const;
+    //! Get last error stack.
+    /*!
+      \param Delimier is used after every single string in error stack. If this is == 0 than there is no delimiter at all.
+      \return Error stack in printable format. 
+    */
+    static std::string GetLastErrorText(char delimiter = '\n');
+
+    //! Verify if parameter is 1.
+    /*!
+      \param Validate if parameter is 1, otherwise throw an exception. 
+    */
+    static void CheckIf_1(const int rc);
+
+    //! Verify if parameter is no null.
+    /*!
+      \param Validate if parameter is not null, otherwise throw an exception. 
+    */
+    static void CheckIfNullptr(const void* ptr);
 };
 
 } //namespace sparrow

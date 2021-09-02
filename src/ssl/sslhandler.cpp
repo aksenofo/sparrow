@@ -139,7 +139,7 @@ void SslHandler::Unencrypt(CircularBuffer& cb)
 
     } while (nRead || nWrite);
 
-    LOG(Debug) << format("Unencripted: %1 bytes", cb.FilledSize() - sizeInBegin);
+    LOG(Debug) << format("Unencrypted: %1 bytes", cb.FilledSize() - sizeInBegin);
 }
 
 bool SslHandler::Encrypt(CircularBuffer& cb)
