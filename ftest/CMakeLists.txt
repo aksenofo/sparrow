@@ -18,7 +18,6 @@ add_executable(ftest
     auxillary/tcp.cpp
 )
 
-
 target_link_libraries(ftest
     ${LIBEV_LIB}
     sparrow-ssl
