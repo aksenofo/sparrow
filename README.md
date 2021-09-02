@@ -1,5 +1,5 @@
-#       Author: Alexander Ksenofontov
-#       License: MIT
-#       All right reserved
+       Author: Alexander Ksenofontov
+       License: MIT
+       All right reserved
  
 # sparrow
