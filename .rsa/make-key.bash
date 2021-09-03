@@ -1,4 +1,7 @@
 #!/bin/bash
+#       Author: Alexander Ksenofontov
+#       License: MIT
+#       All right reserved
 
 openssl genrsa -des3 -passout pass:ABCD -out server.pass.key 2048
 openssl rsa -passin pass:ABCD -in server.pass.key -out server.key
