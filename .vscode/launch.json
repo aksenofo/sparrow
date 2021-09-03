@@ -7,8 +7,8 @@
             "request": "launch",
             "program": "${command:cmake.launchTargetPath}",
             "args": [
-                "-c" "/home/aksenofo/PROJECT/mnt/__NG__/sparrow/.rsa/server.crt",
-                "-k" "/home/aksenofo/PROJECT/mnt/__NG__/sparrow/.rsa/server.key"
+                "-c" ".rsa/server.crt",
+                "-k" ".rsa/server.key"
             ],
             "stopAtEntry": true,
             "cwd": "${workspaceFolder}",
