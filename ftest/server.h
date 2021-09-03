@@ -17,6 +17,8 @@ extern std::string sertificate, privateKey;
 
 class SslInstance
 {
+    constexpr static size_t kBufferSize = 1024;
+
 public:
     SslInstance(int socket);
     NOCOPIBLE(SslInstance);
@@ -29,8 +31,8 @@ private:
 
     std::unique_ptr<sparrow::SslHandler> m_handler;
 
-    sparrow::CircularBuffer m_sendBuffer = sparrow::CircularBuffer(1024);
-    sparrow::CircularBuffer m_recvBuffer = sparrow::CircularBuffer(1024);
+    sparrow::CircularBuffer m_sendBuffer = sparrow::CircularBuffer(kBufferSize);
+    sparrow::CircularBuffer m_recvBuffer = sparrow::CircularBuffer(kBufferSize);
 
 };
 

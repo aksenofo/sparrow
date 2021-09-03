@@ -4,15 +4,17 @@
  *      All right reserved
  */
 
+#include <circlebuffer.h>
 #include <ev++.h>
-#include <utils.h>
-#include <tcp.h>
 #include <sslbase.h>
 #include <sslhandler.h>
-#include <circlebuffer.h>
+#include <tcp.h>
+#include <utils.h>
 
 class SslClient
 {
+    constexpr static size_t kBufferSize = 1024;
+
 public:
     SslClient();
     NOCOPIBLE(SslClient);
@@ -24,7 +26,6 @@ private:
     std::unique_ptr<TcpSocket> m_tcp;
     std::unique_ptr<sparrow::SslHandler> m_handler;
 
-    sparrow::CircularBuffer m_sendBuffer = sparrow::CircularBuffer(1024);
-    sparrow::CircularBuffer m_recvBuffer = sparrow::CircularBuffer(1024);
-
+    sparrow::CircularBuffer m_sendBuffer = sparrow::CircularBuffer(kBufferSize);
+    sparrow::CircularBuffer m_recvBuffer = sparrow::CircularBuffer(kBufferSize);
 };
