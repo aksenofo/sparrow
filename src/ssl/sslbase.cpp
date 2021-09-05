@@ -58,6 +58,7 @@ SslBase& SslBase::operator=(const SslBase& ssl)
 
 void SslBase::SetBio(const SslBio& rbio, const SslBio& wbio)
 {
+    assert(rbio.BioPtr() && wbio.BioPtr() && m_ssl.get());
     BIO* trbio = const_cast<BIO*>(rbio.BioPtr());
     BIO* twbio = const_cast<BIO*>(wbio.BioPtr());
 
@@ -74,18 +75,21 @@ void SslBase::SetBio(const SslBio& rbio, const SslBio& wbio)
 
 void SslBase::SetConnectState()
 {
+    assert(m_ssl.get());
     m_preparedAsServer = false;
     SSL_set_connect_state(m_ssl.get());
 }
 
 void SslBase::SetAcceptState()
 {
+    assert(m_ssl.get());
     m_preparedAsServer = true;
     SSL_set_accept_state(m_ssl.get());
 }
 
 SslBio SslBase::Rbio()
 {
+    assert(m_ssl.get());
     BIO* bio = SSL_get_rbio(m_ssl.get());
     CheckIfNullptr(bio);
     BIO_up_ref(bio);
@@ -94,6 +98,7 @@ SslBio SslBase::Rbio()
 
 SslBio SslBase::Wbio()
 {
+    assert(m_ssl.get());
     BIO* bio = SSL_get_wbio(m_ssl.get());
     CheckIfNullptr(bio);
     BIO_up_ref(bio);
@@ -102,6 +107,7 @@ SslBio SslBase::Wbio()
 
 std::unique_ptr<SslContext> SslBase::ContextPtr()
 {
+    assert(m_ssl.get());
     SSL_CTX* ctx = SSL_get_SSL_CTX(m_ssl.get());
     CheckIfNullptr(ctx);
     SSL_CTX_up_ref(ctx);
@@ -135,12 +141,14 @@ int SslBase::Read(uint8_t* ptr, size_t size) const noexcept
     return SSL_read(m_ssl.get(), ptr, size);
 }
 
-int SslBase::Write(const uint8_t* ptr, size_t size) const noexcept {
+int SslBase::Write(const uint8_t* ptr, size_t size) const noexcept
+{
     assert(m_ssl.get());
     return SSL_write(m_ssl.get(), ptr, size);
 }
 
-void SslBase::CheckPrivateKey() const {
+void SslBase::CheckPrivateKey() const
+{
     assert(m_ssl.get());
     CheckIf_1(SSL_check_private_key(m_ssl.get()));
 }
