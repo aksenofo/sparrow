@@ -19,6 +19,10 @@ namespace sparrow
 class SslContext;
 class SslBio;
 
+/*! \brief SslBase is SSL wrapper.
+ *
+ *  SslBio is SSL wrapper class.
+ */
 class SslBase : public SslAux
 {
 
@@ -26,11 +30,13 @@ public:
     SslBase() = default;
     MOVEBLE_DEFAULT(SslBase);
     virtual ~SslBase();
+
     SslBase(SSL_CTX* sslCtx);
     SslBase(SslContext& sslCtx);
     SslBase(SSL* ssl);
     SslBase(const SslBase& ssl);
     SslBase& operator=(const SslBase& ssl);
+
     SSL* SslPtr() { return m_ssl.get(); }
     const SSL* SslPtr() const { return m_ssl.get(); }
     bool HasObj() const { return !!m_ssl; }
@@ -41,12 +47,13 @@ public:
     SslBio Rbio();
     SslBio Wbio();
     bool PreparedAsServer() const noexcept { return m_preparedAsServer; }
-    template<typename SslBaseT>
-    SslBaseT Dup();
     int Read(uint8_t* ptr, size_t size) const noexcept;
     int Write(const uint8_t* ptr, size_t size) const noexcept;
     void CheckPrivateKey() const;
     int DoHandshake();
+
+    template<typename SslBaseT>
+    SslBaseT Dup();
 
     std::unique_ptr<SslContext> ContextPtr();
 
