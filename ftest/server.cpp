@@ -58,6 +58,8 @@ SslServer::SslServer()
     m_tcp = std::make_unique<TcpListener>(55555, 5);
     m_io.set<SslServer, &SslServer::OnAccept>(this);
     m_io.start(m_tcp->Socket(), ev::READ);
+
+     LOG(Always) << sparrow::format("Server is started.");
 }
 
 void SslServer::OnAccept(ev::io& watcher, int revents) noexcept
