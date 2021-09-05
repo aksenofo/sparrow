@@ -8,7 +8,9 @@
             "program": "${command:cmake.launchTargetPath}",
             "args": [
                 "-c" ".rsa/server.crt",
-                "-k" ".rsa/server.key"
+                "-k" ".rsa/server.key",
+                "-t",
+                "-m server"
             ],
             "stopAtEntry": true,
             "cwd": "${workspaceFolder}",

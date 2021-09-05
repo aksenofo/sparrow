@@ -16,7 +16,7 @@ void usage()
 {
     std::cout << "usage:" << std::endl;
     std::cout << "-c - Certificate file name" << std::endl;
-    std::cout << "-c - Private key file name" << std::endl;
+    std::cout << "-k - Private key file name" << std::endl;
     std::cout << "-l - logging level(TRACE,DEBUG,INFO) ERROR,PANIC are always on" << std::endl;
     std::cout << "-t - Print timestamp in log output" << std::endl;
 }
@@ -35,8 +35,8 @@ int main(int argc, char* argv[])
     int opt;
     std::string level;
     bool printTimestamp = false;
-
-    while ((opt = getopt(argc, argv, "c:k:f:l:")) != -1) {
+    std::string mode;
+    while ((opt = getopt(argc, argv, "c:k:l:m:t")) != -1) {
         switch (opt) {
         case 'c':
             sertificate = sparrow::trim_copy(optarg);
@@ -49,6 +49,9 @@ int main(int argc, char* argv[])
             break;
         case 't':
             printTimestamp = true;
+            break;
+        case 'm':
+            mode = sparrow::trim_copy(optarg);
             break;
         default: /* '?' */
             usage();
@@ -67,11 +70,15 @@ int main(int argc, char* argv[])
         sparrow::LogLevel::Debug,
         sparrow::LogLevel::Warning);
 
-    //    sparrow::Singletone<sparrow::SslContext>::Instance();
-
     ev::default_loop loop;
-    SslServer sslServer;
-    SslClient sslClient;
+    std::unique_ptr<SslServer> sslServer;
+    std::unique_ptr<SslClient> sslClient;
+
+    if (mode == "server" || mode.empty())
+        sslServer = std::make_unique<SslServer>();
+
+    if (mode == "client" || mode.empty())
+        sslClient = std::make_unique<SslClient>();
 
     loop.run(0);
 }
