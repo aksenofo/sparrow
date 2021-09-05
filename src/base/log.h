@@ -23,7 +23,7 @@ using log_level_t = uint8_t;
 /*!
      \brief Log level 
 
-    Used for restrict log level                  
+    Used to restrict log level                  
  */
 
 enum class LogLevel : log_level_t {
@@ -40,25 +40,25 @@ enum class LogLevel : log_level_t {
 
 
 /*!
-     \brief LoggerFactory tmp 
-
-    Not implemented correctly                  
+     \brief LoggerFactory 
  */
 
 class LoggerFactory
 {
 public:
     LoggerFactory()
+    : m_logLevel(static_cast<log_level_t>(LogLevel::Nolog))
     {
-        m_logLevel = static_cast<log_level_t>(LogLevel::Nolog);
     }
 
+    //! Set log level
     template<typename Args>
     void SetLevel(Args lt)
     {
         m_logLevel |= static_cast<log_level_t>(lt);
     }
 
+    //! Set log level variadic
     template<typename T, typename... Args>
     void SetLevel(T first, Args... args)
     {
@@ -66,7 +66,7 @@ public:
         SetLevel(args...);
     }
 
-    //! Verify if log level has been set
+    //! Verify log level
     bool IsLevel(const LogLevel& level) const
     {
         return (m_logLevel & static_cast<log_level_t>(level)) == static_cast<log_level_t>(level);
@@ -79,12 +79,13 @@ public:
         PrintSave(ss);
     }
 
+    //! Print timestamp
     void SetPrintTimeStamp(bool flag = true)
     {
         std::lock_guard<std::mutex> guard(m_mutex);
         m_printTimestamp = flag;
     }
-
+    //! Set log prefix ( executable filename )
     void SetAppPrefix(const char* argv0)
     {
         m_prefixText = GetFilename(argv0);
@@ -94,12 +95,11 @@ public:
 private:
     std::string GetFilename(const char* argv0);
 
-    //! Print exectry to ...
     virtual void PrintSave(const std::stringstream& ss);
 
-    std::mutex m_mutex;                  //! Garding mutex
+    std::mutex m_mutex; //! Garding mutex
     std::atomic<log_level_t> m_logLevel;
-    
+
     bool m_printTimestamp = false;
 
     std::string m_prefixText;
@@ -107,9 +107,7 @@ private:
 
 
 /*!
-     \brief Logger itself 
-
-    Not public class                  
+     \brief Logger 
  */
 
 class Logger
