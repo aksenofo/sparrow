@@ -9,7 +9,8 @@
             "args": [
                 "-c" ".rsa/server.crt",
                 "-k" ".rsa/server.key",
-                "-t"
+                "-t",
+                "-p 55556"
             ],
             "stopAtEntry": true,
             "cwd": "${workspaceFolder}",

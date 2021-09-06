@@ -166,7 +166,7 @@ Logger WrapLogger(const LogLevel& level, const char* funcname);
 
 #define LOG(TYPE) \
     if (sparrow::Singletone<sparrow::LoggerFactory>::Instance().IsLevel(sparrow::LogLevel::TYPE)) \
-    WrapLogger(sparrow::LogLevel::TYPE, __FUNCTION__)
+    sparrow::WrapLogger(sparrow::LogLevel::TYPE, __FUNCTION__)
 
 
 

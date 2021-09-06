@@ -48,6 +48,13 @@ public:
     */
     uint32_t Put(const void* ptr, uint32_t size) noexcept;
 
+    //! Put byte to the buffer
+    /*!
+      \param ptr point to the data buffer.
+      \return size of consumed data 
+    */
+    uint32_t Put(uint8_t byte) noexcept;
+
     //! Put string to the buffer
     /*!
       \param ptr point to the data buffer.
@@ -98,6 +105,11 @@ public:
     */
     bool IsFull() const noexcept { return m_state == Full; }
 
+    //! Reset buffer
+    /*!
+    */
+    void Reset() noexcept;
+
     //! Return how many bytes can be consumed from continuous data block
     /*!
       \return size of contunuous data block 
@@ -117,14 +129,12 @@ public:
     */
     uint32_t PopulateSize() noexcept;
 
-
     //! Populate some data from continuous block
     //! Att. if data block is less thab populate size than assert.
     /*!
       \param size of data block
     */
     void Populate(uint32_t size) noexcept;
-
 
     //! Return const. pointer to the actulal buffer position
     /*!
@@ -240,6 +250,11 @@ public:
         return totallyConsumed;
     }
 };
+
+
+inline uint32_t CircularBuffer::Put(uint8_t byte) noexcept {
+  return Put(&byte, 1);
+}
 
 /*! \brief Populator aux class.
  *

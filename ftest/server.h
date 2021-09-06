@@ -14,6 +14,7 @@
 #include <circlebuffer.h>
 
 extern std::string sertificate, privateKey;
+extern int portNumber;
 
 class SslInstance
 {
@@ -24,7 +25,7 @@ public:
     NOCOPIBLE(SslInstance);
 
 private:
-    void OnCallback(ev::io& watcher, int revents) noexcept;
+    void OnCallback(ev::io& watcher, int revents);
 
     ev::io m_io;
     std::unique_ptr<TcpSocket> m_tcp;
@@ -34,6 +35,7 @@ private:
     sparrow::CircularBuffer m_sendBuffer = sparrow::CircularBuffer(kBufferSize);
     sparrow::CircularBuffer m_recvBuffer = sparrow::CircularBuffer(kBufferSize);
 
+    size_t m_clientToServerByteCounter = 0;
 };
 
 

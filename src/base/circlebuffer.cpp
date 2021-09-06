@@ -79,6 +79,11 @@ uint8_t CircularBuffer::Get()
     return v;
 }
 
+void CircularBuffer::Reset() noexcept {
+    m_head = m_tail = m_buffer.get();
+    m_state = m_size == 0 ? Full : Empty;
+}
+
 uint32_t CircularBuffer::ConsumeSize() noexcept
 {
     if (m_state == Empty)

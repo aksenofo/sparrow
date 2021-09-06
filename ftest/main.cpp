@@ -11,6 +11,7 @@
 #include <singletone.h>
 #include <sslcontext.h>
 #include <unistd.h>
+#include <log.h>
 
 void usage()
 {
@@ -19,6 +20,8 @@ void usage()
     std::cout << "-k - Private key file name" << std::endl;
     std::cout << "-l - logging level(TRACE,DEBUG,INFO) ERROR,PANIC are always on" << std::endl;
     std::cout << "-t - Print timestamp in log output" << std::endl;
+    std::cout << "-p - Port number (55555) " << std::endl;
+
 }
 
 int main(int argc, char* argv[])
@@ -36,7 +39,7 @@ int main(int argc, char* argv[])
     std::string level;
     bool printTimestamp = false;
     std::string mode;
-    while ((opt = getopt(argc, argv, "c:k:l:m:t")) != -1) {
+    while ((opt = getopt(argc, argv, "c:k:l:m:p:t")) != -1) {
         switch (opt) {
         case 'c':
             sertificate = sparrow::trim_copy(optarg);
@@ -52,6 +55,9 @@ int main(int argc, char* argv[])
             break;
         case 'm':
             mode = sparrow::trim_copy(optarg);
+            break;
+        case 'p':
+            portNumber = atoi(optarg);
             break;
         default: /* '?' */
             usage();
@@ -79,6 +85,10 @@ int main(int argc, char* argv[])
 
     if (mode == "client" || mode.empty())
         sslClient = std::make_unique<SslClient>();
-
+    try {
     loop.run(0);
+    }
+    catch(const std::exception& e) {
+        LOG(Error) << e.what();
+    }
 }

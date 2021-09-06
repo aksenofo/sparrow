@@ -137,9 +137,11 @@ void SslHandler::Unencrypt(CircularBuffer& cb)
             return nRead < 0 ? 0 : nRead;
         });
 
-    } while (nRead || nWrite);
+    } while (nRead && nWrite);
 
-    LOG(Debug) << format("Unencrypted: %1 bytes", cb.FilledSize() - sizeInBegin);
+    size_t unencrypted = cb.FilledSize() - sizeInBegin;
+    if (unencrypted)
+        LOG(Debug) << format("Unencrypted: %1 bytes", unencrypted);
 }
 
 bool SslHandler::Encrypt(CircularBuffer& cb)
@@ -206,7 +208,7 @@ bool SslHandler::SockRecv(int sock, CircularBuffer& cb)
 
     if (s)
         LOG(Debug) << format("recv:%1 bytes.", s);
-    
+
     return isSocketNotClosed;
 }
 

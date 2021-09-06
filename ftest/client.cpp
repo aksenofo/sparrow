@@ -5,17 +5,19 @@
  */
 #include "client.h"
 
+#include "server.h"
+
+#include <format.h>
+#include <log.h>
 #include <singletone.h>
 #include <sslbase.h>
 #include <sslbio.h>
-#include <log.h>
-#include <format.h>
 
 using namespace sparrow;
 
 SslClient::SslClient()
 {
-    m_tcp = std::make_unique<TcpSocket>("127.0.0.1", 55555);
+    m_tcp = std::make_unique<TcpSocket>("127.0.0.1", portNumber);
     m_io.set<SslClient, &SslClient::OnCallback>(this);
     m_io.start(m_tcp->Socket(), ev::WRITE | ev::READ);
     SslContext ctx(SSLv23_method());
@@ -30,6 +32,12 @@ void SslClient::OnCallback(ev::io& watcher, int revents)
 {
     bool write = revents & EV_WRITE;
     bool read = revents & EV_READ;
+
+    if (m_sendBuffer.IsEmpty()) {
+        for (size_t t = 0; t < 100; t++)
+            m_sendBuffer.Put(static_cast<uint8_t>(m_clientToServerByteCounter++));
+    }
+
     bool rc = m_handler->Handle(m_sendBuffer, m_recvBuffer, watcher.fd, write, read);
     if (rc)
         watcher.start(m_tcp->Socket(), (read ? ev::READ : 0) | (write ? ev::WRITE : 0));
