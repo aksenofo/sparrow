@@ -44,12 +44,18 @@ void SslInstance::OnCallback(ev::io& watcher, int revents)
 {
     bool write = revents & EV_WRITE;
     bool read = revents & EV_READ;
+
+    if (m_sendBuffer.IsEmpty()) {
+        for (size_t t = 0; t < m_sendBuffer.Capacity(); t++)
+            m_sendBuffer.Put(static_cast<uint8_t>(m_serverToClientByteCounter++));
+    }
+
     bool rc = m_handler->Handle(m_sendBuffer, m_recvBuffer, watcher.fd, write, read);
 
     while(!m_recvBuffer.IsEmpty()) {
         auto v = m_recvBuffer.Get();
         if(v != static_cast<uint8_t>(m_clientToServerByteCounter)) {
-            throw std::runtime_error(format("Invalid value. Imcoming %1, expected: %2", v, static_cast<uint8_t>(m_clientToServerByteCounter)));
+            throw std::runtime_error(format("Client to Server: Invalid value. Imcoming %1, expected: %2", v, static_cast<uint8_t>(m_clientToServerByteCounter)));
         }
         m_clientToServerByteCounter ++;
     }

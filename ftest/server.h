@@ -36,6 +36,7 @@ private:
     sparrow::CircularBuffer m_recvBuffer = sparrow::CircularBuffer(kBufferSize);
 
     size_t m_clientToServerByteCounter = 0;
+    size_t m_serverToClientByteCounter = 0;
 };
 
 

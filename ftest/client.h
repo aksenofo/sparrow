@@ -13,7 +13,7 @@
 
 class SslClient
 {
-    constexpr static size_t kBufferSize = 1024000;
+    constexpr static size_t kBufferSize = 1024;
 
 public:
     SslClient();
@@ -30,4 +30,6 @@ private:
     sparrow::CircularBuffer m_recvBuffer = sparrow::CircularBuffer(kBufferSize);
 
     size_t m_clientToServerByteCounter = 0;
+    size_t m_serverToClientByteCounter = 0;
+
 };

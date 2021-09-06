@@ -151,13 +151,18 @@ bool SslHandler::Encrypt(CircularBuffer& cb)
     Populator populator;
 
     do {
+        size_t nWritenTotal = static_cast<size_t>(m_encSendBuffer.AvailableSize());
+
         // Transmit data from input data buffer to encryptor(SSL)
-        consumer(cb, [this](const uint8_t* ptr, size_t size) {
+        consumer(cb, [this, &nWritenTotal](const uint8_t* ptr, size_t size) {
+            size = std::min(size, nWritenTotal);
             int nWrite = m_ssl.Write(ptr, size);
             if (!m_ssl.IsAcceptableReturn(nWrite, 0)) {
                 throw std::runtime_error(format("Cannot SSL_write. %1", GetLastErrorText()));
             }
-            return nWrite < 0 ? 0 : nWrite;
+            nWrite =  nWrite < 0 ? 0 : nWrite;
+            nWritenTotal -= nWrite;
+            return nWrite;
         });
 
         //        if (!m_ssl.IsInitFinished()) // TODO
