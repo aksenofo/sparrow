@@ -137,7 +137,7 @@ void SslHandler::Unencrypt(CircularBuffer& cb)
             return nRead < 0 ? 0 : nRead;
         });
 
-    } while (nRead && nWrite);
+    } while ((nRead || nWrite) && !cb.IsFull());
 
     size_t unencrypted = cb.FilledSize() - sizeInBegin;
     if (unencrypted)

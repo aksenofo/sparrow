@@ -34,7 +34,7 @@ void SslClient::OnCallback(ev::io& watcher, int revents)
     bool read = revents & EV_READ;
 
     if (m_sendBuffer.IsEmpty()) {
-        for (size_t t = 0; t < 100; t++)
+        for (size_t t = 0; t < 1024000; t++)
             m_sendBuffer.Put(static_cast<uint8_t>(m_clientToServerByteCounter++));
     }
 

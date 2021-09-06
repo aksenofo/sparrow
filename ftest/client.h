@@ -13,7 +13,7 @@
 
 class SslClient
 {
-    constexpr static size_t kBufferSize = 1024;
+    constexpr static size_t kBufferSize = 1024000;
 
 public:
     SslClient();
