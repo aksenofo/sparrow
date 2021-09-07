@@ -4,14 +4,16 @@
  *      All right reserved
  */
 
-#include "client.h"
 #include "server.h"
 
+#include <aux.h>
+#include <format.h>
 #include <log.h>
 #include <singletone.h>
 #include <sslcontext.h>
 #include <unistd.h>
-#include <log.h>
+#include <vector>
+#include <singletone.h>
 
 void usage()
 {
@@ -20,9 +22,7 @@ void usage()
     std::cout << "-k - Private key file name" << std::endl;
     std::cout << "-l - logging level(TRACE,DEBUG,INFO) ERROR,PANIC are always on" << std::endl;
     std::cout << "-t - Print timestamp in log output" << std::endl;
-    std::cout << "-p - Port number (55555)" << std::endl;
-    std::cout << "-m - Mode(client,server,both) " << std::endl;
-
+    std::cout << "-p - Port number (55555) " << std::endl;
 }
 
 int main(int argc, char* argv[])
@@ -39,7 +39,6 @@ int main(int argc, char* argv[])
     int opt;
     std::string level;
     bool printTimestamp = false;
-    std::string mode;
     while ((opt = getopt(argc, argv, "c:k:l:m:p:t")) != -1) {
         switch (opt) {
         case 'c':
@@ -53,9 +52,6 @@ int main(int argc, char* argv[])
             break;
         case 't':
             printTimestamp = true;
-            break;
-        case 'm':
-            mode = sparrow::trim_copy(optarg);
             break;
         case 'p':
             portNumber = atoi(optarg);
@@ -77,17 +73,25 @@ int main(int argc, char* argv[])
         sparrow::LogLevel::Debug,
         sparrow::LogLevel::Warning);
 
+    if (!level.empty()) {
+        std::vector<std::string> array = StringToVector(level, ",");
+        std::for_each(array.begin(), array.end(), [&](auto itm) {
+            if (IsEqual(itm, "debug"))
+                sparrow::Singletone<sparrow::LoggerFactory>::Instance().SetLevel(sparrow::LogLevel::Debug);
+            else if (IsEqual(itm, "trace"))
+                sparrow::Singletone<sparrow::LoggerFactory>::Instance().SetLevel(sparrow::LogLevel::Trace);
+            else {
+                throw std::runtime_error(sparrow::format("Invalid flag %1", itm));
+            }
+        });
+    }
+
     ev::default_loop loop;
-    std::unique_ptr<SslServer> sslServer;
-    std::unique_ptr<SslClient> sslClient;
 
-    if (mode == "server" || mode.empty())
-        sslServer = std::make_unique<SslServer>();
+    SslServer sslServer;
 
-    if (mode == "client" || mode.empty())
-        sslClient = std::make_unique<SslClient>();
     try {
-    loop.run(0);
+        loop.run(0);
     }
     catch(const std::exception& e) {
         LOG(Error) << e.what();

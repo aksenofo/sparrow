@@ -21,5 +21,6 @@ add_definitions(-fpic)
 add_subdirectory(src)
 add_subdirectory(utest)
 add_subdirectory(ftest)
+add_subdirectory(example)
 
 #############################################################
