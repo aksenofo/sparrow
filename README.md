@@ -4,7 +4,7 @@
  
 # Sparrow
 You may use __openssl__ with __libev__ (minimalistic idea)  
-See example forlder.  
+See example folder.  
 Project is unsing some socket wrapper only for simplify unitest and example as well.  
 You may use your own wrapers for you projects.  
 
