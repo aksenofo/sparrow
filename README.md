@@ -2,8 +2,8 @@
        License: MIT
        All right reserved
  
-# sparrow
-You may use openssl with libev (minimalistic idea)  
+# Sparrow
+You may use __openssl__ with __libev__ (minimalistic idea)  
 See example forlder.  
 Project is unsing some socket wrapper only for simplify unitest and example as well.  
 You may use your own wrapers for you projects.  
@@ -18,9 +18,9 @@ You may use your own wrapers for you projects.
        
 3. Use cmake to build 
 
-You will get two libraries  
-libsparrow-base.a - basic classes
-libsparrow-ssl.a - ssl classes
+__You will get two libraries__  
+libsparrow-base.a - basic classes  
+libsparrow-ssl.a - ssl classes  
 
 # Map
 
