@@ -8,7 +8,7 @@ See example folder.
 Project is unsing some socket wrapper only for simplify unitest and example as well.  
 You may use your own wrapers for you projects.  
 
-# Downloading
+# Download
 
 1. Use git to clone.
 2. Load submodules  
@@ -21,6 +21,15 @@ You may use your own wrapers for you projects.
 __You will get two libraries__  
 libsparrow-base.a - basic classes  
 libsparrow-ssl.a - ssl classes  
+
+# Run example
+
+for __server__  
+./server -c ../../.rsa/server.crt -k ../../.rsa/server.key  
+( see file example/main_server.cpp for detail)
+
+for __client__  
+./clinet
 
 # Map
 
