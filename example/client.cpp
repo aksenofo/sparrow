@@ -30,25 +30,25 @@ SslClient::SslClient()
     LOG(Always) << format("Client is started.");
 }
 
+#define MAX_USER_SIZE 1024
+
 void SslClient::OnCallback(ev::io& watcher, int revents)
 {
     bool write = revents & EV_WRITE;
     bool read = revents & EV_READ;
 
-//    if (m_sendBuffer.IsEmpty()) {
-//        for (size_t t = 0; t < m_sendBuffer.Capacity(); t++)
-//            m_sendBuffer.Put(static_cast<uint8_t>(m_clientToServerByteCounter++));
-//    }
+    if (m_sendBuffer.IsEmpty())
+        m_sendBuffer.Put("Hello from client\n");
 
     bool rc = m_handler->Handle(m_sendBuffer, m_recvBuffer, watcher.fd, write, read);
 
-//    while(!m_recvBuffer.IsEmpty()) {
-//        auto v = m_recvBuffer.Get();
-//        if(v != static_cast<uint8_t>(m_serverToClientByteCounter)) {
-//            throw std::runtime_error(format("Server to client. Invalid value. Imcoming %1, expected: %2", v, static_cast<uint8_t>(m_serverToClientByteCounter)));
-//        }
-//        m_serverToClientByteCounter ++;
-//    }
+    while(!m_recvBuffer.IsEmpty()) {
+        char buffer [MAX_USER_SIZE];
+        auto v = m_recvBuffer.Get(buffer, sizeof(buffer));
+        if (v) {
+            std::cout << std::string(buffer, v);
+        }
+    }
 
     if (rc)
         watcher.start(m_tcp->Socket(), (read ? ev::READ : 0) | (write ? ev::WRITE : 0));

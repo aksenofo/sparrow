@@ -70,7 +70,8 @@ int main(int argc, char* argv[])
         sparrow::LogLevel::Error,
         sparrow::LogLevel::Panic,
         sparrow::LogLevel::Info,
-        sparrow::LogLevel::Debug,
+        // Uncomment it for more logging
+//        sparrow::LogLevel::Debug,
         sparrow::LogLevel::Warning);
 
     if (!level.empty()) {

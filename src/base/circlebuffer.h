@@ -117,7 +117,7 @@ public:
     uint32_t ConsumeSize() noexcept;
 
     //! Consume some data from continuous block
-    //! Att. if data block is less thab consume size than assert.
+    //! Att. if data block is less than consume size than assert.
     /*!
       \param size of data block
     */
