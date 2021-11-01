@@ -29,7 +29,7 @@ for __server__
 ( see file example/main_server.cpp for detail)
 
 for __client__  
-./clinet
+./client
 
 # Map
 
