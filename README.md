@@ -6,7 +6,7 @@
 You may use openssl with libev (minimalistic idea)
 See example forlder.
 Project is unsing some socket wrapper only for simplify unitest and example as well.
-You may use your own wrapers for yoy projects.
+You may use your own wrapers for you projects.
 
 # Downloading
 
