@@ -5,8 +5,8 @@
 # Sparrow
 You may use __openssl__ with __libev__ (minimalistic idea)  
 See example folder.  
-Project is unsing some socket wrapper only to simplify unitests and example.  
-You may use your own wrapers for you projects.  
+Project is using some socket wrapper only to simplify unitests and examples.  
+You may use your own wrapers for your projects.  
 
 # Download
 
