@@ -25,9 +25,9 @@ You may use your own wrapers for your projects.
     d. run __./build_libev.bash__ to build libev
 
 5. Use cmake to build 
-    a. mkdit build in any place you want.
-    b. run __cmake absolut_o_relative_path_to_source_location__
-    c. run __make__
+    a. mkdit build in any place you want  
+    b. run __cmake absolut_o_relative_path_to_source_location__  
+    c. run __make__  
     
 __You will get two libraries__  
 libsparrow-base.a - basic classes  
