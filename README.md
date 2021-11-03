@@ -24,7 +24,7 @@ You may use your own wrapers for your projects.
     c. run __./build_googletest.bash__ to build google test  
     d. run __./build_libev.bash__ to build libev  
 
-5. Use cmake to build 
+5. Use cmake to build  
     a. mkdit build in any place you want  
     b. run __cmake absolut_o_relative_path_to_source_location__  
     c. run __make__  
