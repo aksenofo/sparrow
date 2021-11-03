@@ -21,8 +21,8 @@ You may use your own wrapers for your projects.
     a. cd 3th/  
     b. run __./build_openssl.bash__ ( ATT! you need to enter root password to install 'libtext-template-perl')  
        You may install it __outside__ script by running _sudo apt-get install libtext-template-perl_ and commenting appropriate string in script  
-    c. run __./build_googletest.bash__ to build google test
-    d. run __./build_libev.bash__ to build libev
+    c. run __./build_googletest.bash__ to build google test  
+    d. run __./build_libev.bash__ to build libev  
 
 5. Use cmake to build 
     a. mkdit build in any place you want  
