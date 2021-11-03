@@ -15,8 +15,12 @@ You may use your own wrapers for your projects.
        'git submodule add'  
        'git submodule init'  
        'git submodule update'  
-       
-3. Use cmake to build 
+3. Build 3th libraries  
+    a. cd 3th/  
+    b. run __./build_openssl.bash__ ( ATT you need to enter root password to install 'libtext-template-perl')  
+       You may install it __outside__ script by running _sudo apt-get install libtext-template-perl_ and comminting appropriate string in script
+ 
+5. Use cmake to build 
 
 __You will get two libraries__  
 libsparrow-base.a - basic classes  
