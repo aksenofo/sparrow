@@ -10,6 +10,7 @@ OPENSSL=openssl
 
 echo =====================================================
 echo Used Just add 'libtext-template-perl' if not exist
+echo if you have libtext-template-perl already installed juct comment next string
 sudo apt-get install libtext-template-perl
 
 rm -rf openssl-build
