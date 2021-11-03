@@ -25,9 +25,10 @@ You may use your own wrapers for your projects.
     d. run __./build_libev.bash__ to build libev  
 
 5. Use cmake to build  
-    a. run __mkdir__ _absolute_or_relative_path_to_source_location_ 
-    b. run _cmake absolute_or_relative_path_to_source_location_  
-    c. run __make__  
+    a. run __mkdir__ _any_location_you_wants_  
+    b. run __cd__ _any_location_you_wants_  
+    c. run __cmake__ _absolute_or_relative_path_to_source_location_  
+    d. run __make__  
     
 __You will get two libraries__  
 libsparrow-base.a - basic classes  
@@ -36,7 +37,7 @@ libsparrow-ssl.a - ssl classes
 # Run example
 
 for __server__  
-./server -c ../../.rsa/server.crt -k ../../.rsa/server.key  
+./server -c _absolute_or_relative_path_to_source_location_/.rsa/server.crt -k _absolute_or_relative_path_to_source_location_/.rsa/server.key  
 ( see file example/main_server.cpp for detail)
 
 for __client__  
