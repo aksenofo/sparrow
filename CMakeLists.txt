@@ -11,6 +11,11 @@ SET(ROOT_PROJECT ${PROJECT_SOURCE_DIR}/src)
 
 set(CMAKE_CXX_STANDARD 14)
 
+if(NOT CMAKE_BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE "Debug" CACHE STRING
+            "Default build type: Debug" FORCE)
+endif()
+
 include(3th/3th.cmake)
 
 add_definitions(-Wno-deprecated)
