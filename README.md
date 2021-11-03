@@ -11,19 +11,24 @@ You may use your own wrapers for your projects.
 # Download
 
 1. Use git to clone.
+
 2. Load submodules  
        'git submodule add'  
        'git submodule init'  
        'git submodule update'  
+
 3. Build 3th libraries  
     a. cd 3th/  
-    b. run __./build_openssl.bash__ ( ATT you need to enter root password to install 'libtext-template-perl')  
+    b. run __./build_openssl.bash__ ( ATT! you need to enter root password to install 'libtext-template-perl')  
        You may install it __outside__ script by running _sudo apt-get install libtext-template-perl_ and commenting appropriate string in script  
     c. run __./build_googletest.bash__ to build google test
     d. run __./build_libev.bash__ to build libev
-    
-5. Use cmake to build 
 
+5. Use cmake to build 
+    a. mkdit build in any place you want.
+    b. run __cmake absolut_o_relative_path_to_source_location__
+    c. run __make__
+    
 __You will get two libraries__  
 libsparrow-base.a - basic classes  
 libsparrow-ssl.a - ssl classes  
