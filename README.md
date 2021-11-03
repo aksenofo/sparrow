@@ -25,8 +25,8 @@ You may use your own wrapers for your projects.
     d. run __./build_libev.bash__ to build libev  
 
 5. Use cmake to build  
-    a. mkdir build in any place you want  
-    b. run __cmake absolut_o_relative_path_to_source_location__  
+    a. run __mkdir__ _absolute_or_relative_path_to_source_location_ 
+    b. run _cmake absolute_or_relative_path_to_source_location_  
     c. run __make__  
     
 __You will get two libraries__  
