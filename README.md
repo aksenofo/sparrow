@@ -13,7 +13,6 @@ You may use your own wrapers for your projects.
 1. Use git to clone.
 
 2. Load submodules  
-       'git submodule add'  
        'git submodule init'  
        'git submodule update'  
 
