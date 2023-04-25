@@ -52,5 +52,5 @@ utest/ssl - unitests for ssl wrappers
 ftest/auxillary - auxillary classes for funtional tests (tcp,.. etc)  
 ftest - funtional tests itself(client and server modules)  
 
-example/auxillary - auxillary classes for example (tcp,.. etc)  
+example/auxillary - auxillary classes for samples (tcp,.. etc)  
 ftest - example itself(client and server modules)  
